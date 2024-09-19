@@ -1,0 +1,18 @@
+{
+	"title": "SELECT avg WHERE avg IS 80",
+	"input": {
+		"WHERE": {
+			"IS":{
+				"sections_avg":80
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_avg"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

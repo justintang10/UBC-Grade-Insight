@@ -1,0 +1,29 @@
+{
+	"title": "SELECT dept, id, avg WHERE dept = c*sc AND id = 5*",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"IS": {
+						"sections_dept": "c*sc"
+					}
+				},
+				{
+					"IS": {
+						"sections_id": "5*"
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_id",
+				"sections_avg"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
