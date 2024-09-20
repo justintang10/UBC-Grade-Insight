@@ -1,0 +1,87 @@
+{
+	"title": "exact query for one row",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"IS": {
+						"sections_uuid": "33779"
+					}
+				},
+				{
+					"IS": {
+						"sections_id": "421"
+					}
+				},
+				{
+					"IS": {
+						"sections_title": "assess lrn diffi"
+					}
+				},
+				{
+					"IS": {
+						"sections_instructor": "cole, kenneth"
+					}
+				},
+				{
+					"IS": {
+						"sections_dept": "epse"
+					}
+				},
+				{
+					"EQ": {
+						"sections_year": 2009
+					}
+				},
+				{
+					"EQ": {
+						"sections_avg": 98.08
+					}
+				},
+				{
+					"EQ": {
+						"sections_pass": 12
+					}
+				},
+				{
+					"EQ": {
+						"sections_fail": 0
+					}
+				},
+				{
+					"EQ": {
+						"sections_audit": 0
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_uuid",
+				"sections_id",
+				"sections_title",
+				"sections_instructor",
+				"sections_dept",
+				"sections_year",
+				"sections_avg",
+				"sections_pass",
+				"sections_fail",
+				"sections_audit"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_uuid":"33779",
+			"sections_id":"421",
+			"sections_title":"assess lrn diffi",
+			"sections_instructor":"cole, kenneth",
+			"sections_dept":"epse","sections_year":2009,
+			"sections_avg":98.08,
+			"sections_pass":12,
+			"sections_fail":0,
+			"sections_audit":0}
+	]
+}

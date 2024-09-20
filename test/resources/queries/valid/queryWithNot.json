@@ -1,0 +1,119 @@
+{
+	"title": "SELECT dept, avg WHERE NOT avg > 55 AND dept = math",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"NOT": {
+						"GT": {
+							"sections_avg": 55
+						}
+					}
+				},
+				{
+					"IS": {
+						"sections_dept": "math"
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+			{
+				"sections_dept":"math",
+				"sections_avg":46.52
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":49.95
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":50.13
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":51.04
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":51.49
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":51.5
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":52.86
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":52.92
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":53.06
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":53.12
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":53.12
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":53.5
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":53.88
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.44
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.5
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.61
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.62
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.64
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.78
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.78
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.82
+			},
+			{
+				"sections_dept":"math",
+				"sections_avg":54.96
+			}
+	]
+}

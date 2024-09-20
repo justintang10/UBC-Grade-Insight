@@ -1,0 +1,18 @@
+{
+	"title": "SELECT avg WHERE id = 100",
+	"input": {
+		"WHERE": {
+			"EQ":{
+				"sections_id":"100"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_avg"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

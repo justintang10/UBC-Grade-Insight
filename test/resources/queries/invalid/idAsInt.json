@@ -1,0 +1,18 @@
+{
+	"title": "SELECT avg WHERE id IS 400",
+	"input": {
+		"WHERE": {
+			"IS":{
+				"sections_id":400
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_avg"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

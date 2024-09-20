@@ -1,0 +1,12 @@
+{
+	"title": "SELECT WHERE avg > 97 NO OPTIONS",
+	"input": {
+		"WHERE": {
+			"GT": {
+				"sections_avg": 97
+			}
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
