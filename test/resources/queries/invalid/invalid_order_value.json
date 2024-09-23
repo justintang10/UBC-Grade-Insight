@@ -1,0 +1,19 @@
+{
+	"title": "Query where ORDER does not reference a column",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_dept": "bi*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg"
+			],
+			"ORDER": "sections_notreal"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

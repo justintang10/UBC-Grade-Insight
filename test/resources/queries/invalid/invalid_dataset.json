@@ -1,0 +1,19 @@
+{
+	"title": "Query references invalid dataset",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"notsections_dept": "bi*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS":
+				[
+					"notsections_dept",
+					"notsections_avg"
+				]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
