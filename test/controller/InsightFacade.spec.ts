@@ -131,6 +131,17 @@ describe("InsightFacade", function () {
 				});
 		});
 
+		it("should reject with a dataset id that is the same as the id of an already added dataset", async function () {
+			try {
+				await facade.addDataset("validIdDuplicate", singleCourseDataSet, InsightDatasetKind.Sections);
+				await facade.addDataset("validIdDuplicate", singleCourseDataSet, InsightDatasetKind.Sections);
+				expect.fail("Should have thrown above.");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+			// expect.fail("Should have thrown above.");
+		});
+
 		/*
 		AddDataset Content Validation Tests
 		 */
@@ -306,6 +317,19 @@ describe("InsightFacade", function () {
 				.catch((err) => {
 					expect(err).to.be.instanceOf(InsightError);
 				});
+		});
+
+		it("should reject an id string that does not match any of the added dataset ids", async function () {
+			try {
+				await facade.addDataset("validId", smallDataset, InsightDatasetKind.Sections);
+				await facade.addDataset("anotherValidId", smallDataset, InsightDatasetKind.Sections);
+
+				await facade.removeDataset("someOtherId");
+
+				expect.fail("Should have thrown above.");
+			} catch (err) {
+				expect(err).to.be.instanceOf(NotFoundError);
+			}
 		});
 
 		/*
@@ -510,5 +534,31 @@ describe("InsightFacade", function () {
 		it("[invalid/missingOptions.json] SELECT WHERE avg > 97 NO OPTIONS", checkQuery);
 		it("[invalid/referencesMultipleDatasets.json] SELECT dept, id, avg WHERE dept = engl AND avg > 60", checkQuery);
 		it("[invalid/resultTooLarge.json] SELECT avg WHERE avg > 88.74", checkQuery);
+		it("[invalid/invalid_options.json] Query missing OPTIONS", checkQuery);
+		it("[invalid/invalid_wildcard.json] Query includes an invalid wildcard", checkQuery);
+		it("[invalid/invalid_missing_columns.json] Query missing COLUMNS", checkQuery);
+		it("[invalid/invalid_empty_columns.json] Query has empty COLUMNS", checkQuery);
+		it("[invalid/invalid_results_too_large.json] Query returns too many results", checkQuery);
+		it("[invalid/invalid_input_type.json] Query where input is not an object", checkQuery);
+		it("[invalid/invalid_order_value.json] Query where ORDER is not a valid column", checkQuery);
+		it("[invalid/queryWhichContainsInvalidFilter.json] Query which contains invalid filter key", checkQuery);
+		it("[invalid/queryOfLogicComparisonWithEmptyFilter_list.json] Query which contains empty filter_list", checkQuery);
+		it(
+			"[invalid/queryOfLogicComparisonWithEmptyFilter_list.json] Query of logic comparison with invalid filter key",
+			checkQuery
+		);
+		it("[invalid/queryOfMcomparisonWithInvalidMcomparator.json] Query which contains invalid mcomparator", checkQuery);
+		it(
+			"[invalid/queryOfMcomparisonWithInvalidValueType.json] Query of mcomparator which includes invalid value typee",
+			checkQuery
+		);
+		it(
+			"[invalid/queryOfMcomparisonWithMkeyThatContainsUnderscore.json] Query of mcomparison with invalid filter key",
+			checkQuery
+		);
+		it("[invalid/queryOfMcomparisonWithSkey.json] Query of mcomparison with an skey", checkQuery);
+		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
+		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
+		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
 	});
 });

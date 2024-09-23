@@ -1,0 +1,18 @@
+{
+	"title": "Query of mcomparison with invalid mcomparator",
+	"input": {
+		"WHERE": {
+			"ARGH": {
+				"sections_avg": 10
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg"
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

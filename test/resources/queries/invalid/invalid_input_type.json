@@ -1,0 +1,6 @@
+{
+	"title": "Query where input is not an object",
+	"input": true,
+	"errorExpected": true,
+	"expected": "InsightError"
+}
