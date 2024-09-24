@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import { Section } from "../models/section";
-import {InsightError} from "../controller/IInsightFacade";
+import { InsightError } from "../controller/IInsightFacade";
 
 function base64ToBinary(b64string: string): Uint8Array {
 	const binaryBuffer = Buffer.from(b64string, "base64");
@@ -27,7 +27,7 @@ export async function Base64ZipToJSON(b64string: string): Promise<any> {
 		});
 
 	if (courseFilePromises.length === 0) {
-		throw new InsightError("dataset empty or invalid, was unable to parse course sections from given files")
+		throw new InsightError("dataset empty or invalid, was unable to parse course sections from given files");
 	}
 
 	const courseData = await Promise.all(courseFilePromises);
@@ -37,10 +37,10 @@ export async function Base64ZipToJSON(b64string: string): Promise<any> {
 }
 
 /*
-* Verifies that the course file name is in the format "courses/ABDC123"
-* - filters out .DS_Store file, automatically added on Mac
-*
-* */
+ * Verifies that the course file name is in the format "courses/ABDC123"
+ * - filters out .DS_Store file, automatically added on Mac
+ *
+ * */
 function courseFileNameInCorrectFormat(fileName: string): boolean {
 	return fileName.startsWith("courses/") && !fileName.endsWith(".DS_Store") && !(fileName === "courses/");
 }

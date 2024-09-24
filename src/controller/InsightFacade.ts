@@ -1,4 +1,4 @@
-import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, InsightResult} from "./IInsightFacade";
+import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, InsightResult } from "./IInsightFacade";
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
@@ -20,11 +20,11 @@ export default class InsightFacade implements IInsightFacade {
 		if (id.trim().length === 0) {
 			throw new InsightError("Dataset Id cannot be only whitespace.");
 		} else if (id.indexOf("_") > -1) {
-			throw new InsightError("Dataset Id cannot contain underscores.")
+			throw new InsightError("Dataset Id cannot contain underscores.");
 		}
 
 		if (this.datasets.map((dataset) => dataset.id).includes(id)) {
-			throw new InsightError("Dataset Id is already added, new datasets must have unique Ids.")
+			throw new InsightError("Dataset Id is already added, new datasets must have unique Ids.");
 		}
 
 		//parse and add the section data from the encoded dataset
