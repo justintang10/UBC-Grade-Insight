@@ -1,4 +1,3 @@
-
 export class Section {
 	private readonly uuid: String;
 	private readonly id: String;
@@ -11,8 +10,18 @@ export class Section {
 	private readonly fail: number;
 	private readonly audit: number;
 
-	constructor(uuid: String, id: String, title: String, instructor: String, department: String,
-				year: number, avg: number, pass: number, fail: number, audit: number) {
+	constructor(
+		uuid: String,
+		id: String,
+		title: String,
+		instructor: String,
+		department: String,
+		year: number,
+		avg: number,
+		pass: number,
+		fail: number,
+		audit: number
+	) {
 		this.uuid = uuid;
 		this.id = id;
 		this.title = title;
@@ -45,4 +54,3 @@ export class Section {
 		return this.department;
 	}
 }
-
