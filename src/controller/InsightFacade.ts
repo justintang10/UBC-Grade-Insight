@@ -1,4 +1,4 @@
-import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightResult } from "./IInsightFacade";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, InsightResult} from "./IInsightFacade";
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
@@ -16,12 +16,14 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
-		const jsonData = Base64ZipToJSON(content);
-		const sectionsArray: Section[] = jsonToSections(jsonData);
-
-		const dataset: InsightDataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
-		this.datasets.push(dataset);
-
+		try {
+			const jsonData = await Base64ZipToJSON(content);
+			const sectionsArray: Section[] = jsonToSections(jsonData);
+			const dataset: InsightDataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
+			this.datasets.push(dataset);
+		} catch (error) {
+			throw new InsightError("Error: " + error);
+		}
 		return this.getDatasetIds();
 	}
 
