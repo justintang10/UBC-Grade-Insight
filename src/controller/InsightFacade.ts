@@ -66,7 +66,10 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("Dataset Id cannot contain underscores.");
 		}
 
-		if (!this.datasets.map((dataset) => dataset.id).includes(id)) {
+		const dir = './data';
+		await fs.ensureDir(dir);
+		const datasetFiles = await fs.readdir(dir);
+		if (!(datasetFiles.map((datasetFile: string) => datasetFile.replace(".json",""))).includes(id)) {
 			throw new NotFoundError(`Dataset with id ${id} not found.`);
 		}
 
