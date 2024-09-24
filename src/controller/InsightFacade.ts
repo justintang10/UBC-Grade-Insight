@@ -18,9 +18,52 @@ export default class InsightFacade implements IInsightFacade {
 		throw new Error(`InsightFacadeImpl::removeDataset() is unimplemented! - id=${id};`);
 	}
 
+	// Returns array of section information which match the given query
 	public async performQuery(query: unknown): Promise<InsightResult[]> {
-		// TODO: Remove this once you implement the methods!
-		throw new Error(`InsightFacadeImpl::performQuery() is unimplemented! - query=${query};`);
+		// Parse query into a dictionary or jsonObject or something
+		const queryDict = { // TODO: replace example dictionary
+			"WHERE": 0,
+			"OPTIONS": 0
+		};
+
+		// If queryDict missing WHERE or OPTIONS: throw InsightError
+		// Also need to check query keys to make sure the query only references 1 dataset - still unsure about this
+
+		// Pass 1st argument of dictionary["WHERE"] into handleWhere
+		// handleWhere will then return all the valid sections from the query
+		const validSections = await this.handleWhere(queryDict.WHERE);
+
+		// Pass 1st argument of dictionary["OPTIONS"] into handleOptions, as well as validSections
+		// handleOptions will return the array of columns and values for each section
+		const result = await this.handleOptions(queryDict.OPTIONS, validSections);
+
+		// If result.length is > 5000, throw ResultTooLargeError
+
+		return result;
+	}
+
+	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
+	// Returns sections that match the given query parameters
+	private async handleWhere(queryParameters: unknown): Promise<unknown> {
+
+		// Match
+		return;
+	}
+
+	// Takes array of sections
+	// Returns array of InsightResult
+	private async handleOptions(queryOptions: unknown, sections: unknown): Promise<InsightResult[]> {
+		// If COLUMNS does not exist, throw InsightError
+		// If COLUMNS is empty, throw InsightError
+
+		// for column in columns:
+		//     if column key is invalid, throw insight error
+		//     column key is invalid if:
+		// 			referenced dataset has not been added
+		// 			referenced dataset column does not exist
+		// 			references multiple datasets
+
+		return [];
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
