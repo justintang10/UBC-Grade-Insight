@@ -16,6 +16,18 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+		//validate that the id is valid and not already in our dataset array
+		if (id.trim().length === 0) {
+			throw new InsightError("Dataset Id cannot be only whitespace.");
+		} else if (id.indexOf("_") > -1) {
+			throw new InsightError("Dataset Id cannot contain underscores.")
+		}
+
+		if (this.datasets.map((dataset) => dataset.id).includes(id)) {
+			throw new InsightError("Dataset Id is already added, new datasets must have unique Ids.")
+		}
+
+		//parse and add the section data from the encoded dataset
 		try {
 			const jsonData = await Base64ZipToJSON(content);
 			const sectionsArray: Section[] = jsonToSections(jsonData);
