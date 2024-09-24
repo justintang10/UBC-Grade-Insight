@@ -2,6 +2,8 @@ import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, Insig
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
+import { jsonToDataset } from "../utils/persistenceUtils";
+const fs = require("fs-extra");
 
 /**
  * This is the main programmatic entry point for the project.
@@ -10,10 +12,6 @@ import { Dataset } from "../models/dataset";
  */
 export default class InsightFacade implements IInsightFacade {
 	private datasets: InsightDataset[] = [];
-
-	public constructor() {
-		//TODO: read from json
-	}
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
 		//validate that the id is valid and not already in our dataset array
@@ -31,8 +29,12 @@ export default class InsightFacade implements IInsightFacade {
 		try {
 			const jsonData = await Base64ZipToJSON(content);
 			const sectionsArray: Section[] = jsonToSections(jsonData);
-			const dataset: InsightDataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
+			const dataset: Dataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
 			this.datasets.push(dataset);
+
+			this.saveDatasetToFile(dataset).catch((err) => {
+				throw new InsightError(err);
+			});
 		} catch (error) {
 			throw new InsightError("Error: " + error);
 		}
@@ -60,5 +62,30 @@ export default class InsightFacade implements IInsightFacade {
 	public async listDatasets(): Promise<InsightDataset[]> {
 		// TODO: Remove this once you implement the methods!
 		throw new Error(`InsightFacadeImpl::listDatasets is unimplemented!`);
+	}
+
+	private async saveDatasetToFile(dataset: Dataset): Promise<void> {
+		const jsonIndentation = 2;
+		const jsonDataset = JSON.stringify(dataset, null, jsonIndentation);
+		const filePath = `./data/${dataset.id}.json`;
+		try {
+			await fs.outputFile(filePath, jsonDataset);
+		} catch (error) {
+			throw new InsightError("Error saving dataset to disk: " + error);
+		}
+	}
+
+	public async loadDatasetFromFile(id: string): Promise<Dataset> {
+		const filePath = `./data/${id}.json`;
+		let dataset: Dataset;
+
+		try {
+			const datasetFile = await fs.readJson(filePath);
+			dataset = jsonToDataset(datasetFile);
+			this.datasets.push(dataset);
+		} catch (error) {
+			throw new InsightError("Error loading dataset from disk: " + error);
+		}
+		return dataset;
 	}
 }
