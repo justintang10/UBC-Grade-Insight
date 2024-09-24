@@ -1,8 +1,7 @@
-import {InsightDataset, InsightDatasetKind} from "../controller/IInsightFacade";
-import {Section} from "./section";
+import { InsightDataset, InsightDatasetKind } from "../controller/IInsightFacade";
+import { Section } from "./section";
 
 export class Dataset implements InsightDataset {
-
 	private readonly sections: Section[];
 	public readonly id: string;
 	public readonly kind: InsightDatasetKind;

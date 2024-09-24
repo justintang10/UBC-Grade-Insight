@@ -1,4 +1,7 @@
 import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightResult } from "./IInsightFacade";
+import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
+import { Section } from "../models/section";
+import { Dataset } from "../models/dataset";
 
 /**
  * This is the main programmatic entry point for the project.
@@ -6,11 +9,28 @@ import { IInsightFacade, InsightDataset, InsightDatasetKind, InsightResult } fro
  *
  */
 export default class InsightFacade implements IInsightFacade {
+	private datasets: InsightDataset[] = [];
+
+	public constructor() {
+		//TODO: read from json
+	}
+
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
-		// TODO: Remove this once you implement the methods!
-		throw new Error(
-			`InsightFacadeImpl::addDataset() is unimplemented! - id=${id}; content=${content?.length}; kind=${kind}`
-		);
+		const jsonData = Base64ZipToJSON(content);
+		const sectionsArray: Section[] = jsonToSections(jsonData);
+
+		const dataset: InsightDataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
+		this.datasets.push(dataset);
+
+		return this.getDatasetIds();
+	}
+
+	private getDatasetIds(): string[] {
+		const ids: string[] = [];
+		this.datasets.forEach((dataset: InsightDataset) => {
+			ids.push(dataset.id);
+		});
+		return ids;
 	}
 
 	public async removeDataset(id: string): Promise<string> {
