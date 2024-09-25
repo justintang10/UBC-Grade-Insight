@@ -11,10 +11,8 @@ import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
 import { jsonToDataset } from "../utils/persistenceUtils";
-import { query } from "express";
 import "../utils/queryEngineUtils";
 import { isLComparator, isMComparator, isMField } from "../utils/queryEngineUtils";
-import { cp } from "fs";
 
 const fs = require("fs-extra");
 
@@ -166,10 +164,9 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	private async getSectionsFromDataset(datasetId: String): Promise<any> {
-		
-		for (let i = 0; i < this.datasets.length; i++) {
-			if (this.datasets[i].id === datasetId) {
-				return this.datasets[i].getSections();
+		for (const dataset of this.datasets) {
+			if (dataset.id === datasetId) {
+				return dataset.getSections();
 			}
 		}
 		throw new InsightError("Invalid Query: dataset ID does not match any dataset that has been added");
@@ -177,7 +174,7 @@ export default class InsightFacade implements IInsightFacade {
 
 	/* Takes queryParameters (a {'FILTER'})
 	eg.
-	
+
 	{
 		"AND": [
 			{
@@ -193,17 +190,17 @@ export default class InsightFacade implements IInsightFacade {
 		]
   	}
 
-	or 
+	or
 
 	{
 		"GT": {
 			"sections_avg": 90
 		}
 	}
-	
+
 	Returns sections that match the given query parameters
-	*/ 
-	private async handleWhere(queryParams: any, sections: any, datasetId: String): Promise<InsightResult[]> {
+	*/
+	private handleWhere(queryParams: any, sections: any, datasetId: String): InsightResult[] {
 		let result;
 
 		// Return all sections if parameters are empty
@@ -233,8 +230,6 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-
-
 	/* Takes queryKey ("AND" or "OR") and queryParams (an array of {'FILTER': {...}})
 	eg.
 	[
@@ -252,41 +247,33 @@ export default class InsightFacade implements IInsightFacade {
 
 	// Returns sections that match the given query parameters
 	*/
-	private async handleLComparison(
-		queryKey: string,
-		queryParams: any,
-		sections: any,
-		datasetId: String
-	): Promise<InsightResult[]> {
-
-		var result: InsightResult[] = [];
+	private handleLComparison(queryKey: string, queryParams: any, sections: any, datasetId: String): InsightResult[] {
+		let result: InsightResult[] = [];
 
 		if (queryParams.length === 0) {
 			throw new InsightError("Invalid Query: Logic Comparison Filter List is empty");
 		}
 
 		if (queryKey === "AND") {
-			for (let i = 0; i < queryParams.length; i++) {
-				var innerQueryParam = queryParams[i];
-				const recursiveResult = await this.handleWhere(innerQueryParam, sections, datasetId);
-				
+			for (const innerQueryParam of queryParams) {
+				const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
+
 				// Any sections AND [] returns []
 				if (recursiveResult.length === 0) {
 					return [];
 				}
 
-				if (result.length === 0) { 
+				if (result.length === 0) {
 					// First iteration initializes result
 					result = recursiveResult;
-				} else { 
+				} else {
 					// All other iterations compare the returned sections to the result and removes section if it is not in both
 					for (let i = 0; i < result.length; i++) {
-						
 						const section = result[i];
 						let isInRecursiveResult = false;
 
-						for (let j = 0; j < recursiveResult.length; j++) {
-							if (section === recursiveResult[j]) {
+						for (const recursiveResultSection of recursiveResult) {
+							if (section === recursiveResultSection) {
 								isInRecursiveResult = true;
 							}
 						}
@@ -298,13 +285,11 @@ export default class InsightFacade implements IInsightFacade {
 				}
 			}
 		} else if (queryKey === "OR") {
-			for (let i = 0; i < queryParams.length; i++) {
-				var innerQueryParam = queryParams[i];
-				const recursiveResult = await this.handleWhere(innerQueryParam, sections, datasetId);
+			for (const innerQueryParam of queryParams) {
+				const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
 
 				// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
-				var combinedResults = new Set([...result, ...recursiveResult]);
-				result = [...combinedResults];
+				result = [...new Set([...result, ...recursiveResult])];
 			}
 		} else {
 			throw new InsightError("Invalid Query: Invalid Logic Comparator: " + queryKey);
@@ -312,23 +297,17 @@ export default class InsightFacade implements IInsightFacade {
 
 		return result;
 	}
-	
+
 	/* Takes queryKey ("GT" or "LT" or "EQ") and queryParams (a {mkey: number})
 	eg.
 
 	{
 		"sections_avg": 90
 	}
-	
+
 	// Returns sections that match the given query parameters
 	*/
-	private async handleMComparison(
-		queryKey: string,
-		queryParams: any,
-		sections: any,
-		datasetId: String
-	): Promise<InsightResult[]> {
-		
+	private handleMComparison(queryKey: string, queryParams: any, sections: any, datasetId: String): InsightResult[] {
 		if (Object.keys(queryParams).length > 1) {
 			throw new InsightError("Invalid Query: too many query keys in MCOMPARISON");
 		}
@@ -339,7 +318,7 @@ export default class InsightFacade implements IInsightFacade {
 		for (let i = 0; i < columnName.length; i++) {
 			if (columnName.charAt(i) === "_") {
 				thisDatasetId = columnName.substring(0, i);
-				thisDatasetColumn = columnName.substring(i+1, columnName.length);
+				thisDatasetColumn = columnName.substring(i + 1, columnName.length);
 			}
 		}
 		if (thisDatasetId === "") {
@@ -347,7 +326,9 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		if (thisDatasetId != datasetId) {
-			throw new InsightError("Invalid Query: multiple datasets referenced: '" + thisDatasetId + "' and '" + datasetId + "'.");
+			throw new InsightError(
+				"Invalid Query: multiple datasets referenced: '" + thisDatasetId + "' and '" + datasetId + "'."
+			);
 		}
 
 		if (!isMField(thisDatasetColumn)) {
@@ -356,17 +337,15 @@ export default class InsightFacade implements IInsightFacade {
 
 		const comparisonValue = queryParams[columnName];
 
-		if (typeof comparisonValue != "number") {
+		if (typeof comparisonValue !== "number") {
 			throw new InsightError("Invalid Query: Invalid type in MCOMPARISON: " + typeof comparisonValue);
 		}
 
-		var result: InsightResult[] = [];
+		const result: InsightResult[] = [];
 
-		for (let i = 0; i < sections.length; i++) {
-			const section = sections[i];
-
+		for (const section of sections) {
 			const value = section.getMField(thisDatasetColumn);
-			
+
 			if (queryKey === "GT") {
 				if (value > comparisonValue) {
 					result.push(section);
@@ -380,7 +359,7 @@ export default class InsightFacade implements IInsightFacade {
 					result.push(section);
 				}
 			} else {
-				throw new InsightError("Invalid Query: invalid query key - MCOMPARATOR")
+				throw new InsightError("Invalid Query: invalid query key - MCOMPARATOR");
 			}
 		}
 
@@ -389,22 +368,14 @@ export default class InsightFacade implements IInsightFacade {
 
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
 	// Returns sections that match the given query parameters
-	private async handleSComparison(
-		queryParameters: unknown,
-		sections: unknown,
-		datasetId: String
-	): Promise<InsightResult[]> {
+	private handleSComparison(queryParameters: unknown, sections: unknown, datasetId: String): InsightResult[] {
 		// TODO
 		return [];
 	}
 
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
 	// Returns sections that match the given query parameters
-	private async handleNegation(
-		queryParameters: unknown,
-		sections: unknown,
-		datasetId: String
-	): Promise<InsightResult[]> {
+	private handleNegation(queryParameters: unknown, sections: unknown, datasetId: String): InsightResult[] {
 		// TODO
 		return [];
 	}
