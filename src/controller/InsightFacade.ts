@@ -5,6 +5,7 @@ import {
 	InsightError,
 	InsightResult,
 	NotFoundError,
+	ResultTooLargeError,
 } from "./IInsightFacade";
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
@@ -20,7 +21,7 @@ const fs = require("fs-extra");
  */
 
 export default class InsightFacade implements IInsightFacade {
-	private datasets: InsightDataset[] = [];
+	private datasets: Dataset[] = [];
 	private readonly MAX_QUERIES: number = 5000;
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
@@ -108,7 +109,7 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		// Get first datasetId to retrieve sections
-		const datasetId = await this.checkDatasetId(queryOptions);
+		const datasetId = await this.getDatasetId(queryOptions);
 
 		// Get all sections from given dataset
 		const allSections = await this.getSectionsFromDataset(datasetId);
@@ -129,7 +130,7 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	private async checkDatasetId(queryOptions: any): Promise<string> {
+	private async getDatasetId(queryOptions: any): Promise<string> {
 		let hasColumns = false;
 		let columns: any;
 		for (const queryKey in queryOptions) {
@@ -161,9 +162,13 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	private async getSectionsFromDataset(datasetId: String): Promise<any> {
-		// get dataset sections by id
-
-		return [];
+		
+		for (let i = 0; i < this.datasets.length; i++) {
+			if (this.datasets[i].id === datasetId) {
+				return this.datasets[i].getSections();
+			}
+		}
+		throw new InsightError("Invalid Query: dataset ID does not match any dataset that has been added");
 	}
 
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
@@ -184,13 +189,13 @@ export default class InsightFacade implements IInsightFacade {
 		// Match queryParams key to comparator type (logic comparison, mcomparison, etc.)
 		const queryKey = Object.keys(queryParams)[0];
 		if (queryKey === "AND" || queryKey === "OR") {
-			result = this.handleLComparison(queryParams, sections, datasetId);
+			result = this.handleLComparison(queryKey, queryParams[queryKey], sections, datasetId);
 		} else if (queryKey === "GT" || queryKey === "LT" || queryKey === "EQ") {
-			result = this.handleMComparison(queryParams, sections, datasetId);
+			result = this.handleMComparison(queryKey, queryParams[queryKey], sections, datasetId);
 		} else if (queryKey === "IS") {
-			result = this.handleSComparison(queryParams, sections, datasetId);
+			result = this.handleSComparison(queryParams[queryKey], sections, datasetId);
 		} else if (queryKey === "NOT") {
-			result = this.handleNegation(queryParams, sections, datasetId);
+			result = this.handleNegation(queryParams[queryKey], sections, datasetId);
 		} else {
 			throw new InsightError("Invalid Query: Invalid query key");
 		}
@@ -198,31 +203,69 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
+	// Takes queryParams (an array of {'FILTER': {...}})
 	// Returns sections that match the given query parameters
 	private async handleLComparison(
+		queryKey: string,
 		queryParams: any,
 		sections: any,
 		datasetId: String
 	): Promise<InsightResult[]> {
-		// If queryParameters[0] != (AND || OR) throw InsightError
-		for (const key in queryParams) {
-			if (key === "AND") {
 
-			} else if (key === "OR") {
+		var result: InsightResult[] = [];
 
-			} else {
-				throw new InsightError("Invalid Query: Invalid Logic Comparator: " + key);
+		if (queryKey === "AND") {
+			for (let i = 0; i < queryParams.length; i++) {
+				var innerQueryParam = queryParams[i];
+				const recursiveResult = await this.handleWhere(innerQueryParam, sections, datasetId);
+				
+				// Any sections AND [] returns []
+				if (recursiveResult.length === 0) {
+					return [];
+				}
+
+				if (result.length === 0) { 
+					// First iteration initializes result
+					result = recursiveResult;
+				} else { 
+					// All other iterations compare the returned sections to the result and removes section if it is not in both
+					for (let i = 0; i < result.length; i++) {
+						
+						const section = result[i];
+						let isInRecursiveResult = false;
+
+						for (let j = 0; j < recursiveResult.length; j++) {
+							if (section === recursiveResult[j]) {
+								isInRecursiveResult = true;
+							}
+						}
+
+						if (!isInRecursiveResult) {
+							result.splice(i, 1);
+						}
+					}
+				}
 			}
+		} else if (queryKey === "OR") {
+			for (let i = 0; i < queryParams.length; i++) {
+				var innerQueryParam = queryParams[i];
+				const recursiveResult = await this.handleWhere(innerQueryParam, sections, datasetId);
+
+				// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
+				var combinedResults = new Set([...result, ...recursiveResult]);
+				result = [...combinedResults];
+			}
+		} else {
+			throw new InsightError("Invalid Query: Invalid Logic Comparator: " + queryKey);
 		}
-		// else return
 
-		return [];
+		return result;
 	}
-
+	
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
 	// Returns sections that match the given query parameters
 	private async handleMComparison(
+		queryKey: string,
 		queryParameters: unknown,
 		sections: unknown,
 		datasetId: String
