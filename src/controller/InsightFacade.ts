@@ -11,6 +11,10 @@ import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
 import { jsonToDataset } from "../utils/persistenceUtils";
+import { query } from "express";
+import "../utils/queryEngineUtils";
+import { isLComparator, isMComparator, isMField } from "../utils/queryEngineUtils";
+import { cp } from "fs";
 
 const fs = require("fs-extra");
 
@@ -171,8 +175,34 @@ export default class InsightFacade implements IInsightFacade {
 		throw new InsightError("Invalid Query: dataset ID does not match any dataset that has been added");
 	}
 
-	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
-	// Returns sections that match the given query parameters
+	/* Takes queryParameters (a {'FILTER'})
+	eg.
+	
+	{
+		"AND": [
+			{
+				"GT": {
+					"sections_avg": 90
+				}
+			},
+			{
+				"IS": {
+					"sections_dept": "biol"
+				}
+			}
+		]
+  	}
+
+	or 
+
+	{
+		"GT": {
+			"sections_avg": 90
+		}
+	}
+	
+	Returns sections that match the given query parameters
+	*/ 
 	private async handleWhere(queryParams: any, sections: any, datasetId: String): Promise<InsightResult[]> {
 		let result;
 
@@ -188,9 +218,9 @@ export default class InsightFacade implements IInsightFacade {
 
 		// Match queryParams key to comparator type (logic comparison, mcomparison, etc.)
 		const queryKey = Object.keys(queryParams)[0];
-		if (queryKey === "AND" || queryKey === "OR") {
+		if (isLComparator(queryKey)) {
 			result = this.handleLComparison(queryKey, queryParams[queryKey], sections, datasetId);
-		} else if (queryKey === "GT" || queryKey === "LT" || queryKey === "EQ") {
+		} else if (isMComparator(queryKey)) {
 			result = this.handleMComparison(queryKey, queryParams[queryKey], sections, datasetId);
 		} else if (queryKey === "IS") {
 			result = this.handleSComparison(queryParams[queryKey], sections, datasetId);
@@ -203,8 +233,25 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	// Takes queryParams (an array of {'FILTER': {...}})
+
+
+	/* Takes queryKey ("AND" or "OR") and queryParams (an array of {'FILTER': {...}})
+	eg.
+	[
+		{
+			"GT": {
+				"sections_avg": 90
+			}
+		},
+		{
+			"IS": {
+				"sections_dept": "biol"
+			}
+		}
+	]
+
 	// Returns sections that match the given query parameters
+	*/
 	private async handleLComparison(
 		queryKey: string,
 		queryParams: any,
@@ -213,6 +260,10 @@ export default class InsightFacade implements IInsightFacade {
 	): Promise<InsightResult[]> {
 
 		var result: InsightResult[] = [];
+
+		if (queryParams.length === 0) {
+			throw new InsightError("Invalid Query: Logic Comparison Filter List is empty");
+		}
 
 		if (queryKey === "AND") {
 			for (let i = 0; i < queryParams.length; i++) {
@@ -262,16 +313,78 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 	
-	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
+	/* Takes queryKey ("GT" or "LT" or "EQ") and queryParams (a {mkey: number})
+	eg.
+
+	{
+		"sections_avg": 90
+	}
+	
 	// Returns sections that match the given query parameters
+	*/
 	private async handleMComparison(
 		queryKey: string,
-		queryParameters: unknown,
-		sections: unknown,
+		queryParams: any,
+		sections: any,
 		datasetId: String
 	): Promise<InsightResult[]> {
-		// TODO
-		return [];
+		
+		if (Object.keys(queryParams).length > 1) {
+			throw new InsightError("Invalid Query: too many query keys in MCOMPARISON");
+		}
+
+		const columnName = Object.keys(queryParams)[0]; // eg. sections_avg
+		let thisDatasetId = "";
+		let thisDatasetColumn = "";
+		for (let i = 0; i < columnName.length; i++) {
+			if (columnName.charAt(i) === "_") {
+				thisDatasetId = columnName.substring(0, i);
+				thisDatasetColumn = columnName.substring(i+1, columnName.length);
+			}
+		}
+		if (thisDatasetId === "") {
+			throw new InsightError("Invalid Query: Dataset ID cannot be empty");
+		}
+
+		if (thisDatasetId != datasetId) {
+			throw new InsightError("Invalid Query: multiple datasets referenced: '" + thisDatasetId + "' and '" + datasetId + "'.");
+		}
+
+		if (!isMField(thisDatasetColumn)) {
+			throw new InsightError("Invalid Query: MCOMPARISON performed with an non-MFIELD: " + thisDatasetColumn);
+		}
+
+		const comparisonValue = queryParams[columnName];
+
+		if (typeof comparisonValue != "number") {
+			throw new InsightError("Invalid Query: Invalid type in MCOMPARISON: " + typeof comparisonValue);
+		}
+
+		var result: InsightResult[] = [];
+
+		for (let i = 0; i < sections.length; i++) {
+			const section = sections[i];
+
+			const value = section.getMField(thisDatasetColumn);
+			
+			if (queryKey === "GT") {
+				if (value > comparisonValue) {
+					result.push(section);
+				}
+			} else if (queryKey === "LT") {
+				if (value < comparisonValue) {
+					result.push(section);
+				}
+			} else if (queryKey === "EQ") {
+				if (value === comparisonValue) {
+					result.push(section);
+				}
+			} else {
+				throw new InsightError("Invalid Query: invalid query key - MCOMPARATOR")
+			}
+		}
+
+		return result;
 	}
 
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)

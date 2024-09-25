@@ -34,6 +34,40 @@ export class Section {
 		this.audit = audit;
 	}
 
+	public getMField(propertyName: string): number {
+		switch (propertyName) {
+			case "year":
+				return this.year;
+			case "avg":
+				return this.avg;
+			case "pass":
+				return this.pass;
+			case "fail":
+				return this.fail;
+			case "audit":
+				return this.audit;
+		}
+
+		throw new Error("Error: propertyName '" + propertyName + "' is not an MFIELD");
+	}
+
+	public getSField(propertyName: string): String {
+		switch (propertyName) {
+			case "uuid":
+				return this.uuid;
+			case "id":
+				return this.id;
+			case "title":
+				return this.title;
+			case "instructor":
+				return this.instructor;
+			case "dept":
+				return this.department;
+		}
+
+		throw new Error("Error: propertyName '" + propertyName + "' is not an SFIELD");
+	}
+
 	public getUuid(): String {
 		return this.uuid;
 	}
