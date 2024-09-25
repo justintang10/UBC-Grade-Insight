@@ -14,7 +14,7 @@ export class Dataset implements InsightDataset {
 		this.numRows = numRows;
 	}
 
-	public getDataset(): Section[] {
+	public getSections(): Section[] {
 		return this.sections;
 	}
 }
