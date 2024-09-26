@@ -12,7 +12,14 @@ import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
 import { jsonToDataset } from "../utils/persistenceUtils";
 import "../utils/queryEngineUtils";
-import { isLComparator, isMComparator, isMField } from "../utils/queryEngineUtils";
+import {
+	doesInputStringMatch, getAndCheckColumnName, getAndCheckDatasetId,
+	isLComparator,
+	isMComparator,
+	isMField,
+	isSField,
+	QueryComparison, sortByOrder,
+} from "../utils/queryEngineUtils";
 
 const fs = require("fs-extra");
 
@@ -111,18 +118,18 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		// Get first datasetId to retrieve sections
-		const datasetId = await this.getDatasetId(queryOptions);
+		const datasetId = this.getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
 		// Get all sections from given dataset
-		const allSections = await this.getSectionsFromDataset(datasetId);
+		const allSections = this.getSectionsFromDataset(datasetId);
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
-		const validSections = await this.handleWhere(queryWhere, allSections, datasetId);
+		const validSections = this.handleWhere(queryWhere, allSections, datasetId);
 
 		// Pass 1st argument of dictionary["OPTIONS"] into handleOptions, as well as validSections
 		// handleOptions will return the array of columns and values for each section
-		const result = await this.handleOptions(queryOptions, validSections, datasetId);
+		const result = this.handleOptions(queryOptions, validSections, datasetId);
 
 		// If result.length is > 5000, throw ResultTooLargeError
 		if (result.length > this.MAX_QUERIES) {
@@ -132,7 +139,7 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	private async getDatasetId(queryOptions: any): Promise<string> {
+	private getDatasetId(queryOptions: any): string {
 		let hasColumns = false;
 		let columns: any;
 		for (const queryKey in queryOptions) {
@@ -163,13 +170,13 @@ export default class InsightFacade implements IInsightFacade {
 		return datasetId;
 	}
 
-	private async getSectionsFromDataset(datasetId: String): Promise<any> {
+	private getSectionsFromDataset(datasetId: string): any {
 		for (const dataset of this.datasets) {
 			if (dataset.id === datasetId) {
 				return dataset.getSections();
 			}
 		}
-		throw new InsightError("Invalid Query: dataset ID does not match any dataset that has been added");
+		throw new InsightError("Invalid Query: dataset ID '" + datasetId + "' does not match any dataset that has been added");
 	}
 
 	/* Takes queryParameters (a {'FILTER'})
@@ -200,11 +207,11 @@ export default class InsightFacade implements IInsightFacade {
 
 	Returns sections that match the given query parameters
 	*/
-	private handleWhere(queryParams: any, sections: any, datasetId: String): InsightResult[] {
+	private handleWhere(queryParams: any, sections: any, datasetId: string): InsightResult[] {
 		let result;
 
 		// Return all sections if parameters are empty
-		if (queryParams.length === 0) {
+		if (Object.keys(queryParams).length === 0) {
 			return sections;
 		}
 
@@ -247,7 +254,7 @@ export default class InsightFacade implements IInsightFacade {
 
 	// Returns sections that match the given query parameters
 	*/
-	private handleLComparison(queryKey: string, queryParams: any, sections: any, datasetId: String): InsightResult[] {
+	private handleLComparison(queryKey: string, queryParams: any, sections: any, datasetId: string): InsightResult[] {
 		let result: InsightResult[] = [];
 
 		if (queryParams.length === 0) {
@@ -255,46 +262,51 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		if (queryKey === "AND") {
-			for (const innerQueryParam of queryParams) {
-				const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
-
-				// Any sections AND [] returns []
-				if (recursiveResult.length === 0) {
-					return [];
-				}
-
-				if (result.length === 0) {
-					// First iteration initializes result
-					result = recursiveResult;
-				} else {
-					// All other iterations compare the returned sections to the result and removes section if it is not in both
-					for (let i = 0; i < result.length; i++) {
-						const section = result[i];
-						let isInRecursiveResult = false;
-
-						for (const recursiveResultSection of recursiveResult) {
-							if (section === recursiveResultSection) {
-								isInRecursiveResult = true;
-							}
-						}
-
-						if (!isInRecursiveResult) {
-							result.splice(i, 1);
-						}
-					}
-				}
-			}
+			result = this.handleAndComparison(queryParams, sections, datasetId);
 		} else if (queryKey === "OR") {
-			for (const innerQueryParam of queryParams) {
-				const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
-
-				// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
-				result = [...new Set([...result, ...recursiveResult])];
-			}
+			result = this.handleOrComparison(queryParams, sections, datasetId);
 		} else {
 			throw new InsightError("Invalid Query: Invalid Logic Comparator: " + queryKey);
 		}
 
+		return result;
+	}
+
+	private handleAndComparison(queryParams: any, sections: any, datasetId: string): InsightResult[] {
+		let result: InsightResult[] = [];
+		for (const innerQueryParam of queryParams) {
+			const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
+
+			// Any sections AND [] returns []
+			if (recursiveResult.length === 0) {
+				return [];
+			}
+
+			if (result.length === 0) {
+				// First iteration initializes result
+				result = recursiveResult.slice();
+			} else {
+				// All other iterations compare the returned sections to the result and removes section if it is not in both
+				const newResult = [];
+				for (const section of result) {
+					if (recursiveResult.includes(section)) {
+						newResult.push(section);
+					}
+				}
+				result = newResult;
+			}
+		}
+		return result;
+	}
+
+	private handleOrComparison(queryParams: any, sections: any, datasetId: string): InsightResult[] {
+		let result: InsightResult[] = [];
+		for (const innerQueryParam of queryParams) {
+			const recursiveResult = this.handleWhere(innerQueryParam, sections, datasetId);
+
+			// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
+			result = [...new Set([...result, ...recursiveResult])];
+		}
 		return result;
 	}
 
@@ -307,35 +319,20 @@ export default class InsightFacade implements IInsightFacade {
 
 	// Returns sections that match the given query parameters
 	*/
-	private handleMComparison(queryKey: string, queryParams: any, sections: any, datasetId: String): InsightResult[] {
+	private handleMComparison(queryKey: string, queryParams: any, sections: any, datasetId: string): InsightResult[] {
+		if (Object.keys(queryParams).length === 0) {
+			throw new InsightError("Invalid Query: no keys found in MCOMPARISON");
+		}
+
 		if (Object.keys(queryParams).length > 1) {
 			throw new InsightError("Invalid Query: too many query keys in MCOMPARISON");
 		}
 
-		const columnName = Object.keys(queryParams)[0]; // eg. sections_avg
-		let thisDatasetId = "";
-		let thisDatasetColumn = "";
-		for (let i = 0; i < columnName.length; i++) {
-			if (columnName.charAt(i) === "_") {
-				thisDatasetId = columnName.substring(0, i);
-				thisDatasetColumn = columnName.substring(i + 1, columnName.length);
-			}
-		}
-		if (thisDatasetId === "") {
-			throw new InsightError("Invalid Query: Dataset ID cannot be empty");
-		}
+		const datasetColumnPair = Object.keys(queryParams)[0]; // eg. sections_avg
+		getAndCheckDatasetId(datasetColumnPair, datasetId);
+		const thisDatasetColumn = getAndCheckColumnName(datasetColumnPair, QueryComparison.MCOMPARISON);
 
-		if (thisDatasetId != datasetId) {
-			throw new InsightError(
-				"Invalid Query: multiple datasets referenced: '" + thisDatasetId + "' and '" + datasetId + "'."
-			);
-		}
-
-		if (!isMField(thisDatasetColumn)) {
-			throw new InsightError("Invalid Query: MCOMPARISON performed with an non-MFIELD: " + thisDatasetColumn);
-		}
-
-		const comparisonValue = queryParams[columnName];
+		const comparisonValue = queryParams[datasetColumnPair];
 
 		if (typeof comparisonValue !== "number") {
 			throw new InsightError("Invalid Query: Invalid type in MCOMPARISON: " + typeof comparisonValue);
@@ -359,7 +356,45 @@ export default class InsightFacade implements IInsightFacade {
 					result.push(section);
 				}
 			} else {
-				throw new InsightError("Invalid Query: invalid query key - MCOMPARATOR");
+				throw new InsightError("Invalid Query: invalid query key: " + queryKey);
+			}
+		}
+
+		return result;
+	}
+
+	/* Takes queryParameters (values which correspond to the WHERE key in the given query json)
+	{
+		"sections_dept": "*ol"
+	}
+	// Returns sections that match the given query parameters
+	 */
+	private handleSComparison(queryParams: any, sections: any, datasetId: string): InsightResult[] {
+		if (Object.keys(queryParams).length === 0) {
+			throw new InsightError("Invalid Query: no keys found in SCOMPARISON");
+		}
+
+		if (Object.keys(queryParams).length > 1) {
+			throw new InsightError("Invalid Query: too many query keys in SCOMPARISON");
+		}
+
+		const datasetColumnPair = Object.keys(queryParams)[0]; // eg. sections_avg
+		getAndCheckDatasetId(datasetColumnPair, datasetId);
+		const thisDatasetColumn = getAndCheckColumnName(datasetColumnPair, QueryComparison.SCOMPARISON);
+
+		const comparisonValue = queryParams[datasetColumnPair];
+
+		if (typeof comparisonValue !== "string") {
+			throw new InsightError("Invalid Query: Invalid type in SCOMPARISON: " + typeof comparisonValue);
+		}
+
+		const result: InsightResult[] = [];
+
+		for (const section of sections) {
+			const value = section.getSField(thisDatasetColumn);
+
+			if (doesInputStringMatch(comparisonValue, value)) {
+				result.push(section);
 			}
 		}
 
@@ -368,38 +403,75 @@ export default class InsightFacade implements IInsightFacade {
 
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
 	// Returns sections that match the given query parameters
-	private handleSComparison(queryParameters: unknown, sections: unknown, datasetId: String): InsightResult[] {
-		// TODO
-		return [];
+	private handleNegation(queryParams: any, sections: any, datasetId: string): InsightResult[] {
+
+		const result: InsightResult[] = [];
+		const resultsToExclude: InsightResult[] = this.handleWhere(queryParams, sections, datasetId);
+
+		for (const section of sections) {
+			if (!resultsToExclude.includes(section)) {
+				result.push(section)
+			}
+		}
+
+		return result;
 	}
 
-	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
-	// Returns sections that match the given query parameters
-	private handleNegation(queryParameters: unknown, sections: unknown, datasetId: String): InsightResult[] {
-		// TODO
-		return [];
-	}
+	/* Takes
+	"COLUMNS": [
+		"sections_dept",
+		"sections_avg"
+	],
+	"ORDER": "sections_avg"
 
-	// Takes array of sections
-	// Returns array of InsightResult
-	private async handleOptions(queryOptions: unknown, sections: unknown, datasetId: String): Promise<InsightResult[]> {
+	Returns array of InsightResult
+	 */
+	private handleOptions(queryOptions: any, sections: any, datasetId: string): InsightResult[] {
 		// If COLUMNS does not exist, throw InsightError
 		// If COLUMNS is empty, throw InsightError
+		// above is done in getDatasetId()
+		let columns: any;
+		let order: any = null;
+		for (const queryKey in queryOptions) {
+			if (queryKey === "COLUMNS") {
+				columns = queryOptions[queryKey];
+			}
+			if (queryKey === "ORDER") {
+				order = queryOptions[queryKey];
+			}
+		}
+		if (columns.length <= 0) {
+			throw new InsightError("Invalid Query: Columns cannot be an empty array");
+		}
 
 		// initialize empty array
+		let result: InsightResult[] = [];
 
-		// 	for column in columns:
-		//      if column key is invalid, throw insight error
-		//      column key is invalid if:
-		// 			referenced dataset has not been added
-		// 			referenced dataset column does not exist
-		// 			references multiple datasets
-		// 	    else:
-		// 			turn sections into result that only contains given columns
+		for (const section of sections) {
+			const insightResult: InsightResult = {};
+			for (const datasetColumnPair of columns) {
+				getAndCheckDatasetId(datasetColumnPair, datasetId);
+				const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER);
+
+				let value: any;
+				if (isMField(columnName)) {
+					value = section.getMField(columnName);
+				} else if (isSField(columnName)) {
+					value = section.getSField(columnName);
+				}
+
+				insightResult[datasetColumnPair] = value;
+			}
+
+			result.push(insightResult);
+		}
 
 		// sort by order
+		if (order !== null) {
+			result = sortByOrder(result, order);
+		}
 
-		return [];
+		return result;
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
