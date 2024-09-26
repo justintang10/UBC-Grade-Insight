@@ -13,12 +13,17 @@ import { Dataset } from "../models/dataset";
 import { jsonToDataset } from "../utils/persistenceUtils";
 import "../utils/queryEngineUtils";
 import {
-	doesInputStringMatch, getAndCheckColumnName, getAndCheckDatasetId,
+	doesInputStringMatch,
+	getAndCheckColumnName,
+	getAndCheckDatasetId,
+	getDatasetId,
+	getSectionsFromDataset,
 	isLComparator,
 	isMComparator,
 	isMField,
 	isSField,
-	QueryComparison, sortByOrder,
+	QueryComparison,
+	sortByOrder,
 } from "../utils/queryEngineUtils";
 
 const fs = require("fs-extra");
@@ -118,10 +123,10 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		// Get first datasetId to retrieve sections
-		const datasetId = this.getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
+		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
 		// Get all sections from given dataset
-		const allSections = this.getSectionsFromDataset(datasetId);
+		const allSections = getSectionsFromDataset(datasetId, this.datasets);
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
@@ -137,46 +142,6 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		return result;
-	}
-
-	private getDatasetId(queryOptions: any): string {
-		let hasColumns = false;
-		let columns: any;
-		for (const queryKey in queryOptions) {
-			if (queryKey === "COLUMNS") {
-				hasColumns = true;
-				columns = queryOptions[queryKey];
-			}
-		}
-		if (!hasColumns) {
-			throw new InsightError("Invalid Query: Missing COLUMNS");
-		}
-		if (columns.length <= 0) {
-			throw new InsightError("Invalid Query: Columns cannot be an empty array");
-		}
-
-		// traverse down options->columns->columns[0] to check which dataset is being used???? super scuffed
-		const columnName: string = queryOptions.COLUMNS[0];
-		let datasetId = "";
-		for (let i = 0; i < columnName.length; i++) {
-			if (columnName.charAt(i) === "_") {
-				datasetId = columnName.substring(0, i);
-			}
-		}
-		if (datasetId === "") {
-			throw new InsightError("Invalid Query: Dataset ID cannot be empty");
-		}
-
-		return datasetId;
-	}
-
-	private getSectionsFromDataset(datasetId: string): any {
-		for (const dataset of this.datasets) {
-			if (dataset.id === datasetId) {
-				return dataset.getSections();
-			}
-		}
-		throw new InsightError("Invalid Query: dataset ID '" + datasetId + "' does not match any dataset that has been added");
 	}
 
 	/* Takes queryParameters (a {'FILTER'})
@@ -404,13 +369,12 @@ export default class InsightFacade implements IInsightFacade {
 	// Takes queryParameters (values which correspond to the WHERE key in the given query json)
 	// Returns sections that match the given query parameters
 	private handleNegation(queryParams: any, sections: any, datasetId: string): InsightResult[] {
-
 		const result: InsightResult[] = [];
 		const resultsToExclude: InsightResult[] = this.handleWhere(queryParams, sections, datasetId);
 
 		for (const section of sections) {
 			if (!resultsToExclude.includes(section)) {
-				result.push(section)
+				result.push(section);
 			}
 		}
 

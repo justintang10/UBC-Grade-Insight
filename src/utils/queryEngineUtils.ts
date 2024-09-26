@@ -1,4 +1,5 @@
-import {InsightError, InsightResult} from "../controller/IInsightFacade";
+import { InsightError, InsightResult } from "../controller/IInsightFacade";
+import { Dataset } from "../models/dataset";
 
 export function isLComparator(queryKey: string): boolean {
 	const lComparators = ["AND", "OR"];
@@ -41,6 +42,48 @@ export function doesInputStringMatch(inputString: string, value: string): boolea
 	}
 
 	return inputString === value;
+}
+
+export function getDatasetId(queryOptions: any): string {
+	let hasColumns = false;
+	let columns: any;
+	for (const queryKey in queryOptions) {
+		if (queryKey === "COLUMNS") {
+			hasColumns = true;
+			columns = queryOptions[queryKey];
+		}
+	}
+	if (!hasColumns) {
+		throw new InsightError("Invalid Query: Missing COLUMNS");
+	}
+	if (columns.length <= 0) {
+		throw new InsightError("Invalid Query: Columns cannot be an empty array");
+	}
+
+	// traverse down options->columns->columns[0] to check which dataset is being used???? super scuffed
+	const columnName: string = queryOptions.COLUMNS[0];
+	let datasetId = "";
+	for (let i = 0; i < columnName.length; i++) {
+		if (columnName.charAt(i) === "_") {
+			datasetId = columnName.substring(0, i);
+		}
+	}
+	if (datasetId === "") {
+		throw new InsightError("Invalid Query: Dataset ID cannot be empty");
+	}
+
+	return datasetId;
+}
+
+export function getSectionsFromDataset(datasetId: string, datasets: Dataset[]): any {
+	for (const dataset of datasets) {
+		if (dataset.id === datasetId) {
+			return dataset.getSections();
+		}
+	}
+	throw new InsightError(
+		"Invalid Query: dataset ID '" + datasetId + "' does not match any dataset that has been added"
+	);
 }
 
 export function getAndCheckDatasetId(datasetColumnPair: string, previousDatasetId: string): string {
@@ -104,8 +147,9 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 export function sortByOrder(sections: any, order: string): InsightResult[] {
 	const column = getAndCheckColumnName(order, QueryComparison.EITHER);
 
-	if (isMField(column)) { // order by
-		sections.sort(function(a: any, b: any) {
+	if (isMField(column)) {
+		// order by
+		sections.sort(function (a: any, b: any) {
 			const aNum = a[order];
 			const bNum = b[order];
 			if (aNum < bNum) {
@@ -117,9 +161,10 @@ export function sortByOrder(sections: any, order: string): InsightResult[] {
 			if (aNum === bNum) {
 				return 0;
 			}
-		})
-	} else if (isSField(column)) { // order by alphabetical
-		sections.sort(function(a: any, b: any) {
+		});
+	} else if (isSField(column)) {
+		// order by alphabetical
+		sections.sort(function (a: any, b: any) {
 			return a[order].localeCompare(b[order]);
 		});
 	}
