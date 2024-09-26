@@ -126,7 +126,7 @@ export default class InsightFacade implements IInsightFacade {
 		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
 		// Get all sections from given dataset
-		const allSections = getSectionsFromDataset(datasetId, this.datasets);
+		const allSections = this.getSectionsFromDataset(datasetId);
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
@@ -142,6 +142,17 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		return result;
+	}
+
+	private async getSectionsFromDataset(datasetId: string): Promise<any> {
+		for (const dataset of this.datasets) {
+			if (dataset.id === datasetId) {
+				return dataset.getSections();
+			}
+		}
+
+		const dataset: Dataset = await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+		return dataset.getSections();
 	}
 
 	/* Takes queryParameters (a {'FILTER'})

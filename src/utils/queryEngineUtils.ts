@@ -75,17 +75,6 @@ export function getDatasetId(queryOptions: any): string {
 	return datasetId;
 }
 
-export function getSectionsFromDataset(datasetId: string, datasets: Dataset[]): any {
-	for (const dataset of datasets) {
-		if (dataset.id === datasetId) {
-			return dataset.getSections();
-		}
-	}
-	throw new InsightError(
-		"Invalid Query: dataset ID '" + datasetId + "' does not match any dataset that has been added"
-	);
-}
-
 export function getAndCheckDatasetId(datasetColumnPair: string, previousDatasetId: string): string {
 	let thisDatasetId = "";
 	let underscoreFound = false;
