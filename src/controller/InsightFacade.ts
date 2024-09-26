@@ -125,7 +125,7 @@ export default class InsightFacade implements IInsightFacade {
 		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
 		// Get all sections from given dataset
-		const allSections = this.getSectionsFromDataset(datasetId);
+		const allSections = await this.getSectionsFromDataset(datasetId);
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
