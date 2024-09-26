@@ -1,5 +1,4 @@
 import { InsightError, InsightResult } from "../controller/IInsightFacade";
-import { Dataset } from "../models/dataset";
 
 export function isLComparator(queryKey: string): boolean {
 	const lComparators = ["AND", "OR"];

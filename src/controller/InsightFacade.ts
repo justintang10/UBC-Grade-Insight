@@ -17,7 +17,6 @@ import {
 	getAndCheckColumnName,
 	getAndCheckDatasetId,
 	getDatasetId,
-	getSectionsFromDataset,
 	isLComparator,
 	isMComparator,
 	isMField,
