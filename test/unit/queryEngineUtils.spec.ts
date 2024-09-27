@@ -1,12 +1,11 @@
 import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { doesInputStringMatch } from "../../src/utils/queryEngineUtils";
-import {InsightError} from "../../src/controller/IInsightFacade";
+import { InsightError } from "../../src/controller/IInsightFacade";
 
 use(chaiAsPromised);
 
 describe("queryEngineUtils", function () {
-
 	describe("DoesInputStringMatch", function () {
 		it("should accept any string when inputstring is '**'", async function () {
 			const matches = doesInputStringMatch("**", "anythingdjSDIUHqwuekH41241");
@@ -72,6 +71,15 @@ describe("queryEngineUtils", function () {
 			const matches = doesInputStringMatch("*ollll*", "Not here");
 
 			expect(matches).to.equal(false);
+		});
+
+		it("should reject an input string which has an asterisk in the middle", async function () {
+			try {
+				doesInputStringMatch("co*c", "Anything");
+				expect.fail("Should have thrown above");
+			} catch (error) {
+				expect(error).to.be.instanceOf(InsightError);
+			}
 		});
 	});
 });

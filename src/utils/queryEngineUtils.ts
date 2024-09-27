@@ -54,6 +54,10 @@ export function doesInputStringMatch(inputString: string, value: string): boolea
 		return value.startsWith(inputString.substring(0, inputString.length - 1));
 	}
 
+	if (inputString.includes("*")) {
+		throw new InsightError("Invalid Query: input string includes asterisk(s) that are not at the beginning or end");
+	}
+
 	return inputString === value;
 }
 
