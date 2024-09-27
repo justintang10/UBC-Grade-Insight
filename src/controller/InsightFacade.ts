@@ -5,11 +5,15 @@ import {
 	InsightError,
 	InsightResult,
 	NotFoundError,
+	ResultTooLargeError,
 } from "./IInsightFacade";
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
 import { Dataset } from "../models/dataset";
 import { jsonToDataset } from "../utils/persistenceUtils";
+import "../utils/queryEngineUtils";
+import { getDatasetId } from "../utils/queryEngineUtils";
+import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
 
 const fs = require("fs-extra");
 
@@ -18,8 +22,10 @@ const fs = require("fs-extra");
  * Method documentation is in IInsightFacade
  *
  */
+
 export default class InsightFacade implements IInsightFacade {
-	private datasets: InsightDataset[] = [];
+	private datasets: Dataset[] = [];
+	private readonly MAX_QUERIES: number = 5000;
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
 		//validate that the id is valid and not already in our dataset array
@@ -82,9 +88,60 @@ export default class InsightFacade implements IInsightFacade {
 		return id;
 	}
 
-	public async performQuery(query: unknown): Promise<InsightResult[]> {
-		// TODO: Remove this once you implement the methods!
-		throw new Error(`InsightFacadeImpl::performQuery() is unimplemented! - query=${query};`);
+	// Takes JSON object representing query in EBNF
+	// Returns array of section information which match the given query
+	public async performQuery(query: any): Promise<InsightResult[]> {
+		// Note: Super scuffed: does not check for duplicate wheres or options. But also: the reference UI does not check either?
+		let hasWhere = false;
+		let hasOptions = false;
+		let queryWhere;
+		let queryOptions;
+		for (const key in query) {
+			if (key === "WHERE") {
+				hasWhere = true;
+				queryWhere = query[key];
+			} else if (key === "OPTIONS") {
+				hasOptions = true;
+				queryOptions = query[key];
+			}
+		}
+		if (!hasWhere) {
+			throw new InsightError("Invalid Query: Missing WHERE");
+		} else if (!hasOptions) {
+			throw new InsightError("Invalid Query: Missing OPTIONS");
+		}
+
+		// Get first datasetId to retrieve sections
+		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
+
+		// Get all sections from given dataset
+		const allSections = await this.getSectionsFromDataset(datasetId);
+
+		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
+		// handleWhere will then return all the valid sections from the query
+		const validSections = handleWhere(queryWhere, allSections, datasetId);
+
+		// Pass 1st argument of dictionary["OPTIONS"] into handleOptions, as well as validSections
+		// handleOptions will return the array of columns and values for each section
+		const result = handleOptions(queryOptions, validSections, datasetId);
+
+		// If result.length is > 5000, throw ResultTooLargeError
+		if (result.length > this.MAX_QUERIES) {
+			throw new ResultTooLargeError("Result Too Large: Only queries with a maximum of 5000 results are supported");
+		}
+
+		return result;
+	}
+
+	private async getSectionsFromDataset(datasetId: string): Promise<any> {
+		for (const dataset of this.datasets) {
+			if (dataset.id === datasetId) {
+				return dataset.getSections();
+			}
+		}
+
+		const dataset: Dataset = await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+		return dataset.getSections();
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
