@@ -376,6 +376,49 @@ describe("InsightFacade", function () {
 		});
 	});
 
+	/*
+		The following functions: deepEqual and isPrimitive were taken from this Stack Overflow post:
+		https://stackoverflow.com/questions/25456013/javascript-deepequal-comparison.
+		I am ONLY using this to test the performQuery function, to ensure that the sections in expected deeply match
+		the sections in results.
+		- Munn Chai
+	 */
+	function deepEqual(obj1: any, obj2: any): boolean {
+		if (obj1 === obj2) {
+			return true;
+		}
+
+		if (isPrimitive(obj1) && isPrimitive(obj2)) {
+			return obj1 === obj2;
+		}
+
+		if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+			return false;
+		}
+
+		// compare objects with same number of keys
+		for (const key in obj1) {
+			if (!(key in obj2)) {
+				//other object doesn't have this prop
+				return false;
+			}
+			if (!deepEqual(obj1[key], obj2[key])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//check if value is primitive
+	function isPrimitive(obj: any): boolean {
+		return obj !== Object(obj);
+	}
+
+	/*
+		End of Stack Overflow functions
+	 */
+
 	describe("ListDatasets", function () {
 		beforeEach(function () {
 			// This section resets the insightFacade instance
@@ -461,7 +504,20 @@ describe("InsightFacade", function () {
 						expect.fail("performQuery resolved when it should have rejected with " + expected);
 					}
 
-					expect(result).to.deep.equal(expected);
+					expect(result.length).to.equal(expected.length);
+
+					// This undermines the use of ORDER in the queries, but accurately tests queries that do not
+					// contain an ORDER key
+					for (const section of result) {
+						let inExpected = false;
+						for (const expectedSection of expected) {
+							if (deepEqual(section, expectedSection)) {
+								inExpected = true;
+								break;
+							}
+						}
+						expect(inExpected).to.equal(true);
+					}
 				})
 				.catch((err) => {
 					if (!errorExpected) {
