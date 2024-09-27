@@ -30,13 +30,31 @@ export function doesInputStringMatch(inputString: string, value: string): boolea
 	const firstLetter = inputString.charAt(0);
 	const lastLetter = inputString.charAt(inputString.length - 1);
 
+	if (inputString === "**" || inputString === "*") {
+		return true;
+	}
+
 	if (firstLetter === "*" && lastLetter === "*") {
-		return value.includes(inputString);
+		if (inputString.substring(1, inputString.length - 1).includes("*")) {
+			throw new InsightError("Invalid Query: input string includes asterisk(s) that are not at the beginning or end");
+		}
+
+		return value.includes(inputString.substring(1, inputString.length - 1));
 	} else if (firstLetter === "*") {
+		if (inputString.substring(1, inputString.length).includes("*")) {
+			throw new InsightError("Invalid Query: input string includes asterisk(s) that are not at the beginning or end");
+		}
+
 		return value.endsWith(inputString.substring(1, inputString.length));
 	} else if (lastLetter === "*") {
+		if (inputString.substring(0, inputString.length - 1).includes("*")) {
+			throw new InsightError("Invalid Query: input string includes asterisk(s) that are not at the beginning or end");
+		}
+
 		return value.startsWith(inputString.substring(0, inputString.length - 1));
-	} else if (inputString.includes("*")) {
+	}
+
+	if (inputString.includes("*")) {
 		throw new InsightError("Invalid Query: input string includes asterisk(s) that are not at the beginning or end");
 	}
 
