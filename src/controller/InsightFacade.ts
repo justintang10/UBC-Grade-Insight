@@ -35,7 +35,9 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("Dataset Id cannot contain underscores.");
 		}
 
-		if (this.datasets.map((dataset) => dataset.id).includes(id)) {
+		//check dataset id against dataset .json files
+		const addedDatasets = await this.listDatasets();
+		if (addedDatasets.map((dataset) => dataset.id).includes(id)) {
 			throw new InsightError("Dataset Id is already added, new datasets must have unique Ids.");
 		}
 
