@@ -142,12 +142,8 @@ export default class InsightFacade implements IInsightFacade {
 			}
 		}
 
-		try {
-			const dataset: Dataset = await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
-			return dataset.getSections();
-		} catch (error) {
-			throw new InsightError("Error retrieving dataset from file: " + error);
-		}
+		const dataset: Dataset = await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+		return dataset.getSections();
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
