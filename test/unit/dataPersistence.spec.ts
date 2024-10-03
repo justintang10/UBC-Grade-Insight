@@ -2,7 +2,7 @@ import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { getContentFromArchives } from "../TestUtil";
 import InsightFacade from "../../src/controller/InsightFacade";
-import {InsightDatasetKind, InsightError, NotFoundError} from "../../src/controller/IInsightFacade";
+import { InsightDatasetKind, InsightError, NotFoundError } from "../../src/controller/IInsightFacade";
 
 use(chaiAsPromised);
 
@@ -51,13 +51,13 @@ describe("addDatasetUtils", function () {
 
 		it("should list", async function () {
 			try {
+				const two = 2;
 				await insightFacade.addDataset("dataset1", smallDataset, InsightDatasetKind.Sections);
 				await insightFacade.addDataset("dataset2", smallDataset, InsightDatasetKind.Sections);
 				const listedDatasets = await insightFacade.listDatasets();
-				expect(listedDatasets).to.have.length(2);
+				expect(listedDatasets).to.have.length(two);
 				await insightFacade.removeDataset("dataset1");
 				await insightFacade.removeDataset("dataset2");
-
 			} catch (error) {
 				expect.fail("should not have thrown: " + error);
 			}
@@ -97,7 +97,6 @@ describe("addDatasetUtils", function () {
 			} catch (error) {
 				expect(error).to.be.instanceOf(InsightError);
 			}
-
- 		});
+		});
 	});
 });
