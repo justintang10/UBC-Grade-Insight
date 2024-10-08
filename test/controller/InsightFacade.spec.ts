@@ -137,6 +137,17 @@ describe("InsightFacade", function () {
 				});
 		});
 
+		it("should reject incorrect kind", async function () {
+			return facade
+				.addDataset("datasetid", singleCourseDataSet, InsightDatasetKind.Rooms)
+				.then((result) => {
+					expect.fail("should not have succeeded: " + result);
+				})
+				.catch((err) => {
+					expect(err).to.be.instanceOf(InsightError);
+				});
+		});
+
 		it("should reject with a dataset id that is the same as the id of an already added dataset", async function () {
 			try {
 				await facade.addDataset("validIdDuplicate", singleCourseDataSet, InsightDatasetKind.Sections);
@@ -650,5 +661,47 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
 		it("[invalid/datasetNotAdded.json] Queries a dataset that is not in memory or on disk", checkQuery);
+	});
+
+	describe("PersistenceTests", function () {
+		beforeEach(async function () {
+			// This section resets the insightFacade instance
+			// This runs before each test
+			await clearDisk();
+			facade = new InsightFacade();
+		});
+
+		afterEach(async function () {
+			// This section resets the data directory (removing any cached data)
+			// This runs after each test, which should make each test independent of the previous one
+			await clearDisk();
+		});
+
+		it("should fail to remove with an empty dataset id", async function () {
+			const newFacade = new InsightFacade();
+			await newFacade.addDataset("testdata", smallDataset, InsightDatasetKind.Sections);
+			await newFacade.addDataset("testdata2", singleCourseDataSet, InsightDatasetKind.Sections);
+
+			let result = await newFacade.listDatasets();
+
+			expect(result.length).to.equal(two);
+			expect(result[0].id).to.equal("testdata");
+			expect(result[0].kind).to.equal(InsightDatasetKind.Sections);
+			expect(result[0].numRows).to.equal(smallDatasetNumRows);
+
+			expect(result[1].id).to.equal("testdata2");
+			expect(result[1].kind).to.equal(InsightDatasetKind.Sections);
+			expect(result[1].numRows).to.equal(singleCourseDatasetNumRows);
+
+			const newerFacade = new InsightFacade();
+			await newerFacade.removeDataset("testdata2");
+
+			result = await newerFacade.listDatasets();
+
+			expect(result.length).to.equal(1);
+			expect(result[0].id).to.equal("testdata");
+			expect(result[0].kind).to.equal(InsightDatasetKind.Sections);
+			expect(result[0].numRows).to.equal(smallDatasetNumRows);
+		});
 	});
 });
