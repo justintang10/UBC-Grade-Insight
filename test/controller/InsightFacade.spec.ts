@@ -677,7 +677,7 @@ describe("InsightFacade", function () {
 			await clearDisk();
 		});
 
-		it("should fail to remove with an empty dataset id", async function () {
+		it("should persist", async function () {
 			const newFacade = new InsightFacade();
 			await newFacade.addDataset("testdata", smallDataset, InsightDatasetKind.Sections);
 			await newFacade.addDataset("testdata2", singleCourseDataSet, InsightDatasetKind.Sections);
