@@ -23,6 +23,8 @@ const fs = require("fs-extra");
  *
  */
 
+//a comment to let me commit this
+
 export default class InsightFacade implements IInsightFacade {
 	private datasets: Dataset[] = [];
 	private readonly MAX_QUERIES: number = 5000;
@@ -32,10 +34,6 @@ export default class InsightFacade implements IInsightFacade {
 		if (id.trim().length === 0) {
 			throw new InsightError("Dataset Id cannot be only whitespace.");
 		} else if (id.indexOf("_") > -1) {
-			throw new InsightError("Dataset Id cannot contain underscores.");
-		}
-
-		if (kind !== InsightDatasetKind.Sections) {
 			throw new InsightError("Dataset Id cannot contain underscores.");
 		}
 
@@ -60,13 +58,15 @@ export default class InsightFacade implements IInsightFacade {
 		} catch (error) {
 			throw new InsightError("Error: " + error);
 		}
-		return await this.getDatasetIds();
+		return this.getDatasetIds();
 	}
 
-	private async getDatasetIds(): Promise<string[]> {
-		const datasets: InsightDataset[] = await this.listDatasets();
-
-		return datasets.map((dataset: InsightDataset) => dataset.id);
+	private getDatasetIds(): string[] {
+		const ids: string[] = [];
+		this.datasets.forEach((dataset: InsightDataset) => {
+			ids.push(dataset.id);
+		});
+		return ids;
 	}
 
 	public async removeDataset(id: string): Promise<string> {
