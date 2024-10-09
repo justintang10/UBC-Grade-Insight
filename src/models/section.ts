@@ -67,4 +67,24 @@ export class Section {
 
 		throw new Error("Error: propertyName '" + propertyName + "' is not an SFIELD");
 	}
+
+	public getUuid(): String {
+		return this.uuid;
+	}
+
+	public getId(): String {
+		return this.id;
+	}
+
+	public getTitle(): String {
+		return this.title;
+	}
+
+	public getInstructor(): String {
+		return this.instructor;
+	}
+
+	public getDepartment(): String {
+		return this.department;
+	}
 }

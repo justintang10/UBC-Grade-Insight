@@ -74,12 +74,12 @@ export function jsonToSections(jsonData: any): Section[] {
 			});
 
 			const sectionObj = new Section(
-				section.id.toString(),
+				section.id,
 				section.Course,
 				section.Title,
 				section.Professor,
 				section.Subject,
-				Number(section.Year),
+				section.Year,
 				section.Avg,
 				section.Pass,
 				section.Fail,
