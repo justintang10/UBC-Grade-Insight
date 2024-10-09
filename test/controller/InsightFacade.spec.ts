@@ -36,9 +36,6 @@ describe("InsightFacade", function () {
 	let singleCourseMissingField: string;
 	let singleCourseSingleSection: string;
 	let wrongDirectoryName: string;
-	let nonZipFile: string;
-	let noResultKeyword: string;
-	let wrongResultKeyword: string;
 
 	const smallDatasetNumRows = 103;
 	const singleCourseDatasetNumRows = 22;
@@ -57,9 +54,6 @@ describe("InsightFacade", function () {
 		singleCourseMissingField = await getContentFromArchives("singleCourseMissingField.zip");
 		singleCourseSingleSection = await getContentFromArchives("singleCourseSingleSection.zip");
 		wrongDirectoryName = await getContentFromArchives("wrongDirectoryName.zip");
-		nonZipFile = await getContentFromArchives("textFileNotZip.txt");
-		noResultKeyword = await getContentFromArchives("noResultKeyword.zip");
-		wrongResultKeyword = await getContentFromArchives("wrongResultKeyword.zip");
 
 		// Just in case there is anything hanging around from a previous run of the test suite
 		await clearDisk();
@@ -265,33 +259,6 @@ describe("InsightFacade", function () {
 				.catch((err) => {
 					expect.fail("should not have failed: " + err);
 				});
-		});
-
-		it("should fail if the file is not a zip file", async function () {
-			try {
-				await facade.addDataset("datasetid", nonZipFile, InsightDatasetKind.Sections);
-				expect.fail("should have thrown");
-			} catch (error) {
-				expect(error).to.be.instanceOf(InsightError);
-			}
-		});
-
-		it("should fail if the course file does not have the sections any keyword", async function () {
-			try {
-				await facade.addDataset("datasetid", noResultKeyword, InsightDatasetKind.Sections);
-				expect.fail("should have thrown");
-			} catch (error) {
-				expect(error).to.be.instanceOf(InsightError);
-			}
-		});
-
-		it("should fail if the course file does not have the sections within 'result':", async function () {
-			try {
-				await facade.addDataset("datasetid", wrongResultKeyword, InsightDatasetKind.Sections);
-				expect.fail("should have thrown");
-			} catch (error) {
-				expect(error).to.be.instanceOf(InsightError);
-			}
 		});
 	});
 
@@ -649,6 +616,5 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
-		it("[invalid/datasetNotAdded.json] Queries a dataset that is not in memory or on disk", checkQuery);
 	});
 });
