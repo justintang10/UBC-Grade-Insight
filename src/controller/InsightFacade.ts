@@ -58,15 +58,12 @@ export default class InsightFacade implements IInsightFacade {
 		} catch (error) {
 			throw new InsightError("Error: " + error);
 		}
-		return this.getDatasetIds();
+		return await this.getDatasetIds();
 	}
 
-	private getDatasetIds(): string[] {
-		const ids: string[] = [];
-		this.datasets.forEach((dataset: InsightDataset) => {
-			ids.push(dataset.id);
-		});
-		return ids;
+	private async getDatasetIds(): Promise<string[]> {
+		const datasetInfo = await this.listDatasets();
+		return datasetInfo.map((dataset) => dataset.id);
 	}
 
 	public async removeDataset(id: string): Promise<string> {
