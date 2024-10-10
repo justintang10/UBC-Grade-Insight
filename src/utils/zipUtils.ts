@@ -92,8 +92,6 @@ export function jsonToSections(jsonData: any): Section[] {
 				section.Audit
 			);
 
-
-
 			sections.push(sectionObj);
 		}
 	}

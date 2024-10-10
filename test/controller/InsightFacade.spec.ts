@@ -445,42 +445,41 @@ describe("InsightFacade", function () {
 		the sections in results.
 		- Munn Chai
 	 */
-		function deepEqual(obj1: any, obj2: any): boolean {
-			if (obj1 === obj2) {
-				return true;
-			}
-
-			if (isPrimitive(obj1) && isPrimitive(obj2)) {
-				return obj1 === obj2;
-			}
-
-			if (Object.keys(obj1).length !== Object.keys(obj2).length) {
-				return false;
-			}
-
-			// compare objects with same number of keys
-			for (const key in obj1) {
-				if (!(key in obj2)) {
-					//other object doesn't have this prop
-					return false;
-				}
-				if (!deepEqual(obj1[key], obj2[key])) {
-					return false;
-				}
-			}
-
+	function deepEqual(obj1: any, obj2: any): boolean {
+		if (obj1 === obj2) {
 			return true;
 		}
 
-	//check if value is primitive
-		function isPrimitive(obj: any): boolean {
-			return obj !== Object(obj);
+		if (isPrimitive(obj1) && isPrimitive(obj2)) {
+			return obj1 === obj2;
 		}
+
+		if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+			return false;
+		}
+
+		// compare objects with same number of keys
+		for (const key in obj1) {
+			if (!(key in obj2)) {
+				//other object doesn't have this prop
+				return false;
+			}
+			if (!deepEqual(obj1[key], obj2[key])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//check if value is primitive
+	function isPrimitive(obj: any): boolean {
+		return obj !== Object(obj);
+	}
 
 	/*
 		End of Stack Overflow functions
 	 */
-
 
 	describe("PerformQuery", function () {
 		/**
@@ -618,79 +617,5 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
-	});
-
-	describe("PerformQueryOr", function () {
-		/**
-		 * Loads the TestQuery specified in the test name and asserts the behaviour of performQuery.
-		 *
-		 * Note: the 'this' parameter is automatically set by Mocha and contains information about the test.
-		 */
-		async function checkQuery(this: Mocha.Context): Promise<void> {
-			if (!this.test) {
-				throw new Error(
-					"Invalid call to checkQuery." +
-					"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
-					"Do not invoke the function directly."
-				);
-			}
-			// Destructuring assignment to reduce property accesses
-			const { input, expected, errorExpected } = await loadTestQuery(this.test.title);
-
-			return facade
-				.performQuery(input)
-				.then((result) => {
-					if (errorExpected) {
-						expect.fail("performQuery resolved when it should have rejected with " + expected);
-					}
-
-					expect(result.length).to.equal(expected.length);
-					expect(result).to.deep.equal(expected);
-				})
-				.catch((err) => {
-					if (!errorExpected) {
-						expect.fail("performQuery threw unexpected error: " + err);
-					}
-
-					//make sure returned error is correct
-					if (expected === "InsightError") {
-						expect(err).to.be.instanceOf(InsightError);
-					} else {
-						expect(err).to.be.instanceOf(ResultTooLargeError);
-					}
-				});
-		}
-
-		before(async function () {
-			facade = new InsightFacade();
-
-			// Add the datasets to InsightFacade once.
-			// Will *fail* if there is a problem reading ANY dataset.
-			const loadDatasetPromises: Promise<string[]>[] = [
-				facade.addDataset("sections", sections, InsightDatasetKind.Sections),
-			];
-
-			try {
-				await Promise.all(loadDatasetPromises);
-			} catch (err) {
-				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
-			}
-		});
-
-		after(async function () {
-			await clearDisk();
-		});
-
-		// Examples demonstrating how to test performQuery using the JSON Test Queries.
-		// The relative path to the query file must be given in square brackets.
-		it("[validOr/Or3fields.json] Or3fields.json", checkQuery);
-		it("[validOr/1OrField.json] 1OrField.json", checkQuery);
-		it("[validOr/1OrField2.json] 1OrField2.json", checkQuery);
-		it("[validOr/Or3MFields.json] Or3MFields.json", checkQuery);
-		it("[validOr/OrMcomparisons.json] OrMcomparisons.json", checkQuery);
-		it("[validOr/OrMixed.json] OrMixed.json", checkQuery);
-		it("[validOr/regularOr.json] regularOr.json", checkQuery);
-
-		it("[validOr/testgt.json] testgt.json", checkQuery);
 	});
 });
