@@ -73,13 +73,19 @@ export function jsonToSections(jsonData: any): Section[] {
 				}
 			});
 
+			const overallYear = 1900;
+			let trueYear = section.Year;
+			if (section.Section === "overall") {
+				trueYear = overallYear;
+			}
+
 			const sectionObj = new Section(
 				section.id,
 				section.Course,
 				section.Title,
 				section.Professor,
 				section.Subject,
-				section.Year,
+				trueYear,
 				section.Avg,
 				section.Pass,
 				section.Fail,
