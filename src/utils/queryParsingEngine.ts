@@ -294,7 +294,7 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 
 	// sort by order
 	if (order !== null) {
-		if (!columns.includes(order)){
+		if (!columns.includes(order)) {
 			throw new InsightError("Invalid Query: ORDER must be a column in COLUMNS");
 		}
 		result = sortByOrder(result, order);
