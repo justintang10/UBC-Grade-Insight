@@ -183,3 +183,47 @@ export enum QueryComparison {
 	SCOMPARISON,
 	EITHER,
 }
+
+/*
+	The following functions: deepEqual and isPrimitive were taken from this Stack Overflow post:
+	https://stackoverflow.com/questions/25456013/javascript-deepequal-comparison.
+	I am using this to compare sections, and use this to test performQuery's results, as well as compare sections in
+	the handleOrComparison function in queryParsingEngine.ts
+	the sections in results.
+	- Munn Chai
+ */
+export function deepEqual(obj1: any, obj2: any): boolean {
+	if (obj1 === obj2) {
+		return true;
+	}
+
+	if (isPrimitive(obj1) && isPrimitive(obj2)) {
+		return obj1 === obj2;
+	}
+
+	if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+		return false;
+	}
+
+	// compare objects with same number of keys
+	for (const key in obj1) {
+		if (!(key in obj2)) {
+			//other object doesn't have this prop
+			return false;
+		}
+		if (!deepEqual(obj1[key], obj2[key])) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+//check if value is primitive
+function isPrimitive(obj: any): boolean {
+	return obj !== Object(obj);
+}
+
+/*
+	End of Stack Overflow functions
+ */

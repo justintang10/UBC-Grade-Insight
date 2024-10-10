@@ -1,5 +1,6 @@
 import { InsightError, InsightResult } from "../controller/IInsightFacade";
 import {
+	deepEqual,
 	doesInputStringMatch,
 	getAndCheckColumnName,
 	getAndCheckDatasetId,
@@ -137,14 +138,28 @@ export function handleAndComparison(queryParams: any, sections: any, datasetId: 
 }
 
 export function handleOrComparison(queryParams: any, sections: any, datasetId: string): InsightResult[] {
-	let result: InsightResult[] = [];
+	const result: InsightResult[] = [];
 	for (const innerQueryParam of queryParams) {
 		const recursiveResult = handleWhere(innerQueryParam, sections, datasetId);
 
-		// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
-		result = [...new Set([...result, ...recursiveResult])];
+		for (const section of recursiveResult) {
+			if (!deepIncludes(result, section)) {
+				result.push(section);
+			}
+		}
 	}
+
 	return result;
+}
+
+function deepIncludes(array: any, object: any): boolean {
+	for (const element of array) {
+		if (element.uuid === object.uuid) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /* Takes queryKey ("GT" or "LT" or "EQ") and queryParams (a {mkey: number})
@@ -156,12 +171,7 @@ eg.
 
 // Returns sections that match the given query parameters
 */
-export function handleMComparison(
-	queryKey: string,
-	queryParams: any,
-	sections: any,
-	datasetId: string
-): InsightResult[] {
+export function handleMComparison(key: string, queryParams: any, sections: any, datasetId: string): InsightResult[] {
 	if (Object.keys(queryParams).length !== 1) {
 		throw new InsightError("Invalid Query: invalid number of keys in MCOMPARISON: " + Object.keys(queryParams).length);
 	}
@@ -181,13 +191,13 @@ export function handleMComparison(
 	for (const section of sections) {
 		const value = section.getMField(thisDatasetColumn);
 
-		if (!["GT", "LT", "EQ"].includes(queryKey)) {
-			throw new InsightError("Invalid Query: invalid query key: " + queryKey);
-		} else if (
-			(queryKey === "GT" && value > comparisonValue) ||
-			(queryKey === "LT" && value < comparisonValue) ||
-			(queryKey === "EQ" && value === comparisonValue)
-		) {
+		if (!["GT", "LT", "EQ"].includes(key)) {
+			throw new InsightError("Invalid Query: invalid query key: " + key);
+		} else if (key === "GT" && value > comparisonValue) {
+			result.push(section);
+		} else if (key === "LT" && value < comparisonValue) {
+			result.push(section);
+		} else if (key === "EQ" && value === comparisonValue) {
 			result.push(section);
 		}
 	}
@@ -266,13 +276,11 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 	for (const queryKey in queryOptions) {
 		if (queryKey === "COLUMNS") {
 			columns = queryOptions[queryKey];
-		}
-		if (queryKey === "ORDER") {
+		} else if (queryKey === "ORDER") {
 			order = queryOptions[queryKey];
+		} else {
+			throw new InsightError("Invalid Query: invalid key in options");
 		}
-	}
-	if (columns.length <= 0) {
-		throw new InsightError("Invalid Query: Columns cannot be an empty array");
 	}
 
 	// initialize empty array
@@ -284,14 +292,11 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 			getAndCheckDatasetId(datasetColumnPair, datasetId);
 			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER);
 
-			let value: any;
 			if (isMField(columnName)) {
-				value = section.getMField(columnName);
+				insightResult[datasetColumnPair] = section.getMField(columnName);
 			} else if (isSField(columnName)) {
-				value = section.getSField(columnName);
+				insightResult[datasetColumnPair] = section.getSField(columnName);
 			}
-
-			insightResult[datasetColumnPair] = value;
 		}
 
 		result.push(insightResult);
@@ -299,6 +304,9 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 
 	// sort by order
 	if (order !== null) {
+		if (!columns.includes(order)){
+			throw new InsightError("Invalid Query: ORDER must be a column in COLUMNS");
+		}
 		result = sortByOrder(result, order);
 	}
 
