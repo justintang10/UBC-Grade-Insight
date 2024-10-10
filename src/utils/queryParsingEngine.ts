@@ -137,28 +137,14 @@ export function handleAndComparison(queryParams: any, sections: any, datasetId: 
 }
 
 export function handleOrComparison(queryParams: any, sections: any, datasetId: string): InsightResult[] {
-	const result: InsightResult[] = [];
+	let result: InsightResult[] = [];
 	for (const innerQueryParam of queryParams) {
 		const recursiveResult = handleWhere(innerQueryParam, sections, datasetId);
 
-		for (const section of recursiveResult) {
-			if (!deepIncludes(result, section)) {
-				result.push(section);
-			}
-		}
+		// Combine and remove duplicates (WARNING: may be screwy if object references don't match)
+		result = [...new Set([...result, ...recursiveResult])];
 	}
-
 	return result;
-}
-
-function deepIncludes(array: any, object: any): boolean {
-	for (const element of array) {
-		if (element.uuid === object.uuid) {
-			return true;
-		}
-	}
-
-	return false;
 }
 
 /* Takes queryKey ("GT" or "LT" or "EQ") and queryParams (a {mkey: number})
@@ -170,7 +156,12 @@ eg.
 
 // Returns sections that match the given query parameters
 */
-export function handleMComparison(key: string, queryParams: any, sections: any, datasetId: string): InsightResult[] {
+export function handleMComparison(
+	queryKey: string,
+	queryParams: any,
+	sections: any,
+	datasetId: string
+): InsightResult[] {
 	if (Object.keys(queryParams).length !== 1) {
 		throw new InsightError("Invalid Query: invalid number of keys in MCOMPARISON: " + Object.keys(queryParams).length);
 	}
@@ -190,13 +181,13 @@ export function handleMComparison(key: string, queryParams: any, sections: any, 
 	for (const section of sections) {
 		const value = section.getMField(thisDatasetColumn);
 
-		if (!["GT", "LT", "EQ"].includes(key)) {
-			throw new InsightError("Invalid Query: invalid query key: " + key);
-		} else if (key === "GT" && value > comparisonValue) {
-			result.push(section);
-		} else if (key === "LT" && value < comparisonValue) {
-			result.push(section);
-		} else if (key === "EQ" && value === comparisonValue) {
+		if (!["GT", "LT", "EQ"].includes(queryKey)) {
+			throw new InsightError("Invalid Query: invalid query key: " + queryKey);
+		} else if (
+			(queryKey === "GT" && value > comparisonValue) ||
+			(queryKey === "LT" && value < comparisonValue) ||
+			(queryKey === "EQ" && value === comparisonValue)
+		) {
 			result.push(section);
 		}
 	}
@@ -303,7 +294,7 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 
 	// sort by order
 	if (order !== null) {
-		if (!columns.includes(order)) {
+		if (!columns.includes(order)){
 			throw new InsightError("Invalid Query: ORDER must be a column in COLUMNS");
 		}
 		result = sortByOrder(result, order);
