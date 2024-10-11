@@ -23,8 +23,6 @@ const fs = require("fs-extra");
  *
  */
 
-//a comment to let me commit this
-
 export default class InsightFacade implements IInsightFacade {
 	private datasets: Dataset[] = [];
 	private readonly MAX_QUERIES: number = 5000;
