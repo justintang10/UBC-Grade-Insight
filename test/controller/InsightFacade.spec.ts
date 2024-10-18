@@ -593,11 +593,11 @@ describe("InsightFacade", function () {
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
 		it("[invalid/avgQueriedWithIs.json] SELECT avg WHERE avg IS 80", checkQuery);
 		it("[invalid/badQueryGrammar.json] SELECT avg WHERE AND", checkQuery);
-		it("[invalid/badQueryGrammar2.json] SELECT avg WHERE IS");
+		// it("[invalid/badQueryGrammar2.json] SELECT avg WHERE IS", checkQuery);
 		it("[invalid/emptyColumnsList.json] SELECT WHERE avg > 97", checkQuery);
 		it("[invalid/emptyIsStatement.json] SELECT dept, id, WHERE IS", checkQuery);
 		it("[invalid/idAsInt.json] SELECT avg WHERE id IS 400", checkQuery);
-		it("[invalid/idQueriedWithEq.json] SELECT avg where id = 400");
+		it("[invalid/idQueriedWithEq.json] SELECT avg where id = 400", checkQuery);
 		it("[invalid/invalid.json] Query missing WHERE", checkQuery);
 		it("[invalid/invalidWildcard.json] SELECT dept, id, avg WHERE dept = c*sc AND id = 5*", checkQuery);
 		it("[invalid/matchAll.json] SELECT dept, id, WHERE", checkQuery);
