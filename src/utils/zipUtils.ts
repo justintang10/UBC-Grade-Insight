@@ -93,12 +93,12 @@ export function jsonToSections(jsonData: any): Section[] {
 
 	for (const course of jsonData) {
 		for (const section of course.result) {
-			//assert that the required fields all exist
-			requiredFields.forEach((field) => {
-				if (!(field in section)) {
-					throw new InsightError(`field ${field} not found in section data`);
-				}
-			});
+			//verify that the section has all required fields - skip if not
+			const sectionIsValid = requiredFields.every((field) => field in section);
+
+			if (!sectionIsValid) {
+				continue;
+			}
 
 			const overallYear = 1900;
 			let trueYear = Number(section.Year);
@@ -121,6 +121,10 @@ export function jsonToSections(jsonData: any): Section[] {
 
 			sections.push(sectionObj);
 		}
+	}
+
+	if (sections.length === 0) {
+		throw new InsightError("No valid course sections in dataset");
 	}
 
 	return sections;

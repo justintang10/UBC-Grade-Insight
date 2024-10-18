@@ -36,6 +36,7 @@ describe("InsightFacade", function () {
 	let singleCourseMissingField: string;
 	let singleCourseSingleSection: string;
 	let wrongDirectoryName: string;
+	let goodAndBadSections: string;
 
 	const smallDatasetNumRows = 103;
 	const singleCourseDatasetNumRows = 22;
@@ -54,6 +55,7 @@ describe("InsightFacade", function () {
 		singleCourseMissingField = await getContentFromArchives("singleCourseMissingField.zip");
 		singleCourseSingleSection = await getContentFromArchives("singleCourseSingleSection.zip");
 		wrongDirectoryName = await getContentFromArchives("wrongDirectoryName.zip");
+		goodAndBadSections = await getContentFromArchives("goodAndBadSections.zip");
 
 		// Just in case there is anything hanging around from a previous run of the test suite
 		await clearDisk();
@@ -259,6 +261,17 @@ describe("InsightFacade", function () {
 				.catch((err) => {
 					expect.fail("should not have failed: " + err);
 				});
+		});
+
+		it("should pass for a dataset with both valid and invalid sections, and should only add the valid ones", async function () {
+			try {
+				const datasetIds = await facade.addDataset("datasetid", goodAndBadSections, InsightDatasetKind.Sections);
+				expect(datasetIds).to.have.members(["datasetid"]);
+				const listedDatasets = await facade.listDatasets();
+				expect(listedDatasets.length).to.equal(1);
+			} catch (err) {
+				expect.fail("should not have failed: " + err);
+			}
 		});
 	});
 
