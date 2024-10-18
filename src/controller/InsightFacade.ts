@@ -15,7 +15,7 @@ import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
 import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
 
-const fs = require("fs-extra");
+import fs from "fs-extra";
 
 /**
  * This is the main programmatic entry point for the project.
