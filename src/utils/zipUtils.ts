@@ -2,10 +2,10 @@ import JSZip from "jszip";
 import { Section } from "../models/section";
 import { InsightError } from "../controller/IInsightFacade";
 
-function base64ToBinary(b64string: string): Uint8Array {
-	const binaryBuffer = Buffer.from(b64string, "base64");
-	return new Uint8Array(binaryBuffer);
-}
+// function base64ToBinary(b64string: string): Uint8Array {
+// 	const binaryBuffer = Buffer.from(b64string, "base64");
+// 	return new Uint8Array(binaryBuffer);
+// }
 
 export async function Base64ZipToJSON(b64string: string): Promise<any> {
 	// const byteArray = base64ToBinary(b64string);
