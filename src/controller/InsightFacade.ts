@@ -7,7 +7,7 @@ import {
 	NotFoundError,
 	ResultTooLargeError,
 } from "./IInsightFacade";
-import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
+import { Base64ZipToJsonSections, jsonToSections } from "../utils/zipUtilsSection";
 import { Section } from "../models/section";
 import { SectionsDataset } from "../models/sectionsDataset";
 import { jsonToRoomsDataset, jsonToSectionsDataset } from "../utils/persistenceUtils";
@@ -15,6 +15,7 @@ import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
 import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
 import { RoomsDataset } from "../models/roomsDataset";
+import { Base64ZipToJsonRooms, jsonToRooms } from "../utils/zipUtilsRoom";
 
 const fs = require("fs-extra");
 
@@ -30,19 +31,6 @@ export default class InsightFacade implements IInsightFacade {
 	private readonly MAX_QUERIES: number = 5000;
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
-		/*
-		 * TODO: rooms dataset validation and addition
-		 *  	- must have kind .room
-		 * 	- files are .htm
-		 * 	- id same specs
-		 * 	- at least 1 valid room
-		 * 	- needs index.htm file
-		 * 	- index.htm MUST have a building table
-		 * 	- each room has all required fields (...)
-		 * 	- each room's geolocation query must succeed
-		 *
-		 * */
-
 		//validate that the id is valid and not already in our dataset array
 		if (id.trim().length === 0) {
 			throw new InsightError("Dataset Id cannot be only whitespace.");
@@ -69,7 +57,7 @@ export default class InsightFacade implements IInsightFacade {
 
 	private async addSectionsDataset(id: string, content: string): Promise<void> {
 		try {
-			const jsonData = await Base64ZipToJSON(content);
+			const jsonData = await Base64ZipToJsonSections(content);
 			const data: Section[] = jsonToSections(jsonData);
 			const sectionsDataset = new SectionsDataset(data, id, InsightDatasetKind.Sections, data.length);
 
@@ -82,8 +70,8 @@ export default class InsightFacade implements IInsightFacade {
 
 	private async addRoomsDataset(id: string, content: string): Promise<void> {
 		try {
-			//TODO: parse the rooms dataset to JSON
-			const data: string | any[] = [content];
+			const jsonData = await Base64ZipToJsonRooms(content);
+			const data = jsonToRooms(jsonData);
 			const roomsDataset = new RoomsDataset(data, id, InsightDatasetKind.Rooms, data.length);
 
 			this.roomsDatasets.push(roomsDataset);
