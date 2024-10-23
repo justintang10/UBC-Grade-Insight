@@ -41,11 +41,23 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("Dataset Id is already added, new datasets must have unique Ids.");
 		}
 
+		if (kind === InsightDatasetKind.Sections) {
+			await this.addSectionsDataset(id, content);
+		} else if (kind === InsightDatasetKind.Rooms) {
+			//hello
+		} else {
+			throw new InsightError("incorrect value for 'kind': " + kind);
+		}
+
+		return await this.getDatasetIds();
+	}
+
+	private async addSectionsDataset(id: string, content: string): Promise<void> {
 		//parse and add the section data from the encoded dataset
 		try {
 			const jsonData = await Base64ZipToJSON(content);
 			const sectionsArray: Section[] = jsonToSections(jsonData);
-			const dataset: Dataset = new Dataset(sectionsArray, id, kind, sectionsArray.length);
+			const dataset: Dataset = new Dataset(sectionsArray, id, InsightDatasetKind.Sections, sectionsArray.length);
 			this.datasets.push(dataset);
 
 			try {
@@ -56,7 +68,6 @@ export default class InsightFacade implements IInsightFacade {
 		} catch (error) {
 			throw new InsightError("Error: " + error);
 		}
-		return await this.getDatasetIds();
 	}
 
 	private async getDatasetIds(): Promise<string[]> {
