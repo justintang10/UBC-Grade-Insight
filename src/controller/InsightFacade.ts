@@ -9,11 +9,12 @@ import {
 } from "./IInsightFacade";
 import { Base64ZipToJSON, jsonToSections } from "../utils/zipUtils";
 import { Section } from "../models/section";
-import { Dataset } from "../models/dataset";
-import { jsonToDataset } from "../utils/persistenceUtils";
+import { SectionsDataset } from "../models/sectionsDataset";
+import { jsonToRoomsDataset, jsonToSectionsDataset } from "../utils/persistenceUtils";
 import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
 import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
+import { RoomsDataset } from "../models/roomsDataset";
 
 const fs = require("fs-extra");
 
@@ -24,10 +25,24 @@ const fs = require("fs-extra");
  */
 
 export default class InsightFacade implements IInsightFacade {
-	private datasets: Dataset[] = [];
+	private sectionsDatasets: SectionsDataset[] = [];
+	private roomsDatasets: RoomsDataset[] = [];
 	private readonly MAX_QUERIES: number = 5000;
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+		/*
+		 * TODO: rooms dataset validation and addition
+		 *  	- must have kind .room
+		 * 	- files are .htm
+		 * 	- id same specs
+		 * 	- at least 1 valid room
+		 * 	- needs index.htm file
+		 * 	- index.htm MUST have a building table
+		 * 	- each room has all required fields (...)
+		 * 	- each room's geolocation query must succeed
+		 *
+		 * */
+
 		//validate that the id is valid and not already in our dataset array
 		if (id.trim().length === 0) {
 			throw new InsightError("Dataset Id cannot be only whitespace.");
@@ -44,29 +59,37 @@ export default class InsightFacade implements IInsightFacade {
 		if (kind === InsightDatasetKind.Sections) {
 			await this.addSectionsDataset(id, content);
 		} else if (kind === InsightDatasetKind.Rooms) {
-			//hello
+			await this.addRoomsDataset(id, content);
 		} else {
-			throw new InsightError("incorrect value for 'kind': " + kind);
+			throw new InsightError("Incorrect value for 'kind': " + kind);
 		}
 
 		return await this.getDatasetIds();
 	}
 
 	private async addSectionsDataset(id: string, content: string): Promise<void> {
-		//parse and add the section data from the encoded dataset
 		try {
 			const jsonData = await Base64ZipToJSON(content);
-			const sectionsArray: Section[] = jsonToSections(jsonData);
-			const dataset: Dataset = new Dataset(sectionsArray, id, InsightDatasetKind.Sections, sectionsArray.length);
-			this.datasets.push(dataset);
+			const data: Section[] = jsonToSections(jsonData);
+			const sectionsDataset = new SectionsDataset(data, id, InsightDatasetKind.Sections, data.length);
 
-			try {
-				await this.saveDatasetToFile(dataset);
-			} catch (error) {
-				throw new InsightError("Error saving dataset to file: " + error);
-			}
+			this.sectionsDatasets.push(sectionsDataset);
+			await this.saveDatasetToFile(sectionsDataset);
 		} catch (error) {
-			throw new InsightError("Error: " + error);
+			throw new InsightError("Error parsing sections dataset: " + error);
+		}
+	}
+
+	private async addRoomsDataset(id: string, content: string): Promise<void> {
+		try {
+			//TODO: parse the rooms dataset to JSON
+			const data: string | any[] = [content];
+			const roomsDataset = new RoomsDataset(data, id, InsightDatasetKind.Rooms, data.length);
+
+			this.roomsDatasets.push(roomsDataset);
+			await this.saveDatasetToFile(roomsDataset);
+		} catch (error) {
+			throw new InsightError("Error parsing rooms dataset: " + error);
 		}
 	}
 
@@ -90,7 +113,8 @@ export default class InsightFacade implements IInsightFacade {
 		}
 
 		try {
-			this.datasets = this.datasets.filter((dataset) => dataset.id !== id);
+			this.sectionsDatasets = this.sectionsDatasets.filter((dataset) => dataset.id !== id);
+			this.roomsDatasets = this.roomsDatasets.filter((dataset) => dataset.id !== id);
 			await this.deleteDatasetFile(id);
 		} catch (error) {
 			throw new InsightError("Error removing dataset: " + error);
@@ -144,14 +168,15 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	private async getSectionsFromDataset(datasetId: string): Promise<any> {
-		for (const dataset of this.datasets) {
+		await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+
+		for (const dataset of this.sectionsDatasets) {
 			if (dataset.id === datasetId) {
 				return dataset.getSections();
 			}
 		}
 
-		const dataset: Dataset = await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
-		return dataset.getSections();
+		throw new InsightError("Dataset not found on disk or in memory uh oh");
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
@@ -170,7 +195,7 @@ export default class InsightFacade implements IInsightFacade {
 		});
 	}
 
-	private async saveDatasetToFile(dataset: Dataset): Promise<void> {
+	private async saveDatasetToFile(dataset: InsightDataset): Promise<void> {
 		const jsonIndentation = 2;
 		const jsonDataset = JSON.stringify(dataset, null, jsonIndentation);
 		const filePath = `./data/${dataset.id}.json`;
@@ -190,17 +215,24 @@ export default class InsightFacade implements IInsightFacade {
 		}
 	}
 
-	public async loadDatasetFromFile(id: string): Promise<Dataset> {
+	public async loadDatasetFromFile(id: string): Promise<InsightDataset> {
 		const filePath = `./data/${id}.json`;
-		let dataset: Dataset;
 
 		try {
 			const datasetFile = await fs.readJson(filePath);
-			dataset = jsonToDataset(datasetFile);
-			this.datasets.push(dataset);
+			const datasetInterface = { id: datasetFile.id, kind: datasetFile.kind, numRows: datasetFile.numRows };
+
+			if (datasetFile.kind === InsightDatasetKind.Sections) {
+				const dataset = jsonToSectionsDataset(datasetFile);
+				this.sectionsDatasets.push(dataset);
+			} else if (datasetFile.kind === InsightDatasetKind.Rooms) {
+				const dataset = jsonToRoomsDataset(datasetFile);
+				this.roomsDatasets.push(dataset);
+			}
+
+			return datasetInterface;
 		} catch (error) {
 			throw new InsightError("Error loading dataset from disk: " + error);
 		}
-		return dataset;
 	}
 }
