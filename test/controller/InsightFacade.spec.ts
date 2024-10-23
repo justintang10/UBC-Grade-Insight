@@ -273,6 +273,17 @@ describe("InsightFacade", function () {
 				expect.fail("should not have failed: " + err);
 			}
 		});
+
+		it("should be able to add the entire PAIR given dataset (big)", async function () {
+			try {
+				const datasetIds = await facade.addDataset("pairDataset", sections, InsightDatasetKind.Sections);
+				expect(datasetIds).to.have.members(["pairDataset"]);
+				const listedDatasets = await facade.listDatasets();
+				expect(listedDatasets.length).to.equal(1);
+			} catch (err) {
+				expect.fail("should not have failed: " + err);
+			}
+		});
 	});
 
 	describe("RemoveDataset", function () {
@@ -550,15 +561,15 @@ describe("InsightFacade", function () {
 		before(async function () {
 			facade = new InsightFacade();
 
-			// Add the datasets to InsightFacade once.
-			// Will *fail* if there is a problem reading ANY dataset.
-			const loadDatasetPromises: Promise<string[]>[] = [
-				facade.addDataset("sections", sections, InsightDatasetKind.Sections),
-				facade.addDataset("smalldataset", smallDataset, InsightDatasetKind.Sections),
-			];
+			//reload the dataset from memory
+			await clearDisk();
+			sections = await getContentFromArchives("pair.zip");
 
+			// Add the dataset to InsightFacade once.
+			// Will *fail* if there is a problem reading the dataset.
 			try {
-				await Promise.all(loadDatasetPromises);
+				const datasetIds = await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				expect(datasetIds).to.have.length(1);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
 			}
