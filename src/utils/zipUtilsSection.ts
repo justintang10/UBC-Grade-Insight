@@ -7,7 +7,7 @@ import { InsightError } from "../controller/IInsightFacade";
 // 	return new Uint8Array(binaryBuffer);
 // }
 
-export async function Base64ZipToJSON(b64string: string): Promise<any> {
+export async function Base64ZipToJsonSections(b64string: string): Promise<any> {
 	// const byteArray = base64ToBinary(b64string);
 
 	const zip = new JSZip();
