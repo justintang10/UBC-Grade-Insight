@@ -7,7 +7,7 @@ import {
 	isMComparator,
 	isMField,
 	isSField,
-	QueryComparison,
+	QueryComparison, sortByMultipleColumns,
 	sortByOrder,
 } from "./queryEngineUtils";
 
@@ -292,13 +292,80 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
 		result.push(insightResult);
 	}
 
+
 	// sort by order
 	if (order !== null) {
+		result = handleOrder(order, columns, result, datasetId);
+	}
+
+	return result;
+}
+
+
+/* order is
+  {
+      "dir": "DOWN",
+        "keys": [
+          "sections_dept",
+          "sections_avg"
+        ]
+    }
+    OR
+    "sections_dept"
+ */
+export function handleOrder(order: any, columns: any, sections: any, datasetId: string): InsightResult[] {
+	let result = sections;
+
+	if (typeof(order) === "string") { // Same as C1
 		if (!columns.includes(order)) {
 			throw new InsightError("Invalid Query: ORDER must be a column in COLUMNS");
 		}
 		result = sortByOrder(result, order);
+	} else if (typeof(order) === "object") { // C2
+		result = handleOrderObject(order, columns, sections, datasetId);
+	} else {
+		throw new InsightError("Invalid Query: ORDER is not a string or object");
 	}
+	return result;
+}
+
+/* order is
+	{
+      	"dir": "DOWN",
+		"keys": [
+		  "sections_dept",
+		  "sections_avg"
+		]
+    }
+ */
+
+export function handleOrderObject(order: any, columns: any, sections: any, datasetId: string): InsightResult[] {
+	let result = sections;
+
+	let direction = ""
+	let keys: any;
+	try {
+		direction = order.dir;
+		keys = order.keys;
+	} catch {
+		throw new InsightError("Invalid Query: missing ORDER keys or ORDER dir");
+	}
+	if (direction !== "UP" && direction !== "DOWN") {
+		throw new InsightError("Invalid Query: dir is not UP or DOWN");
+	}
+	if (Object.prototype.toString.call(keys) !== "[object Array]") {
+		throw new InsightError("Invalid Query: invalid type of ORDER keys");
+	}
+	if (keys.length === 0) {
+		throw new InsightError("Invalid Query: ORDER keys is empty")
+	}
+
+	for (const key of keys) {
+		if (!columns.includes(key)) {
+			throw new InsightError("Invalid Query: ORDER keys must be a column in COLUMNS");
+		}
+	}
+	result = sortByMultipleColumns(result, direction, keys);
 
 	return result;
 }

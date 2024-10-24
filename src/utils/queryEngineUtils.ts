@@ -151,31 +151,58 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 }
 
 export function sortByOrder(sections: any, order: string): InsightResult[] {
-	const column = getAndCheckColumnName(order, QueryComparison.EITHER);
 
-	if (isMField(column)) {
-		// order by
-		sections.sort(function (a: any, b: any) {
-			const aNum = a[order];
-			const bNum = b[order];
-			if (aNum < bNum) {
-				return -1;
-			}
-			if (aNum > bNum) {
-				return 1;
-			}
-			if (aNum === bNum) {
-				return 0;
-			}
-		});
-	} else if (isSField(column)) {
-		// order by alphabetical
-		sections.sort(function (a: any, b: any) {
-			return a[order].localeCompare(b[order]);
-		});
-	}
+	sections.sort(function (a: any, b: any) {
+		const aValue = a[order];
+		const bValue = b[order];
+		if (aValue < bValue) {
+			return -1;
+		}
+		if (aValue > bValue) {
+			return 1;
+		}
+		if (aValue === bValue) {
+			return 0;
+		}
+	});
 
 	return sections;
+}
+
+export function sortByMultipleColumns(sections: any, direction: string, keys: any): InsightResult[] {
+
+	sections.sort(function (a: any, b: any) {
+		let value = compareParameters(a, b, 0, keys);
+		if (direction === "DOWN") {
+			value *= -1;
+		}
+		return value;
+	});
+
+	return sections;
+}
+
+// a is a section
+// b is a section
+// i is index of current key
+// keys is an array of column names
+function compareParameters(a: any, b: any, i: number, keys: any): number {
+	// Out of keys to compare, will not sort
+	if (i >= keys.length) {
+		return 0;
+	}
+
+	let ret = 0;
+	const keyColumnPair = keys[i];
+	if (a[keyColumnPair] > b[keyColumnPair]) {
+		ret = 1;
+	} else if (a[keyColumnPair] < b[keyColumnPair]) {
+		ret = -1;
+	} else {
+		ret = compareParameters(a, b, i + 1, keys); // if a[keyColumnPair] === b[keyColumnPair], compare by the next key
+	}
+
+	return ret;
 }
 
 export enum QueryComparison {
