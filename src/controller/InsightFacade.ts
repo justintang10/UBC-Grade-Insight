@@ -136,8 +136,8 @@ export default class InsightFacade implements IInsightFacade {
 		// Get first datasetId to retrieve sections
 		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
-		// Get all sections from given dataset
-		const allSections = await this.getSectionsFromDataset(datasetId);
+		// Get all data (an array of either sections or rooms) from given dataset
+		const allSections = await this.getDataFromDataset(datasetId);
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
@@ -155,12 +155,23 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	private async getSectionsFromDataset(datasetId: string): Promise<any> {
+	private async getDataFromDataset(datasetId: string): Promise<any> {
 		await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+		// ^^ I think putting this line before the loops might break things/be expensive, since we only want to load the
+		// dataset from the disk if the dataset is not found in memory? eg. if a dataset is already
+		// in memory, this function will push it into sectionsDatasets/roomsDatasets either way, so we'll have
+		// duplicate datasets in the array (which I don't actually think breaks anything, it's just weird?)
+		// - Munn
 
 		for (const dataset of this.sectionsDatasets) {
 			if (dataset.id === datasetId) {
 				return dataset.getSections();
+			}
+		}
+
+		for (const dataset of this.roomsDatasets) {
+			if (dataset.id === datasetId) {
+				return dataset.getRooms();
 			}
 		}
 
