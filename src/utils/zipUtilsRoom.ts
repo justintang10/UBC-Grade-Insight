@@ -30,7 +30,15 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 	const zipData = await zip.loadAsync(b64string, { base64: true });
 
 	const indexHtmlJson = await getIndexHtml(zipData);
-	indexHtmlJson.toString()
+	indexHtmlJson.toString();
+
+	//TODO: find buildings table in indexHtmlJson
+
+	//TODO: load associated buildings files
+
+	//TODO: parse buildings files
+
+	//TODO: get rooms data from buildings files
 
 
 
