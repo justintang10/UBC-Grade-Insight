@@ -38,6 +38,8 @@ describe("InsightFacade", function () {
 	let wrongDirectoryName: string;
 	let goodAndBadSections: string;
 
+	let validRoomsDataset: string;
+
 	const smallDatasetNumRows = 103;
 	const singleCourseDatasetNumRows = 22;
 	const two = 2;
@@ -57,6 +59,7 @@ describe("InsightFacade", function () {
 		wrongDirectoryName = await getContentFromArchives("wrongDirectoryName.zip");
 		goodAndBadSections = await getContentFromArchives("goodAndBadSections.zip");
 
+		validRoomsDataset = await getContentFromArchives("campus.zip");
 		// Just in case there is anything hanging around from a previous run of the test suite
 		await clearDisk();
 	});
@@ -284,6 +287,21 @@ describe("InsightFacade", function () {
 				expect.fail("should not have failed: " + err);
 			}
 		});
+
+		it("should be able to add a valid rooms dataset", async function () {
+			try {
+				const datasetIds = await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
+				expect(datasetIds).to.have.members(["rooms"]);
+				const listedDatasets = await facade.listDatasets();
+				expect(listedDatasets.length).to.equal(1);
+			} catch (err) {
+				expect.fail("should not have failed: " + err);
+			}
+		});
+
+
+
+
 	});
 
 	describe("RemoveDataset", function () {

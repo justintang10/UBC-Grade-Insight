@@ -1,4 +1,7 @@
 import { Room } from "../models/room";
+import JSZip from "jszip";
+import { InsightError } from "../controller/IInsightFacade";
+import {parse} from "parse5";
 
 //TODO: Justin if you want, see zipUtilsSection to see how we handled this for sections datasets
 
@@ -23,6 +26,14 @@ import { Room } from "../models/room";
  * (see Base64ZipToJsonSections in zipUtilsSection for an analogous function for sections)
  * - note that here we will have to use the Parse5 library's parse function, and look through the html structure*/
 export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
+	const zip = new JSZip();
+	const zipData = await zip.loadAsync(b64string, { base64: true });
+
+	const indexHtmlJson = await getIndexHtml(zipData);
+	indexHtmlJson.toString()
+
+
+
 	//this promise is meaningless and only meant to prevent lint errors
 	return new Promise((resolve, reject) => {
 		if (!b64string) {
@@ -32,7 +43,20 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 	});
 }
 
-//TODO: this function tooo (see zipUtilsSection again)
+export async function getIndexHtml(zipData: JSZip): Promise<any> {
+	const indexHtml = zipData.file("index.htm")
+	if (!indexHtml) {
+		throw new InsightError("No index.htm file found.");
+	}
+	try {
+		const indexHtmlContent = await indexHtml.async("string");
+		return parse(indexHtmlContent);
+	} catch (error) {
+		throw new InsightError("Error parsing Index.htm: " + error);
+	}
+}
+
+//TODO: this function too (see zipUtilsSection again)
 /*
  * Takes in a json representation of rooms (from the above function), and converts it to an array of rooms
  *  (a RoomsDataset), so that it can be used internally by performQuery & saved to disk etc.
