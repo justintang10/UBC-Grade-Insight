@@ -298,10 +298,6 @@ describe("InsightFacade", function () {
 				expect.fail("should not have failed: " + err);
 			}
 		});
-
-
-
-
 	});
 
 	describe("RemoveDataset", function () {

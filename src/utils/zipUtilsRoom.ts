@@ -36,9 +36,12 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 
 	const buildingFileLinks = getBuildingFileLinks(buildings);
 
-	//TODO: parse buildings files
+	const buildingsJson = await parseBuildingFiles(buildingFileLinks, zipData);
 
-	//TODO: get rooms data from buildings files
+	const roomsTables = getRoomTables(buildingsJson);
+	roomsTables.join();
+	//TODO: refactor this to parse rooms to json + api call one building at a time
+
 
 	//this promise is meaningless and only meant to prevent lint errors
 	return new Promise((resolve, reject) => {
@@ -66,7 +69,7 @@ export function getBuildingTable(indexJson: any): any[] {
 	const allTables = getAllTables(indexJson);
 
 	for (const table of allTables) {
-		if (tableIsBuildingTable(table)) {
+		if (tableIsValid(table)) {
 			return table;
 		}
 	}
@@ -90,12 +93,11 @@ function getAllTables(node: any): any[] {
 	return tables;
 }
 
-function tableIsBuildingTable(table: any): boolean {
+function tableIsValid(table: any): boolean {
 	let tbody: any;
 	for (const child of table.childNodes) {
 		if (child.nodeName === "tbody") {
 			tbody = child;
-			break;
 		}
 	}
 	if (!tbody) {
@@ -123,7 +125,11 @@ function tableIsBuildingTable(table: any): boolean {
 		return false;
 	}
 
-	return td.attrs[0].value === "views-field views-field-field-building-image";
+	return checkTableClasses(td.attrs[0].value);
+}
+
+function checkTableClasses(classes: string): boolean {
+	return classes.includes("views-field");
 }
 
 function getBuildingFileLinks(buildingsTable: any): any[] {
@@ -145,9 +151,40 @@ function getBuildingFileLinks(buildingsTable: any): any[] {
 		});
 		const four = 4;
 		const fileLink: string = rowData[four].childNodes[1].attrs[0].value;
-		buildingFileLinks.push(fileLink.replace("./",""));
+		buildingFileLinks.push(fileLink.replace("./", ""));
 	}
 	return buildingFileLinks;
+}
+
+async function parseBuildingFiles(buildingFileLinks: string[], zipData: JSZip): Promise<any[]> {
+	const buildingFilePromises: Promise<any>[] = buildingFileLinks.map(async (fileName) => {
+		const file = zipData.file(fileName);
+
+		if (file) {
+			const fileContent = await file.async("string");
+			return parse(fileContent);
+		}
+		return {};
+	});
+
+	if (buildingFilePromises.length === 0) {
+		throw new InsightError("No valid building files to parse.");
+	}
+
+	return await Promise.all(buildingFilePromises);
+}
+
+function getRoomTables(buildingsJson: any[]): any[] {
+	const roomTables: any[] = [];
+	for (const buildingFile of buildingsJson) {
+		const tables = getAllTables(buildingFile);
+		for (const table of tables) {
+			if (tableIsValid(table)) {
+				roomTables.push(table);
+			}
+		}
+	}
+	return roomTables;
 }
 
 //TODO: this function too (see zipUtilsSection again)
