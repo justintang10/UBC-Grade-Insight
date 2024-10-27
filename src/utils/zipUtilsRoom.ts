@@ -3,6 +3,7 @@ import JSZip from "jszip";
 import { InsightError } from "../controller/IInsightFacade";
 import { parse } from "parse5";
 import { getAllTables, getBuildingTableData, getRoomsData, tableIsValid } from "./htmlTableParsing";
+import http from "node:http";
 
 interface BuildingData {
 	codeName: string;
@@ -95,12 +96,11 @@ async function buildingFileJsonToRoomsJson(buildingsData: BuildingData[]): Promi
 }
 
 async function parseRoomsFromBuilding(buildingData: BuildingData): Promise<any> {
-	const URIEncodedAddress = encodeURI(buildingData.address);
+	const URIEncodedAddress = encodeURIComponent(buildingData.address);
 	const apiCallUrl = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team052/" + URIEncodedAddress;
-	const response = await fetch(apiCallUrl);
-	const data = await response.json();
+	const response: any = await fetchGeoData(apiCallUrl);
 
-	if (data.error) {
+	if (response.error) {
 		throw new InsightError("Failed to fetch geo data for: " + buildingData.address);
 	}
 
@@ -114,8 +114,8 @@ async function parseRoomsFromBuilding(buildingData: BuildingData): Promise<any> 
 			room.number,
 			buildingData.codeName + "_" + room.number,
 			buildingData.address,
-			data.lat,
-			data.lon,
+			response.lat,
+			response.lon,
 			room.seats,
 			room.type,
 			room.furniture,
@@ -124,4 +124,25 @@ async function parseRoomsFromBuilding(buildingData: BuildingData): Promise<any> 
 		roomsJson.push(roomObj);
 	}
 	return roomsJson;
+}
+
+async function fetchGeoData(url: string): Promise<any> {
+	return new Promise((resolve, reject) => {
+		http.get(url, (res) => {
+			let data = "";
+
+			res.on("data", (chunk) => {
+				data += chunk;
+			});
+
+			res.on("end", () => {
+				try {
+					const jsonData = JSON.parse(data);
+					resolve(jsonData);
+				} catch (error) {
+					reject(error);
+				}
+			});
+		});
+	});
 }
