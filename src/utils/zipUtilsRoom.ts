@@ -1,7 +1,7 @@
 import { Room } from "../models/room";
 import JSZip from "jszip";
 import { InsightError } from "../controller/IInsightFacade";
-import {parse} from "parse5";
+import { parse } from "parse5";
 
 //TODO: Justin if you want, see zipUtilsSection to see how we handled this for sections datasets
 
@@ -32,18 +32,13 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 	const indexHtmlJson = await getIndexHtml(zipData);
 	indexHtmlJson.toString();
 
-	//TODO: find buildings table in indexHtmlJson
 	const buildings = getBuildingTable(indexHtmlJson);
-	buildings.forEach((building) => {
-		building.toString()})
 
-	//TODO: load associated buildings files
+	const buildingFileLinks = getBuildingFileLinks(buildings);
 
 	//TODO: parse buildings files
 
 	//TODO: get rooms data from buildings files
-
-
 
 	//this promise is meaningless and only meant to prevent lint errors
 	return new Promise((resolve, reject) => {
@@ -55,7 +50,7 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 }
 
 export async function getIndexHtml(zipData: JSZip): Promise<any> {
-	const indexHtml = zipData.file("index.htm")
+	const indexHtml = zipData.file("index.htm");
 	if (!indexHtml) {
 		throw new InsightError("No index.htm file found.");
 	}
@@ -68,7 +63,6 @@ export async function getIndexHtml(zipData: JSZip): Promise<any> {
 }
 
 export function getBuildingTable(indexJson: any): any[] {
-
 	const allTables = getAllTables(indexJson);
 
 	for (const table of allTables) {
@@ -85,11 +79,11 @@ function getAllTables(node: any): any[] {
 
 	if (node.childNodes) {
 		for (const child of node.childNodes) {
-			tables = [...tables, ...getAllTables(child)]
+			tables = [...tables, ...getAllTables(child)];
 		}
 	}
 
-	if (node.nodeName === 'table') {
+	if (node.nodeName === "table") {
 		tables.push(node);
 	}
 
@@ -99,8 +93,9 @@ function getAllTables(node: any): any[] {
 function tableIsBuildingTable(table: any): boolean {
 	let tbody: any;
 	for (const child of table.childNodes) {
-		if (child.nodeName === 'tbody') {
+		if (child.nodeName === "tbody") {
 			tbody = child;
+			break;
 		}
 	}
 	if (!tbody) {
@@ -109,34 +104,51 @@ function tableIsBuildingTable(table: any): boolean {
 
 	let tr: any;
 	for (const child of tbody.childNodes) {
-		if (child.nodeName === 'tr') {
+		if (child.nodeName === "tr") {
 			tr = child;
+			break;
 		}
 	}
-
 	if (!tr) {
 		return false;
 	}
-
 	let td: any;
 	for (const child of tr.childNodes) {
-		if (child.nodeName === 'td') {
+		if (child.nodeName === "td") {
 			td = child;
+			break;
 		}
 	}
-
 	if (!td) {
 		return false;
 	}
 
-	if (td.attrs.class === "views-field views-field-field-building-image") {
-		return true;
-	}
-
-	return false;
+	return td.attrs[0].value === "views-field views-field-field-building-image";
 }
 
+function getBuildingFileLinks(buildingsTable: any): any[] {
+	let tbody: any;
+	for (const childNode of buildingsTable.childNodes) {
+		if (childNode.nodeName === "tbody") {
+			tbody = childNode;
+			break;
+		}
+	}
 
+	const tableRows = tbody.childNodes.filter((row: any) => {
+		return row.nodeName === "tr";
+	});
+	const buildingFileLinks: any[] = [];
+	for (const row of tableRows) {
+		const rowData = row.childNodes.filter((child: any) => {
+			return child.nodeName === "td";
+		});
+		const four = 4;
+		const fileLink: string = rowData[four].childNodes[1].attrs[0].value;
+		buildingFileLinks.push(fileLink.replace("./",""));
+	}
+	return buildingFileLinks;
+}
 
 //TODO: this function too (see zipUtilsSection again)
 /*
