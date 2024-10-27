@@ -2,24 +2,16 @@ import { Room } from "../models/room";
 import JSZip from "jszip";
 import { InsightError } from "../controller/IInsightFacade";
 import { parse } from "parse5";
+import { getAllTables, getBuildingTableData, getRoomsData, tableIsValid } from "./htmlTableParsing";
 
-//TODO: Justin if you want, see zipUtilsSection to see how we handled this for sections datasets
+interface BuildingData {
+	codeName: string;
+	fullName: string;
+	address: string;
+	fileLink: string;
+	page: any | null;
+}
 
-//TODO: parse the rooms dataset to JSON
-/*
- * TODO: rooms dataset validation and addition
- * 	- files are .htm
- * 	- id same specs
- * 	- at least 1 valid room
- * 	- needs index.htm file
- * 	- index.htm MUST have a building table
- * 	- each room has all required fields (see room object in models)
- * 	- each room's geolocation query must succeed
- * ( this is a quick list based on the spec, likely not comprehensive so loop back to spec as needed
- *
- * */
-
-//TODO: this function, see zipUtilsSection for inspo
 /*
  * Should take in a rooms dataset as a zipped directory of .htm files (see the campus.zip on the 310 website),
  * should validate all requirements to ensure that it is valid, then return a JSON representation of the rooms
@@ -34,21 +26,20 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 
 	const buildings = getBuildingTable(indexHtmlJson);
 
-	const buildingFileLinks = getBuildingFileLinks(buildings);
+	const buildingsData: BuildingData[] = getBuildingTableData(buildings);
 
-	const buildingsJson = await parseBuildingFiles(buildingFileLinks, zipData);
+	const buildingsDataWithFiles: BuildingData[] = await parseBuildingFiles(buildingsData, zipData);
 
-	const roomsTables = getRoomTables(buildingsJson);
-	roomsTables.join();
-	//TODO: refactor this to parse rooms to json + api call one building at a time
+	const roomsJson = await buildingFileJsonToRoomsJson(buildingsDataWithFiles);
 
-	//this promise is meaningless and only meant to prevent lint errors
-	return new Promise((resolve, reject) => {
-		if (!b64string) {
-			reject(new Error("B64string is required"));
+	const roomArray: string | any[] = [];
+	for (const roomList of roomsJson) {
+		for (const room of roomList) {
+			roomArray.push(room);
 		}
-		resolve("hello");
-	});
+	}
+
+	return roomArray;
 }
 
 export async function getIndexHtml(zipData: JSZip): Promise<any> {
@@ -76,92 +67,14 @@ export function getBuildingTable(indexJson: any): any[] {
 	throw new InsightError("No valid building table found.");
 }
 
-function getAllTables(node: any): any[] {
-	let tables: any[] = [];
-
-	if (node.childNodes) {
-		for (const child of node.childNodes) {
-			tables = [...tables, ...getAllTables(child)];
-		}
-	}
-
-	if (node.nodeName === "table") {
-		tables.push(node);
-	}
-
-	return tables;
-}
-
-function tableIsValid(table: any): boolean {
-	let tbody: any;
-	for (const child of table.childNodes) {
-		if (child.nodeName === "tbody") {
-			tbody = child;
-		}
-	}
-	if (!tbody) {
-		return false;
-	}
-
-	let tr: any;
-	for (const child of tbody.childNodes) {
-		if (child.nodeName === "tr") {
-			tr = child;
-			break;
-		}
-	}
-	if (!tr) {
-		return false;
-	}
-	let td: any;
-	for (const child of tr.childNodes) {
-		if (child.nodeName === "td") {
-			td = child;
-			break;
-		}
-	}
-	if (!td) {
-		return false;
-	}
-
-	return checkTableClasses(td.attrs[0].value);
-}
-
-function checkTableClasses(classes: string): boolean {
-	return classes.includes("views-field");
-}
-
-function getBuildingFileLinks(buildingsTable: any): any[] {
-	let tbody: any;
-	for (const childNode of buildingsTable.childNodes) {
-		if (childNode.nodeName === "tbody") {
-			tbody = childNode;
-			break;
-		}
-	}
-
-	const tableRows = tbody.childNodes.filter((row: any) => {
-		return row.nodeName === "tr";
-	});
-	const buildingFileLinks: any[] = [];
-	for (const row of tableRows) {
-		const rowData = row.childNodes.filter((child: any) => {
-			return child.nodeName === "td";
-		});
-		const four = 4;
-		const fileLink: string = rowData[four].childNodes[1].attrs[0].value;
-		buildingFileLinks.push(fileLink.replace("./", ""));
-	}
-	return buildingFileLinks;
-}
-
-async function parseBuildingFiles(buildingFileLinks: string[], zipData: JSZip): Promise<any[]> {
-	const buildingFilePromises: Promise<any>[] = buildingFileLinks.map(async (fileName) => {
-		const file = zipData.file(fileName);
+async function parseBuildingFiles(buildingsData: BuildingData[], zipData: JSZip): Promise<any[]> {
+	const buildingFilePromises: Promise<any>[] = buildingsData.map(async (bd) => {
+		const file = zipData.file(bd.fileLink);
 
 		if (file) {
 			const fileContent = await file.async("string");
-			return parse(fileContent);
+			bd.page = parse(fileContent);
+			return bd;
 		}
 		return {};
 	});
@@ -173,29 +86,42 @@ async function parseBuildingFiles(buildingFileLinks: string[], zipData: JSZip): 
 	return await Promise.all(buildingFilePromises);
 }
 
-function getRoomTables(buildingsJson: any[]): any[] {
-	const roomTables: any[] = [];
-	for (const buildingFile of buildingsJson) {
-		const tables = getAllTables(buildingFile);
-		for (const table of tables) {
-			if (tableIsValid(table)) {
-				roomTables.push(table);
-			}
-		}
-	}
-	return roomTables;
+async function buildingFileJsonToRoomsJson(buildingsData: BuildingData[]): Promise<any[]> {
+	const roomJsonPromises: Promise<any>[] = buildingsData.map(async (buildingData) => {
+		return parseRoomsFromBuilding(buildingData);
+	});
+
+	return await Promise.all(roomJsonPromises);
 }
 
-//TODO: this function too (see zipUtilsSection again)
-/*
- * Takes in a json representation of rooms (from the above function), and converts it to an array of rooms
- *  (a RoomsDataset), so that it can be used internally by performQuery & saved to disk etc.
- * 	once again see zipUtilsSection
- * */
-export function jsonToRooms(jsonData: any): Room[] {
-	const rooms: Room[] = [];
-	//meaningless line to stop error
-	jsonData.trimEnd();
+async function parseRoomsFromBuilding(buildingData: BuildingData): Promise<any> {
+	const URIEncodedAddress = encodeURI(buildingData.address);
+	const apiCallUrl = "http://cs310.students.cs.ubc.ca:11316/api/v1/project_team052/" + URIEncodedAddress;
+	const response = await fetch(apiCallUrl);
+	const data = await response.json();
 
-	return rooms;
+	if (data.error) {
+		throw new InsightError("Failed to fetch geo data for: " + buildingData.address);
+	}
+
+	const roomsData = getRoomsData(buildingData.page);
+
+	const roomsJson = [];
+	for (const room of roomsData) {
+		const roomObj = new Room(
+			buildingData.fullName,
+			buildingData.codeName,
+			room.number,
+			buildingData.codeName + "_" + room.number,
+			buildingData.address,
+			data.lat,
+			data.lon,
+			room.seats,
+			room.type,
+			room.furniture,
+			room.href
+		);
+		roomsJson.push(roomObj);
+	}
+	return roomsJson;
 }

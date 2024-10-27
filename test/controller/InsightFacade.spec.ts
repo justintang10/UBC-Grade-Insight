@@ -294,6 +294,8 @@ describe("InsightFacade", function () {
 				expect(datasetIds).to.have.members(["rooms"]);
 				const listedDatasets = await facade.listDatasets();
 				expect(listedDatasets.length).to.equal(1);
+				const numrows = 364;
+				expect(listedDatasets[0].numRows).to.equal(numrows);
 			} catch (err) {
 				expect.fail("should not have failed: " + err);
 			}

@@ -15,7 +15,7 @@ import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
 import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
 import { RoomsDataset } from "../models/roomsDataset";
-import { Base64ZipToJsonRooms, jsonToRooms } from "../utils/zipUtilsRoom";
+import { Base64ZipToJsonRooms } from "../utils/zipUtilsRoom";
 
 import fs from "fs-extra";
 
@@ -70,9 +70,8 @@ export default class InsightFacade implements IInsightFacade {
 
 	private async addRoomsDataset(id: string, content: string): Promise<void> {
 		try {
-			const jsonData = await Base64ZipToJsonRooms(content);
-			const data = jsonToRooms(jsonData);
-			const roomsDataset = new RoomsDataset(data, id, InsightDatasetKind.Rooms, data.length);
+			const rooms = await Base64ZipToJsonRooms(content);
+			const roomsDataset = new RoomsDataset(rooms, id, InsightDatasetKind.Rooms, rooms.length);
 
 			this.roomsDatasets.push(roomsDataset);
 			await this.saveDatasetToFile(roomsDataset);
