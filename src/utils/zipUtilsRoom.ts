@@ -42,7 +42,6 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 	roomsTables.join();
 	//TODO: refactor this to parse rooms to json + api call one building at a time
 
-
 	//this promise is meaningless and only meant to prevent lint errors
 	return new Promise((resolve, reject) => {
 		if (!b64string) {
