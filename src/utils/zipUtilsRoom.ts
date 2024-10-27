@@ -33,6 +33,9 @@ export async function Base64ZipToJsonRooms(b64string: string): Promise<any> {
 	indexHtmlJson.toString();
 
 	//TODO: find buildings table in indexHtmlJson
+	const buildings = getBuildingTable(indexHtmlJson);
+	buildings.forEach((building) => {
+		building.toString()})
 
 	//TODO: load associated buildings files
 
@@ -63,6 +66,77 @@ export async function getIndexHtml(zipData: JSZip): Promise<any> {
 		throw new InsightError("Error parsing Index.htm: " + error);
 	}
 }
+
+export function getBuildingTable(indexJson: any): any[] {
+
+	const allTables = getAllTables(indexJson);
+
+	for (const table of allTables) {
+		if (tableIsBuildingTable(table)) {
+			return table;
+		}
+	}
+
+	throw new InsightError("No valid building table found.");
+}
+
+function getAllTables(node: any): any[] {
+	let tables: any[] = [];
+
+	if (node.childNodes) {
+		for (const child of node.childNodes) {
+			tables = [...tables, ...getAllTables(child)]
+		}
+	}
+
+	if (node.nodeName === 'table') {
+		tables.push(node);
+	}
+
+	return tables;
+}
+
+function tableIsBuildingTable(table: any): boolean {
+	let tbody: any;
+	for (const child of table.childNodes) {
+		if (child.nodeName === 'tbody') {
+			tbody = child;
+		}
+	}
+	if (!tbody) {
+		return false;
+	}
+
+	let tr: any;
+	for (const child of tbody.childNodes) {
+		if (child.nodeName === 'tr') {
+			tr = child;
+		}
+	}
+
+	if (!tr) {
+		return false;
+	}
+
+	let td: any;
+	for (const child of tr.childNodes) {
+		if (child.nodeName === 'td') {
+			td = child;
+		}
+	}
+
+	if (!td) {
+		return false;
+	}
+
+	if (td.attrs.class === "views-field views-field-field-building-image") {
+		return true;
+	}
+
+	return false;
+}
+
+
 
 //TODO: this function too (see zipUtilsSection again)
 /*
