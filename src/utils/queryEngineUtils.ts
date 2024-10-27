@@ -192,7 +192,7 @@ function compareParameters(a: any, b: any, i: number, keys: any): number {
 		return 0;
 	}
 
-	let ret = 0;
+	let ret;
 	const keyColumnPair = keys[i];
 	if (a[keyColumnPair] > b[keyColumnPair]) {
 		ret = 1;
@@ -209,4 +209,95 @@ export enum QueryComparison {
 	MCOMPARISON,
 	SCOMPARISON,
 	EITHER,
+}
+
+export function translateToInsightResult(columns: any, sections: any, datasetId: string): InsightResult[] {
+	// initialize empty array
+	const result: InsightResult[] = [];
+
+	for (const section of sections) {
+		const insightResult: InsightResult = {};
+		for (const datasetColumnPair of columns) {
+			getAndCheckDatasetId(datasetColumnPair, datasetId);
+			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER);
+
+			if (isMField(columnName)) {
+				insightResult[datasetColumnPair] = section.getMField(columnName);
+			} else if (isSField(columnName)) {
+				insightResult[datasetColumnPair] = section.getSField(columnName);
+			}
+		}
+
+		result.push(insightResult);
+	}
+
+	return result;
+}
+
+export function handleMax(columnName: any, sections: any): number {
+	let max = Number.MIN_SAFE_INTEGER;
+	for (const section of sections) {
+		const value = section.getMField(columnName);
+		if (value > max) {
+			max = value;
+		}
+	}
+	return max;
+}
+
+export function handleMin(columnName: any, sections: any): number {
+	let min = Number.MAX_SAFE_INTEGER;
+	for (const section of sections) {
+		const value = section.getMField(columnName);
+		if (value < min) {
+			min = value;
+		}
+	}
+	return min;
+}
+
+export function handleAvg(columnName: any, sections: any): number {
+	let sum = 0;
+	if (sections[0].getSField("title") === "adv soil s") {
+		console.log("Hi");
+	}
+	for (const section of sections) {
+		const value = section.getMField(columnName);
+		sum += value;
+	}
+	const decimalCount = 2;
+	sum = Number(sum.toFixed(decimalCount)); // deal with floating point error
+	const avg = sum / sections.length;
+	return Number(avg.toFixed(decimalCount));
+}
+
+export function handleSum(columnName: any, sections: any): number {
+	let sum = 0;
+	for (const section of sections) {
+		const value = section.getMField(columnName);
+		sum += value;
+	}
+	return sum;
+}
+
+export function handleCount(sections: any): number {
+	return sections.length;
+}
+
+// key is "sections_avg:90,sections_title:310"
+export function parseMapKeyToObj(mapKey: string): InsightResult {
+	const result: InsightResult = {};
+	while (mapKey.length > 0) {
+		const nextCommaIndex = mapKey.indexOf("~");
+		const keyValuePair = mapKey.substring(0, nextCommaIndex);
+		const colonIndex = keyValuePair.indexOf(":");
+		const key = keyValuePair.substring(0, colonIndex);
+		let value = keyValuePair.substring(colonIndex + 1, keyValuePair.length) as number | string;
+		if (!Number.isNaN(Number(value)) && value !== "") { // cast value to number if it is a valid number
+			value = Number(value);
+		}
+		result[key] = value;
+		mapKey = mapKey.substring(nextCommaIndex + 1, mapKey.length);
+	}
+	return result;
 }

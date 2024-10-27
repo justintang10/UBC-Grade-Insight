@@ -1,14 +1,15 @@
-import { InsightError, InsightResult } from "../controller/IInsightFacade";
+import {InsightError, InsightResult} from "../controller/IInsightFacade";
 import {
 	doesInputStringMatch,
 	getAndCheckColumnName,
-	getAndCheckDatasetId,
+	getAndCheckDatasetId, handleAvg, handleCount, handleMax, handleMin, handleSum,
 	isLComparator,
 	isMComparator,
 	isMField,
-	isSField,
-	QueryComparison, sortByMultipleColumns,
-	sortByOrder,
+	isSField, parseMapKeyToObj,
+	QueryComparison,
+	sortByMultipleColumns,
+	sortByOrder, translateToInsightResult,
 } from "./queryEngineUtils";
 
 /* Takes queryParameters (a {'FILTER'})
@@ -257,45 +258,31 @@ export function handleNegation(queryParams: any, sections: any, datasetId: strin
 
 	Returns array of InsightResult
 	 */
-export function handleOptions(queryOptions: any, sections: any, datasetId: string): InsightResult[] {
+export function handleOptions(options: any, sections: any, datasetId: string, isTransformed: boolean): InsightResult[] {
 	// If COLUMNS does not exist, throw InsightError
 	// If COLUMNS is empty, throw InsightError
 	// above is done in getDatasetId()
 	let columns: any;
 	let order: any = null;
-	for (const queryKey in queryOptions) {
+	for (const queryKey in options) {
 		if (queryKey === "COLUMNS") {
-			columns = queryOptions[queryKey];
+			columns = options[queryKey];
 		} else if (queryKey === "ORDER") {
-			order = queryOptions[queryKey];
+			order = options[queryKey];
 		} else {
 			throw new InsightError("Invalid Query: invalid key in options");
 		}
 	}
 
-	// initialize empty array
-	let result: InsightResult[] = [];
+	let result = sections;
 
-	for (const section of sections) {
-		const insightResult: InsightResult = {};
-		for (const datasetColumnPair of columns) {
-			getAndCheckDatasetId(datasetColumnPair, datasetId);
-			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER);
-
-			if (isMField(columnName)) {
-				insightResult[datasetColumnPair] = section.getMField(columnName);
-			} else if (isSField(columnName)) {
-				insightResult[datasetColumnPair] = section.getSField(columnName);
-			}
-		}
-
-		result.push(insightResult);
+	if (!isTransformed) {
+		result = translateToInsightResult(columns, sections, datasetId);
 	}
-
 
 	// sort by order
 	if (order !== null) {
-		result = handleOrder(order, columns, result, datasetId);
+		result = handleOrder(order, columns, result);
 	}
 
 	return result;
@@ -313,7 +300,7 @@ export function handleOptions(queryOptions: any, sections: any, datasetId: strin
     OR
     "sections_dept"
  */
-export function handleOrder(order: any, columns: any, sections: any, datasetId: string): InsightResult[] {
+export function handleOrder(order: any, columns: any, sections: any): InsightResult[] {
 	let result = sections;
 
 	if (typeof(order) === "string") { // Same as C1
@@ -322,7 +309,7 @@ export function handleOrder(order: any, columns: any, sections: any, datasetId: 
 		}
 		result = sortByOrder(result, order);
 	} else if (typeof(order) === "object") { // C2
-		result = handleOrderObject(order, columns, sections, datasetId);
+		result = handleOrderObject(order, columns, sections);
 	} else {
 		throw new InsightError("Invalid Query: ORDER is not a string or object");
 	}
@@ -337,11 +324,11 @@ export function handleOrder(order: any, columns: any, sections: any, datasetId: 
 		  "sections_avg"
 		]
     }
- */
+*/
 
-export function handleOrderObject(order: any, columns: any, sections: any, datasetId: string): InsightResult[] {
+export function handleOrderObject(order: any, columns: any, sections: any): InsightResult[] {
 	let result = sections;
-
+	// Error handling
 	let direction = ""
 	let keys: any;
 	try {
@@ -365,7 +352,132 @@ export function handleOrderObject(order: any, columns: any, sections: any, datas
 			throw new InsightError("Invalid Query: ORDER keys must be a column in COLUMNS");
 		}
 	}
+	// This is the sorting function
 	result = sortByMultipleColumns(result, direction, keys);
 
 	return result;
 }
+
+/*	transformations is
+	{
+		"GROUP": [
+		  "sections_title"
+		],
+		"APPLY": [
+		  {
+			"overallAvg": {
+			  "AVG": "sections_avg"
+			}
+		  }
+		]
+	}
+ */
+export function handleTransformations(transformations: any, columns: any, sections: any): InsightResult[] {
+
+	let group: any;
+	let apply: any;
+	try {
+		group = transformations.GROUP;
+		apply = transformations.APPLY;
+	} catch {
+		throw new InsightError("Invalid Query: missing GROUP or APPLY in TRANSFORMATIONS");
+	}
+	if (group.length === 0) {
+		throw new InsightError("Invalid Query: GROUP must have at least 1 key");
+	}
+
+	const applyKeys = apply.map((obj: {}) => Object.keys(obj)[0]);
+	for (const column of columns) {
+		if (column.includes("_") && !group.includes(column)) {
+			throw new InsightError("Invalid Query: Keys in COLUMNS must be in GROUP or APPLY when TRANSFORMATIONS is present");
+		} else if (!column.includes("_") && !applyKeys.includes(column)) {
+			throw new InsightError("Invalid Query: Keys in COLUMNS must be in GROUP or APPLY when TRANSFORMATIONS is present");
+		}
+	}
+
+	return handleAggregation(group, apply, sections);
+}
+
+export function handleAggregation(group: any, apply: any, sections: any): InsightResult[] {
+
+	const map = handleGroup(group, sections);
+
+	const result: InsightResult[] = [];
+	for (const [key, value] of map) { // key is "sections_avg:90,sections_title:310", value is array of sections that match the key
+		const insightResult: InsightResult = parseMapKeyToObj(key);
+
+		for (const aggregation of apply) {
+			insightResult[Object.keys(aggregation)[0]] = handleAggregationCalculation(aggregation, value);
+		}
+
+		result.push(insightResult);
+	}
+
+	return result;
+}
+
+/* aggregation looks like this
+	{
+		"overallAvg": {
+		  "AVG": "sections_avg"
+		}
+	}
+*/
+export function handleAggregationCalculation(aggregation: any, sections: any): number {
+	const aggregationInside = Object.values(aggregation)[0] as any;
+	const aggregationType = Object.keys(aggregationInside)[0];
+	const columnFieldPair = Object.values(aggregationInside)[0] as string;
+
+	if (aggregationType === "COUNT") { // Count can be used on SFields, others cannot
+		return handleCount(sections);
+	}
+
+	const columnName = getAndCheckColumnName(columnFieldPair, QueryComparison.EITHER);
+	let result = 0;
+	if (isSField(columnName)) {
+		throw new InsightError("Invalid Query: Cannot aggregate on SField: " + columnName);
+	}
+
+	if (aggregationType === "MAX") {
+		result = handleMax(columnName, sections);
+	} else if (aggregationType === "MIN") {
+		result = handleMin(columnName, sections);
+	} else if (aggregationType === "AVG") {
+		result = handleAvg(columnName, sections);
+	} else if (aggregationType === "SUM") {
+		result = handleSum(columnName, sections);
+	} else {
+		throw new InsightError("Invalid Query: invalid transformation operator: " + aggregationType);
+	}
+
+	return result;
+}
+
+export function handleGroup(group: any, sections: any): Map<string, any> {
+	const map = new Map<string, any>();
+	for (const section of sections) {
+		let key = "";
+
+		for (const column of group) { // creates a key of the given group_by columns, which will be used as a key in a map
+			const columnName = getAndCheckColumnName(column, QueryComparison.EITHER);
+			if (isMField(columnName)) {
+				const field = section.getMField(columnName);
+				key = key + column + ":" + field + "~";
+			} else if (isSField(columnName)) {
+				const field = section.getSField(columnName);
+				key = key + column + ":" + field + "~";
+			} else {
+				throw new InsightError("Invalid Query: invalid key in GROUP");
+			}
+		}
+
+		if (map.has(key)) {
+			const array = map.get(key);
+			array.push(section);
+		} else {
+			map.set(key, [section]);
+		}
+	}
+	return map;
+}
+

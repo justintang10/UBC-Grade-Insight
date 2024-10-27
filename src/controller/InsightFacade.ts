@@ -13,7 +13,7 @@ import { SectionsDataset } from "../models/sectionsDataset";
 import { jsonToRoomsDataset, jsonToSectionsDataset } from "../utils/persistenceUtils";
 import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
-import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
+import {handleOptions, handleTransformations, handleWhere} from "../utils/queryParsingEngine";
 import { RoomsDataset } from "../models/roomsDataset";
 import { Base64ZipToJsonRooms, jsonToRooms } from "../utils/zipUtilsRoom";
 
@@ -118,6 +118,7 @@ export default class InsightFacade implements IInsightFacade {
 		let hasOptions = false;
 		let queryWhere;
 		let queryOptions;
+		let queryTransformations = null;
 		for (const key in query) {
 			if (key === "WHERE") {
 				hasWhere = true;
@@ -125,6 +126,8 @@ export default class InsightFacade implements IInsightFacade {
 			} else if (key === "OPTIONS") {
 				hasOptions = true;
 				queryOptions = query[key];
+			} else if (key == "TRANSFORMATIONS") {
+				queryTransformations = query[key];
 			}
 		}
 		if (!hasWhere) {
@@ -143,9 +146,27 @@ export default class InsightFacade implements IInsightFacade {
 		// handleWhere will then return all the valid sections from the query
 		const validSections = handleWhere(queryWhere, allSections, datasetId);
 
+		let columns;
+		try {
+			columns = queryOptions.COLUMNS;
+		} catch {
+			throw new InsightError("Invalid Query: Options missing COLUMNS");
+		}
+		if (columns.length === 0) {
+			throw new InsightError("Invalid Query: COLUMNS must be nonzero list");
+		}
+
+		let transformationsInQuery = false;
+		let transformedSections = validSections;
+		if (queryTransformations !== null) {
+			transformedSections = handleTransformations(queryTransformations, columns, validSections);
+			transformationsInQuery = true;
+		}
+
 		// Pass 1st argument of dictionary["OPTIONS"] into handleOptions, as well as validSections
 		// handleOptions will return the array of columns and values for each section
-		const result = handleOptions(queryOptions, validSections, datasetId);
+
+		const result = handleOptions(queryOptions, transformedSections, datasetId, transformationsInQuery);
 
 		// If result.length is > 5000, throw ResultTooLargeError
 		if (result.length > this.MAX_QUERIES) {

@@ -538,8 +538,12 @@ describe("InsightFacade", function () {
 						for (const expectedSection of expected) {
 							if (deepEqual(section, expectedSection)) {
 								inExpected = true;
+								expected.splice(expected.indexOf(expectedSection), 1);
 								break;
 							}
+						}
+						if (!inExpected) {
+							console.log("NOT FOUND: ", section);
 						}
 						expect(inExpected).to.equal(true);
 					}
@@ -641,5 +645,9 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
+
+		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
+		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
+		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
 	});
 });
