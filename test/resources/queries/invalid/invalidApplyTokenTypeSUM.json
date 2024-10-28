@@ -1,0 +1,44 @@
+{
+	"title": "invalidApplyTokenTypeSUM",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"overallAvg",
+				"highestSectionGrade",
+				"lowestSectionGrade",
+				"sumOfGrades"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"overallAvg": {
+						"AVG": "sections_avg"
+					}
+				},
+				{
+					"highestSectionGrade": {
+						"MAX": "sections_avg"
+					}
+				},
+				{
+					"lowestSectionGrade": {
+						"MIN": "sections_avg"
+					}
+				},
+				{
+					"sumOfGrades": {
+						"SUM": "sections_instructor"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
