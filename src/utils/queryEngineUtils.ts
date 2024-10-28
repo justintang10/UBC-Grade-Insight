@@ -12,14 +12,24 @@ export function isMComparator(queryKey: string): boolean {
 	return lComparators.includes(queryKey);
 }
 
-export function isMField(field: string): boolean {
-	const mFields = ["avg", "pass", "fail", "audit", "year"];
+export function isMField(field: string, isSections: boolean): boolean {
+	let mFields;
+	if (isSections) {
+		mFields = ["avg", "pass", "fail", "audit", "year"];
+	} else {
+		mFields = ["lat", "lon", "seats"];
+	}
 
 	return mFields.includes(field);
 }
 
-export function isSField(field: string): boolean {
-	const sFields = ["dept", "id", "instructor", "title", "uuid"];
+export function isSField(field: string, isSections: boolean): boolean {
+	let sFields;
+	if (isSections) {
+		sFields = ["dept", "id", "instructor", "title", "uuid"];
+	} else {
+		sFields = ["fullname", "shortname", "number", "name", "address", "type", "furniture", "href"];
+	}
 
 	return sFields.includes(field);
 }
@@ -119,7 +129,11 @@ export function getAndCheckDatasetId(datasetColumnPair: string, previousDatasetI
 	return thisDatasetId;
 }
 
-export function getAndCheckColumnName(datasetColumnPair: string, comparisonType: QueryComparison): string {
+export function getAndCheckColumnName(
+	datasetColumnPair: string,
+	comparisonType: QueryComparison,
+	isSections: boolean
+): string {
 	let columnName = "";
 	let underscoreFound = false;
 	for (let i = 0; i < datasetColumnPair.length; i++) {
@@ -134,15 +148,15 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 	}
 
 	if (comparisonType === QueryComparison.SCOMPARISON) {
-		if (!isSField(columnName)) {
+		if (!isSField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: SCOMPARISON performed with an non-SFIELD: " + columnName);
 		}
 	} else if (comparisonType === QueryComparison.MCOMPARISON) {
-		if (!isMField(columnName)) {
+		if (!isMField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: MCOMPARISON performed with an non-MFIELD: " + columnName);
 		}
 	} else if (comparisonType === QueryComparison.EITHER) {
-		if (!isMField(columnName) && !isSField(columnName)) {
+		if (!isMField(columnName, isSections) && !isSField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: " + columnName + " is not a valid column field!");
 		}
 	}
@@ -151,7 +165,6 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 }
 
 export function sortByOrder(sections: any, order: string): InsightResult[] {
-
 	sections.sort(function (a: any, b: any) {
 		const aValue = a[order];
 		const bValue = b[order];
@@ -170,7 +183,6 @@ export function sortByOrder(sections: any, order: string): InsightResult[] {
 }
 
 export function sortByMultipleColumns(sections: any, direction: string, keys: any): InsightResult[] {
-
 	sections.sort(function (a: any, b: any) {
 		let value = compareParameters(a, b, 0, keys);
 		if (direction === "DOWN") {
@@ -211,7 +223,12 @@ export enum QueryComparison {
 	EITHER,
 }
 
-export function translateToInsightResult(columns: any, sections: any, datasetId: string): InsightResult[] {
+export function translateToInsightResult(
+	columns: any,
+	sections: any,
+	datasetId: string,
+	isSections: boolean
+): InsightResult[] {
 	// initialize empty array
 	const result: InsightResult[] = [];
 
@@ -219,11 +236,11 @@ export function translateToInsightResult(columns: any, sections: any, datasetId:
 		const insightResult: InsightResult = {};
 		for (const datasetColumnPair of columns) {
 			getAndCheckDatasetId(datasetColumnPair, datasetId);
-			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER);
+			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER, isSections);
 
-			if (isMField(columnName)) {
+			if (isMField(columnName, isSections)) {
 				insightResult[datasetColumnPair] = section.getMField(columnName);
-			} else if (isSField(columnName)) {
+			} else if (isSField(columnName, isSections)) {
 				insightResult[datasetColumnPair] = section.getSField(columnName);
 			}
 		}
@@ -232,56 +249,6 @@ export function translateToInsightResult(columns: any, sections: any, datasetId:
 	}
 
 	return result;
-}
-
-export function handleMax(columnName: any, sections: any): number {
-	let max = Number.MIN_SAFE_INTEGER;
-	for (const section of sections) {
-		const value = section.getMField(columnName);
-		if (value > max) {
-			max = value;
-		}
-	}
-	return max;
-}
-
-export function handleMin(columnName: any, sections: any): number {
-	let min = Number.MAX_SAFE_INTEGER;
-	for (const section of sections) {
-		const value = section.getMField(columnName);
-		if (value < min) {
-			min = value;
-		}
-	}
-	return min;
-}
-
-export function handleAvg(columnName: any, sections: any): number {
-	let sum = 0;
-	if (sections[0].getSField("title") === "adv soil s") {
-		console.log("Hi");
-	}
-	for (const section of sections) {
-		const value = section.getMField(columnName);
-		sum += value;
-	}
-	const decimalCount = 2;
-	sum = Number(sum.toFixed(decimalCount)); // deal with floating point error
-	const avg = sum / sections.length;
-	return Number(avg.toFixed(decimalCount));
-}
-
-export function handleSum(columnName: any, sections: any): number {
-	let sum = 0;
-	for (const section of sections) {
-		const value = section.getMField(columnName);
-		sum += value;
-	}
-	return sum;
-}
-
-export function handleCount(sections: any): number {
-	return sections.length;
 }
 
 // key is "sections_avg:90,sections_title:310"
@@ -293,7 +260,8 @@ export function parseMapKeyToObj(mapKey: string): InsightResult {
 		const colonIndex = keyValuePair.indexOf(":");
 		const key = keyValuePair.substring(0, colonIndex);
 		let value = keyValuePair.substring(colonIndex + 1, keyValuePair.length) as number | string;
-		if (!Number.isNaN(Number(value)) && value !== "") { // cast value to number if it is a valid number
+		if (!Number.isNaN(Number(value)) && value !== "") {
+			// cast value to number if it is a valid number
 			value = Number(value);
 		}
 		result[key] = value;
@@ -301,3 +269,11 @@ export function parseMapKeyToObj(mapKey: string): InsightResult {
 	}
 	return result;
 }
+
+/* aggregation looks like this
+	{
+		"overallAvg": {
+		  "AVG": "sections_avg"
+		}
+	}
+*/
