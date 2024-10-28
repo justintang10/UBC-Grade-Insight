@@ -1,0 +1,38 @@
+{
+	"title": "invalidApplyTokenTypeMIN",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"overallAvg",
+				"highestSectionGrade",
+				"lowestSectionGrade"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"overallAvg": {
+						"AVG": "sections_avg"
+					}
+				},
+				{
+					"highestSectionGrade": {
+						"MAX": "sections_avg"
+					}
+				},
+				{
+					"lowestSectionGrade": {
+						"MIN": "sections_dept"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

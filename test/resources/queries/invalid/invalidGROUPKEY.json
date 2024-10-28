@@ -1,0 +1,19 @@
+{
+	"title": "invalidGROUPKEY",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_random"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_random"
+			],
+			"APPLY": []
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
