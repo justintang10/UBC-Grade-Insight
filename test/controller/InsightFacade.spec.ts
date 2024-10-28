@@ -619,6 +619,12 @@ describe("InsightFacade", function () {
 			checkQuery
 		);
 		it("[valid/validWildcard.json] SELECT dept, id, avg WHERE dept = cpsc AND id = 5*", checkQuery);
+		//QUERY EBNF C2
+		it("[valid/applyTokenValidType.json] applyTokenValidType", checkQuery);
+		it("[valid/validEmptyApply.json] validEmptyApply", checkQuery);
+		it("[valid/validOptionsSORT.json] validOptionsSORT", checkQuery);
+		it("[valid/validOptionsSORTMultipleKeys.json] validOptionsSORTMultipleKeys", checkQuery);
+		it("[valid/validOptionsSORTUP.json] validOptionsSORTUP", checkQuery);
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
@@ -665,5 +671,26 @@ describe("InsightFacade", function () {
 		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
 		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
 		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
+		//QUERY EBNF C2
+		it("[valid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
+		it("[valid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
+		it("[valid/invalidOptionsSORTMissingDir.json] invalidOptionsSORTMissingDir.json", checkQuery);
+		it("[valid/invalidOptionsSORTMissingKeys.json] invalidOptionsSORTMissingKeys.json", checkQuery);
+		it("[valid/invalidOptionsSORTKeyNotInColumns.json] invalidOptionsSORTKeyNotInColumns.json", checkQuery);
+		it("[valid/invalidApplyKeyUNDERSCORE.json] invalidApplyKeyUNDERSCORE.json", checkQuery);
+		it("[valid/invalidGroupSpelling.json] invalidGroupSpelling.json", checkQuery);
+		it("[valid/invalidGroupNotArray.json] invalidGroupNotArray.json", checkQuery);
+		it("[valid/invalidGroupEmptyArray.json] invalidGroupEmptyArray.json", checkQuery);
+		it("[valid/invalidApplyMissing.json] invalidApplyMissing.json", checkQuery);
+		it("[valid/invalidApplySpelling.json] invalidApplySpelling.json", checkQuery);
+		it("[valid/invalidApplyArray.json] invalidApplyArray.json", checkQuery);
+		it("[valid/invalidGROUPKEY.json] invalidGROUPKEY.json", checkQuery);
+		it("[valid/invalidColumnsKeyAPPLYorGROUP.json] invalidColumnsKeyAPPLYorGROUP.json", checkQuery);
+		it("[valid/invalidDuplicateApplyKey.json] invalidDuplicateApplyKey.json", checkQuery);
+		it("[valid/invalidApplyKey.json] invalidApplyKey.json", checkQuery);
+		it("[valid/invalidApplyTokenTypeAVG.json] invalidApplyTokenTypeAVG.json", checkQuery);
+		it("[valid/invalidApplyTokenTypeMAX.json] invalidApplyTokenTypeMAX.json", checkQuery);
+		it("[valid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
+		it("[valid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
 	});
 });
