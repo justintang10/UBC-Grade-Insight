@@ -13,7 +13,7 @@ import { SectionsDataset } from "../models/sectionsDataset";
 import { jsonToRoomsDataset, jsonToSectionsDataset } from "../utils/persistenceUtils";
 import "../utils/queryEngineUtils";
 import { getDatasetId } from "../utils/queryEngineUtils";
-import { handleOptions, handleWhere } from "../utils/queryParsingEngine";
+import { handleOptions, handleTransformations, handleWhere } from "../utils/queryParsingEngine";
 import { RoomsDataset } from "../models/roomsDataset";
 import { Base64ZipToJsonRooms } from "../utils/zipUtilsRoom";
 
@@ -113,38 +113,48 @@ export default class InsightFacade implements IInsightFacade {
 	// Returns array of section information which match the given query
 	public async performQuery(query: any): Promise<InsightResult[]> {
 		// Note: Super scuffed: does not check for duplicate wheres or options. But also: the reference UI does not check either?
-		let hasWhere = false;
-		let hasOptions = false;
-		let queryWhere;
-		let queryOptions;
+		let where = null;
+		let options = null;
+		let transformations = null;
 		for (const key in query) {
 			if (key === "WHERE") {
-				hasWhere = true;
-				queryWhere = query[key];
+				where = query[key];
 			} else if (key === "OPTIONS") {
-				hasOptions = true;
-				queryOptions = query[key];
+				options = query[key];
+			} else if (key === "TRANSFORMATIONS") {
+				transformations = query[key];
 			}
 		}
-		if (!hasWhere) {
-			throw new InsightError("Invalid Query: Missing WHERE");
-		} else if (!hasOptions) {
-			throw new InsightError("Invalid Query: Missing OPTIONS");
+		if (where === null || options === null) {
+			throw new InsightError("Invalid Query: Missing WHERE or OPTIONS");
 		}
 
 		// Get first datasetId to retrieve sections
-		const datasetId = getDatasetId(queryOptions); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
+		const datasetId = getDatasetId(options); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
-		// Get all sections from given dataset
-		const allSections = await this.getSectionsFromDataset(datasetId);
+		// Get all data (an array of either sections or rooms) from given dataset
+		const allSections = await this.getDataFromDataset(datasetId);
+
+		let isSections = true;
+		if (allSections[0].constructor.name === "Room") {
+			isSections = false;
+		}
 
 		// Pass query["WHERE"] into handleWhere, as well as all sections from dataset
 		// handleWhere will then return all the valid sections from the query
-		const validSections = handleWhere(queryWhere, allSections, datasetId);
+		const validSections = handleWhere(where, allSections, datasetId, isSections);
+
+		let transformationsInQuery = false;
+		let transformedSections = validSections;
+		if (transformations !== null) {
+			transformedSections = handleTransformations(transformations, options.COLUMNS, validSections, isSections);
+			transformationsInQuery = true;
+		}
 
 		// Pass 1st argument of dictionary["OPTIONS"] into handleOptions, as well as validSections
 		// handleOptions will return the array of columns and values for each section
-		const result = handleOptions(queryOptions, validSections, datasetId);
+
+		const result = handleOptions(options, transformedSections, datasetId, transformationsInQuery, isSections);
 
 		// If result.length is > 5000, throw ResultTooLargeError
 		if (result.length > this.MAX_QUERIES) {
@@ -154,12 +164,23 @@ export default class InsightFacade implements IInsightFacade {
 		return result;
 	}
 
-	private async getSectionsFromDataset(datasetId: string): Promise<any> {
+	private async getDataFromDataset(datasetId: string): Promise<any> {
 		await this.loadDatasetFromFile(datasetId); // will throw error if dataset not found in disk
+		// ^^ I think putting this line before the loops might break things/be expensive, since we only want to load the
+		// dataset from the disk if the dataset is not found in memory? eg. if a dataset is already
+		// in memory, this function will push it into sectionsDatasets/roomsDatasets either way, so we'll have
+		// duplicate datasets in the array (which I don't actually think breaks anything, it's just weird?)
+		// - Munn
 
 		for (const dataset of this.sectionsDatasets) {
 			if (dataset.id === datasetId) {
 				return dataset.getSections();
+			}
+		}
+
+		for (const dataset of this.roomsDatasets) {
+			if (dataset.id === datasetId) {
+				return dataset.getRooms();
 			}
 		}
 

@@ -12,14 +12,24 @@ export function isMComparator(queryKey: string): boolean {
 	return lComparators.includes(queryKey);
 }
 
-export function isMField(field: string): boolean {
-	const mFields = ["avg", "pass", "fail", "audit", "year"];
+export function isMField(field: string, isSections: boolean): boolean {
+	let mFields;
+	if (isSections) {
+		mFields = ["avg", "pass", "fail", "audit", "year"];
+	} else {
+		mFields = ["lat", "lon", "seats"];
+	}
 
 	return mFields.includes(field);
 }
 
-export function isSField(field: string): boolean {
-	const sFields = ["dept", "id", "instructor", "title", "uuid"];
+export function isSField(field: string, isSections: boolean): boolean {
+	let sFields;
+	if (isSections) {
+		sFields = ["dept", "id", "instructor", "title", "uuid"];
+	} else {
+		sFields = ["fullname", "shortname", "number", "name", "address", "type", "furniture", "href"];
+	}
 
 	return sFields.includes(field);
 }
@@ -119,7 +129,11 @@ export function getAndCheckDatasetId(datasetColumnPair: string, previousDatasetI
 	return thisDatasetId;
 }
 
-export function getAndCheckColumnName(datasetColumnPair: string, comparisonType: QueryComparison): string {
+export function getAndCheckColumnName(
+	datasetColumnPair: string,
+	comparisonType: QueryComparison,
+	isSections: boolean
+): string {
 	let columnName = "";
 	let underscoreFound = false;
 	for (let i = 0; i < datasetColumnPair.length; i++) {
@@ -134,15 +148,15 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 	}
 
 	if (comparisonType === QueryComparison.SCOMPARISON) {
-		if (!isSField(columnName)) {
+		if (!isSField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: SCOMPARISON performed with an non-SFIELD: " + columnName);
 		}
 	} else if (comparisonType === QueryComparison.MCOMPARISON) {
-		if (!isMField(columnName)) {
+		if (!isMField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: MCOMPARISON performed with an non-MFIELD: " + columnName);
 		}
 	} else if (comparisonType === QueryComparison.EITHER) {
-		if (!isMField(columnName) && !isSField(columnName)) {
+		if (!isMField(columnName, isSections) && !isSField(columnName, isSections)) {
 			throw new InsightError("Invalid Query: " + columnName + " is not a valid column field!");
 		}
 	}
@@ -151,31 +165,56 @@ export function getAndCheckColumnName(datasetColumnPair: string, comparisonType:
 }
 
 export function sortByOrder(sections: any, order: string): InsightResult[] {
-	const column = getAndCheckColumnName(order, QueryComparison.EITHER);
-
-	if (isMField(column)) {
-		// order by
-		sections.sort(function (a: any, b: any) {
-			const aNum = a[order];
-			const bNum = b[order];
-			if (aNum < bNum) {
-				return -1;
-			}
-			if (aNum > bNum) {
-				return 1;
-			}
-			if (aNum === bNum) {
-				return 0;
-			}
-		});
-	} else if (isSField(column)) {
-		// order by alphabetical
-		sections.sort(function (a: any, b: any) {
-			return a[order].localeCompare(b[order]);
-		});
-	}
+	sections.sort(function (a: any, b: any) {
+		const aValue = a[order];
+		const bValue = b[order];
+		if (aValue < bValue) {
+			return -1;
+		}
+		if (aValue > bValue) {
+			return 1;
+		}
+		if (aValue === bValue) {
+			return 0;
+		}
+	});
 
 	return sections;
+}
+
+export function sortByMultipleColumns(sections: any, direction: string, keys: any): InsightResult[] {
+	sections.sort(function (a: any, b: any) {
+		let value = compareParameters(a, b, 0, keys);
+		if (direction === "DOWN") {
+			value *= -1;
+		}
+		return value;
+	});
+
+	return sections;
+}
+
+// a is a section
+// b is a section
+// i is index of current key
+// keys is an array of column names
+function compareParameters(a: any, b: any, i: number, keys: any): number {
+	// Out of keys to compare, will not sort
+	if (i >= keys.length) {
+		return 0;
+	}
+
+	let ret;
+	const keyColumnPair = keys[i];
+	if (a[keyColumnPair] > b[keyColumnPair]) {
+		ret = 1;
+	} else if (a[keyColumnPair] < b[keyColumnPair]) {
+		ret = -1;
+	} else {
+		ret = compareParameters(a, b, i + 1, keys); // if a[keyColumnPair] === b[keyColumnPair], compare by the next key
+	}
+
+	return ret;
 }
 
 export enum QueryComparison {
@@ -183,3 +222,58 @@ export enum QueryComparison {
 	SCOMPARISON,
 	EITHER,
 }
+
+export function translateToInsightResult(
+	columns: any,
+	sections: any,
+	datasetId: string,
+	isSections: boolean
+): InsightResult[] {
+	// initialize empty array
+	const result: InsightResult[] = [];
+
+	for (const section of sections) {
+		const insightResult: InsightResult = {};
+		for (const datasetColumnPair of columns) {
+			getAndCheckDatasetId(datasetColumnPair, datasetId);
+			const columnName = getAndCheckColumnName(datasetColumnPair, QueryComparison.EITHER, isSections);
+
+			if (isMField(columnName, isSections)) {
+				insightResult[datasetColumnPair] = section.getMField(columnName);
+			} else if (isSField(columnName, isSections)) {
+				insightResult[datasetColumnPair] = section.getSField(columnName);
+			}
+		}
+
+		result.push(insightResult);
+	}
+
+	return result;
+}
+
+// key is "sections_avg:90,sections_title:310"
+export function parseMapKeyToObj(mapKey: string): InsightResult {
+	const result: InsightResult = {};
+	while (mapKey.length > 0) {
+		const nextCommaIndex = mapKey.indexOf("~");
+		const keyValuePair = mapKey.substring(0, nextCommaIndex);
+		const colonIndex = keyValuePair.indexOf(":");
+		const key = keyValuePair.substring(0, colonIndex);
+		let value = keyValuePair.substring(colonIndex + 1, keyValuePair.length) as number | string;
+		if (!Number.isNaN(Number(value)) && value !== "") {
+			// cast value to number if it is a valid number
+			value = Number(value);
+		}
+		result[key] = value;
+		mapKey = mapKey.substring(nextCommaIndex + 1, mapKey.length);
+	}
+	return result;
+}
+
+/* aggregation looks like this
+	{
+		"overallAvg": {
+		  "AVG": "sections_avg"
+		}
+	}
+*/

@@ -554,9 +554,13 @@ describe("InsightFacade", function () {
 						for (const expectedSection of expected) {
 							if (deepEqual(section, expectedSection)) {
 								inExpected = true;
+								expected.splice(expected.indexOf(expectedSection), 1);
 								break;
 							}
 						}
+						// if (!inExpected) {
+						// 	console.log("NOT FOUND: ", section);
+						// }
 						expect(inExpected).to.equal(true);
 					}
 				})
@@ -580,12 +584,15 @@ describe("InsightFacade", function () {
 			//reload the dataset from memory
 			await clearDisk();
 			sections = await getContentFromArchives("pair.zip");
+			validRoomsDataset = await getContentFromArchives("campus.zip");
 
 			// Add the dataset to InsightFacade once.
 			// Will *fail* if there is a problem reading the dataset.
 			try {
-				const datasetIds = await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
-				expect(datasetIds).to.have.length(1);
+				// I don't know why adding both datasets at the same time doesn't work,
+				// commenting either one out lets the other one actually run though
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
 			}
@@ -663,26 +670,30 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
+
+		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
+		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
+		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
 		//QUERY EBNF C2
-		it("[valid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
-		it("[valid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
-		it("[valid/invalidOptionsSORTMissingDir.json] invalidOptionsSORTMissingDir.json", checkQuery);
-		it("[valid/invalidOptionsSORTMissingKeys.json] invalidOptionsSORTMissingKeys.json", checkQuery);
-		it("[valid/invalidOptionsSORTKeyNotInColumns.json] invalidOptionsSORTKeyNotInColumns.json", checkQuery);
-		it("[valid/invalidApplyKeyUNDERSCORE.json] invalidApplyKeyUNDERSCORE.json", checkQuery);
-		it("[valid/invalidGroupSpelling.json] invalidGroupSpelling.json", checkQuery);
-		it("[valid/invalidGroupNotArray.json] invalidGroupNotArray.json", checkQuery);
-		it("[valid/invalidGroupEmptyArray.json] invalidGroupEmptyArray.json", checkQuery);
-		it("[valid/invalidApplyMissing.json] invalidApplyMissing.json", checkQuery);
-		it("[valid/invalidApplySpelling.json] invalidApplySpelling.json", checkQuery);
-		it("[valid/invalidApplyArray.json] invalidApplyArray.json", checkQuery);
-		it("[valid/invalidGROUPKEY.json] invalidGROUPKEY.json", checkQuery);
-		it("[valid/invalidColumnsKeyAPPLYorGROUP.json] invalidColumnsKeyAPPLYorGROUP.json", checkQuery);
-		it("[valid/invalidDuplicateApplyKey.json] invalidDuplicateApplyKey.json", checkQuery);
-		it("[valid/invalidApplyKey.json] invalidApplyKey.json", checkQuery);
-		it("[valid/invalidApplyTokenTypeAVG.json] invalidApplyTokenTypeAVG.json", checkQuery);
-		it("[valid/invalidApplyTokenTypeMAX.json] invalidApplyTokenTypeMAX.json", checkQuery);
-		it("[valid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
-		it("[valid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
+		it("[invalid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
+		it("[invalid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
+		it("[invalid/invalidOptionsSORTMissingDir.json] invalidOptionsSORTMissingDir.json", checkQuery);
+		it("[invalid/invalidOptionsSORTMissingKeys.json] invalidOptionsSORTMissingKeys.json", checkQuery);
+		it("[invalid/invalidOptionsSORTKeyNotInColumns.json] invalidOptionsSORTKeyNotInColumns.json", checkQuery);
+		it("[invalid/invalidApplyKeyUNDERSCORE.json] invalidApplyKeyUNDERSCORE.json", checkQuery);
+		it("[invalid/invalidGroupSpelling.json] invalidGroupSpelling.json", checkQuery);
+		it("[invalid/invalidGroupNotArray.json] invalidGroupNotArray.json", checkQuery);
+		it("[invalid/invalidGroupEmptyArray.json] invalidGroupEmptyArray.json", checkQuery);
+		it("[invalid/invalidApplyMissing.json] invalidApplyMissing.json", checkQuery);
+		it("[invalid/invalidApplySpelling.json] invalidApplySpelling.json", checkQuery);
+		it("[invalid/invalidApplyArray.json] invalidApplyArray.json", checkQuery);
+		it("[invalid/invalidGROUPKEY.json] invalidGROUPKEY.json", checkQuery);
+		it("[invalid/invalidColumnsKeyAPPLYorGROUP.json] invalidColumnsKeyAPPLYorGROUP.json", checkQuery);
+		it("[invalid/invalidDuplicateApplyKey.json] invalidDuplicateApplyKey.json", checkQuery);
+		it("[invalid/invalidApplyKey.json] invalidApplyKey.json", checkQuery);
+		it("[invalid/invalidApplyTokenTypeAVG.json] invalidApplyTokenTypeAVG.json", checkQuery);
+		it("[invalid/invalidApplyTokenTypeMAX.json] invalidApplyTokenTypeMAX.json", checkQuery);
+		it("[invalid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
+		it("[invalid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
 	});
 });
