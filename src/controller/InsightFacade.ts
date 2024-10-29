@@ -16,7 +16,6 @@ import { getDatasetId } from "../utils/queryEngineUtils";
 import { handleOptions, handleTransformations, handleWhere } from "../utils/queryParsingEngine";
 import { RoomsDataset } from "../models/roomsDataset";
 import { Base64ZipToJsonRooms } from "../utils/zipUtilsRoom";
-
 import fs from "fs-extra";
 
 /**
