@@ -1,10 +1,8 @@
 import {
 	IInsightFacade,
-	//InsightDataset,
 	InsightDatasetKind,
 	InsightError,
 	NotFoundError,
-	//InsightResult,
 	ResultTooLargeError,
 } from "../../src/controller/IInsightFacade";
 import InsightFacade from "../../src/controller/InsightFacade";
@@ -50,7 +48,6 @@ describe("InsightFacade", function () {
 		singleCourseDataSet = await getContentFromArchives("singleCourseDataset.zip");
 		emptyDataset = await getContentFromArchives("emptyDataset.zip");
 		smallDataset = await getContentFromArchives("smallDataset.zip");
-
 		emptyCourseDataset = await getContentFromArchives("emptyCourseDataset.zip");
 		imageFile = await getContentFromArchives("image.zip");
 		invalidCourseDataset = await getContentFromArchives("invalidCourseDataset.zip");
@@ -144,7 +141,6 @@ describe("InsightFacade", function () {
 			} catch (err) {
 				expect(err).to.be.instanceOf(InsightError);
 			}
-			// expect.fail("Should have thrown above.");
 		});
 
 		/*
@@ -558,9 +554,6 @@ describe("InsightFacade", function () {
 								break;
 							}
 						}
-						// if (!inExpected) {
-						// 	console.log("NOT FOUND: ", section);
-						// }
 						expect(inExpected).to.equal(true);
 					}
 				})
@@ -581,16 +574,14 @@ describe("InsightFacade", function () {
 		before(async function () {
 			facade = new InsightFacade();
 
-			//reload the dataset from memory
+			//reload the datasets from memory
 			await clearDisk();
 			sections = await getContentFromArchives("pair.zip");
 			validRoomsDataset = await getContentFromArchives("campus.zip");
 
-			// Add the dataset to InsightFacade once.
-			// Will *fail* if there is a problem reading the dataset.
+			// Add each dataset to InsightFacade.
+			// Will *fail* if there is a problem reading either dataset.
 			try {
-				// I don't know why adding both datasets at the same time doesn't work,
-				// commenting either one out lets the other one actually run though
 				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
 				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
