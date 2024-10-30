@@ -1,0 +1,623 @@
+{
+	"title": "validRoomManyTiebreakers",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_type",
+				"rooms_address",
+				"rooms_fullname",
+				"rooms_shortname"
+			],
+			"ORDER": {
+				"dir": "UP",
+				"keys": [
+					"rooms_type",
+					"rooms_address",
+					"rooms_fullname",
+					"rooms_shortname"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_type",
+				"rooms_address",
+				"rooms_fullname",
+				"rooms_shortname"
+			],
+			"APPLY": [
+				{
+					"roomMAXLat": {
+						"MAX": "rooms_lat"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_type": "",
+			"rooms_address": "6333 Memorial Road",
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_shortname": "LASR"
+		},
+		{
+			"rooms_type": "Active Learning",
+			"rooms_address": "6363 Agronomy Road",
+			"rooms_fullname": "Orchard Commons",
+			"rooms_shortname": "ORCH"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "1822 East Mall",
+			"rooms_fullname": "Allard Hall (LAW)",
+			"rooms_shortname": "ALRD"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "1866 Main Mall",
+			"rooms_fullname": "Buchanan",
+			"rooms_shortname": "BUCH"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "1961 East Mall V6T 1Z1",
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_shortname": "IBLC"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "2053 Main Mall",
+			"rooms_fullname": "Henry Angus",
+			"rooms_shortname": "ANGU"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "2357 Main Mall",
+			"rooms_fullname": "MacMillan",
+			"rooms_shortname": "MCML"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "2424 Main Mall",
+			"rooms_fullname": "Forest Sciences Centre",
+			"rooms_shortname": "FSC"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "6000 Iona Drive",
+			"rooms_fullname": "Iona Building",
+			"rooms_shortname": "IONA"
+		},
+		{
+			"rooms_type": "Case Style",
+			"rooms_address": "6250 Applied Science Lane",
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_shortname": "CEME"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1822 East Mall",
+			"rooms_fullname": "Allard Hall (LAW)",
+			"rooms_shortname": "ALRD"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1866 Main Mall",
+			"rooms_fullname": "Buchanan",
+			"rooms_shortname": "BUCH"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1874 East Mall",
+			"rooms_fullname": "Brock Hall Annex",
+			"rooms_shortname": "BRKX"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1961 East Mall V6T 1Z1",
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_shortname": "IBLC"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1984 Mathematics Road",
+			"rooms_fullname": "Mathematics",
+			"rooms_shortname": "MATH"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "1984 West Mall",
+			"rooms_fullname": "Geography",
+			"rooms_shortname": "GEOG"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2045 East Mall",
+			"rooms_fullname": "Hebb",
+			"rooms_shortname": "HEBB"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2053 Main Mall",
+			"rooms_fullname": "Henry Angus",
+			"rooms_shortname": "ANGU"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2080 West Mall",
+			"rooms_fullname": "Jack Bell Building for the School of Social Work",
+			"rooms_shortname": "SOWK"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2175 West Mall V6T 1Z4",
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_shortname": "SWNG"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2205 East Mall",
+			"rooms_fullname": "Food, Nutrition and Health",
+			"rooms_shortname": "FNH"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2206 East Mall",
+			"rooms_fullname": "School of Population and Public Health",
+			"rooms_shortname": "SPPH"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2356 Main Mall",
+			"rooms_fullname": "MacLeod",
+			"rooms_shortname": "MCLD"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2357 Main Mall",
+			"rooms_fullname": "MacMillan",
+			"rooms_shortname": "MCML"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2360 East Mall V6T 1Z3",
+			"rooms_fullname": "Chemical and Biological Engineering Building",
+			"rooms_shortname": "CHBE"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "2405 Wesbrook Mall",
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_shortname": "PHRM"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6000 Iona Drive",
+			"rooms_fullname": "Iona Building",
+			"rooms_shortname": "IONA"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6081 University Blvd",
+			"rooms_fullname": "War Memorial Gymnasium",
+			"rooms_shortname": "MGYM"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6108 Thunderbird Boulevard",
+			"rooms_fullname": "Robert F. Osborne Centre",
+			"rooms_shortname": "OSBO"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6303 North West Marine Drive",
+			"rooms_fullname": "Anthropology and Sociology",
+			"rooms_shortname": "ANSO"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6331 Crescent Road V6T 1Z1",
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"rooms_shortname": "UCLL"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6333 Memorial Road",
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_shortname": "LASR"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6339 Stores Road",
+			"rooms_fullname": "Earth and Ocean Sciences - Main",
+			"rooms_shortname": "EOSM"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6350 Stores Road",
+			"rooms_fullname": "Frank Forward",
+			"rooms_shortname": "FORW"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6356 Agricultural Road",
+			"rooms_fullname": "Leonard S. Klinck (also known as CSCI)",
+			"rooms_shortname": "LSK"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6363 Agronomy Road",
+			"rooms_fullname": "Orchard Commons",
+			"rooms_shortname": "ORCH"
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"rooms_address": "6445 University Boulevard",
+			"rooms_fullname": "Ponderosa Commons: Oak House",
+			"rooms_shortname": "PCOH"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "1866 Main Mall",
+			"rooms_fullname": "Buchanan",
+			"rooms_shortname": "BUCH"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "1924 West Mall",
+			"rooms_fullname": "Auditorium Annex",
+			"rooms_shortname": "AUDX"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "1961 East Mall V6T 1Z1",
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_shortname": "IBLC"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "1984 Mathematics Road",
+			"rooms_fullname": "Mathematics",
+			"rooms_shortname": "MATH"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "1984 West Mall",
+			"rooms_fullname": "Geography",
+			"rooms_shortname": "GEOG"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2053 Main Mall",
+			"rooms_fullname": "Henry Angus",
+			"rooms_shortname": "ANGU"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2080 West Mall",
+			"rooms_fullname": "Jack Bell Building for the School of Social Work",
+			"rooms_shortname": "SOWK"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2125 Main Mall",
+			"rooms_fullname": "Neville Scarfe",
+			"rooms_shortname": "SCRF"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2175 West Mall V6T 1Z4",
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_shortname": "SWNG"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2194 Health Sciences Mall",
+			"rooms_fullname": "Woodward (Instructional Resources Centre-IRC)",
+			"rooms_shortname": "WOOD"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2205 East Mall",
+			"rooms_fullname": "Food, Nutrition and Health",
+			"rooms_shortname": "FNH"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2206 East Mall",
+			"rooms_fullname": "School of Population and Public Health",
+			"rooms_shortname": "SPPH"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2356 Main Mall",
+			"rooms_fullname": "MacLeod",
+			"rooms_shortname": "MCLD"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2357 Main Mall",
+			"rooms_fullname": "MacMillan",
+			"rooms_shortname": "MCML"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2405 Wesbrook Mall",
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_shortname": "PHRM"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "2424 Main Mall",
+			"rooms_fullname": "Forest Sciences Centre",
+			"rooms_shortname": "FSC"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6108 Thunderbird Boulevard",
+			"rooms_fullname": "Robert F. Osborne Centre",
+			"rooms_shortname": "OSBO"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6224 Agricultural Road",
+			"rooms_fullname": "Hennings",
+			"rooms_shortname": "HENN"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6245 Agronomy Road V6T 1Z4",
+			"rooms_fullname": "Hugh Dempster Pavilion",
+			"rooms_shortname": "DMP"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6250 Applied Science Lane",
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_shortname": "CEME"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6270 University Boulevard",
+			"rooms_fullname": "Biological Sciences",
+			"rooms_shortname": "BIOL"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6303 North West Marine Drive",
+			"rooms_fullname": "Anthropology and Sociology",
+			"rooms_shortname": "ANSO"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6331 Crescent Road V6T 1Z1",
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"rooms_shortname": "UCLL"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6333 Memorial Road",
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_shortname": "LASR"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6350 Stores Road",
+			"rooms_fullname": "Frank Forward",
+			"rooms_shortname": "FORW"
+		},
+		{
+			"rooms_type": "Small Group",
+			"rooms_address": "6445 University Boulevard",
+			"rooms_fullname": "Ponderosa Commons: Oak House",
+			"rooms_shortname": "PCOH"
+		},
+		{
+			"rooms_type": "Studio Lab",
+			"rooms_address": "6331 Crescent Road V6T 1Z1",
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"rooms_shortname": "UCLL"
+		},
+		{
+			"rooms_type": "Studio Lab",
+			"rooms_address": "6363 Agronomy Road",
+			"rooms_fullname": "Orchard Commons",
+			"rooms_shortname": "ORCH"
+		},
+		{
+			"rooms_type": "TBD",
+			"rooms_address": "2053 Main Mall",
+			"rooms_fullname": "Henry Angus",
+			"rooms_shortname": "ANGU"
+		},
+		{
+			"rooms_type": "TBD",
+			"rooms_address": "6000 Student Union Blvd",
+			"rooms_fullname": "Student Recreation Centre",
+			"rooms_shortname": "SRC"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1866 Main Mall",
+			"rooms_fullname": "Buchanan",
+			"rooms_shortname": "BUCH"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1874 East Mall",
+			"rooms_fullname": "Brock Hall Annex",
+			"rooms_shortname": "BRKX"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1961 East Mall V6T 1Z1",
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_shortname": "IBLC"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1984 Mathematics Road",
+			"rooms_fullname": "Mathematics",
+			"rooms_shortname": "MATH"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1984 West Mall",
+			"rooms_fullname": "Geography",
+			"rooms_shortname": "GEOG"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "1986 Mathematics Road",
+			"rooms_fullname": "Mathematics Annex",
+			"rooms_shortname": "MATX"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2036 Main Mall",
+			"rooms_fullname": "Chemistry",
+			"rooms_shortname": "CHEM"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2045 East Mall",
+			"rooms_fullname": "Hebb",
+			"rooms_shortname": "HEBB"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2053 Main Mall",
+			"rooms_fullname": "Henry Angus",
+			"rooms_shortname": "ANGU"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2125 Main Mall",
+			"rooms_fullname": "Neville Scarfe",
+			"rooms_shortname": "SCRF"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2175 West Mall V6T 1Z4",
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_shortname": "SWNG"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2177 Wesbrook Mall V6T 1Z3",
+			"rooms_fullname": "Friedman Building",
+			"rooms_shortname": "FRDM"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2194 Health Sciences Mall",
+			"rooms_fullname": "Woodward (Instructional Resources Centre-IRC)",
+			"rooms_shortname": "WOOD"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2202 Main Mall",
+			"rooms_fullname": "Aquatic Ecosystems Research Laboratory",
+			"rooms_shortname": "AERL"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2205 East Mall",
+			"rooms_fullname": "Food, Nutrition and Health",
+			"rooms_shortname": "FNH"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2207 Main Mall",
+			"rooms_fullname": "Earth Sciences Building",
+			"rooms_shortname": "ESB"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2260 West Mall, V6T 1Z4",
+			"rooms_fullname": "Centre for Interactive  Research on Sustainability",
+			"rooms_shortname": "CIRS"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2350 Health Sciences Mall",
+			"rooms_fullname": "Life Sciences Centre",
+			"rooms_shortname": "LSC"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2356 Main Mall",
+			"rooms_fullname": "MacLeod",
+			"rooms_shortname": "MCLD"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2357 Main Mall",
+			"rooms_fullname": "MacMillan",
+			"rooms_shortname": "MCML"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2360 East Mall V6T 1Z3",
+			"rooms_fullname": "Chemical and Biological Engineering Building",
+			"rooms_shortname": "CHBE"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2405 Wesbrook Mall",
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_shortname": "PHRM"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "2424 Main Mall",
+			"rooms_fullname": "Forest Sciences Centre",
+			"rooms_shortname": "FSC"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6174 University Boulevard",
+			"rooms_fullname": "Wesbrook",
+			"rooms_shortname": "WESB"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6224 Agricultural Road",
+			"rooms_fullname": "Hennings",
+			"rooms_shortname": "HENN"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6245 Agronomy Road V6T 1Z4",
+			"rooms_fullname": "Hugh Dempster Pavilion",
+			"rooms_shortname": "DMP"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6250 Applied Science Lane",
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_shortname": "CEME"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6270 University Boulevard",
+			"rooms_fullname": "Biological Sciences",
+			"rooms_shortname": "BIOL"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6333 Memorial Road",
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_shortname": "LASR"
+		},
+		{
+			"rooms_type": "Tiered Large Group",
+			"rooms_address": "6356 Agricultural Road",
+			"rooms_fullname": "Leonard S. Klinck (also known as CSCI)",
+			"rooms_shortname": "LSK"
+		}
+	]
+}

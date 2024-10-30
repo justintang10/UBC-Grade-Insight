@@ -619,6 +619,10 @@ describe("InsightFacade", function () {
 		it("[valid/validOptionsSORT.json] validOptionsSORT", checkQuery);
 		it("[valid/validOptionsSORTMultipleKeys.json] validOptionsSORTMultipleKeys", checkQuery);
 		it("[valid/validOptionsSORTUP.json] validOptionsSORTUP", checkQuery);
+		it("[valid/validRoomAppliesGroup.json] validRoomAppliesGroup", checkQuery);
+		it("[valid/validRoomDupSortKeys.json] validRoomDupSortKeys", checkQuery);
+		it("[valid/validRoomManyTiebreakers.json] validRoomManyTiebreakers", checkQuery);
+		it("[valid/validRoomMultipleTieBreakersNumbers.json] validRoomMultipleTieBreakersNumbers", checkQuery);
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
