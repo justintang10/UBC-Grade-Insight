@@ -1,0 +1,1251 @@
+{
+	"title": "validRoomMultipleTieBreakersNumbers",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"countRoomHref",
+				"rooms_lat",
+				"rooms_lon",
+				"rooms_seats"
+			],
+			"ORDER": {
+				"dir": "UP",
+				"keys": [
+					"countRoomHref",
+					"rooms_lat",
+					"rooms_lon",
+					"rooms_seats"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_lat",
+				"rooms_lon",
+				"rooms_seats"
+			],
+			"APPLY": [
+				{
+					"sumLat": {
+						"SUM": "rooms_lat"
+					}
+				},
+				{
+					"countRoomHref": {
+						"COUNT": "rooms_href"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 18
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 36
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 99
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 250
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26047,
+			"rooms_lon": -123.24467,
+			"rooms_seats": 39
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26047,
+			"rooms_lon": -123.24467,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26047,
+			"rooms_lon": -123.24467,
+			"rooms_seats": 442
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26048,
+			"rooms_lon": -123.24944,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 47
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 72
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 74
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 200
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26125,
+			"rooms_lon": -123.24807,
+			"rooms_seats": 80
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26125,
+			"rooms_lon": -123.24807,
+			"rooms_seats": 120
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26125,
+			"rooms_lon": -123.24807,
+			"rooms_seats": 160
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.25179,
+			"rooms_seats": 35
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.25179,
+			"rooms_seats": 44
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.25179,
+			"rooms_seats": 63
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.24935,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.24935,
+			"rooms_seats": 84
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.24935,
+			"rooms_seats": 123
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.24935,
+			"rooms_seats": 136
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26207,
+			"rooms_lon": -123.25314,
+			"rooms_seats": 426
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26228,
+			"rooms_lon": -123.25198,
+			"rooms_seats": 50
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26228,
+			"rooms_lon": -123.24718,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26228,
+			"rooms_lon": -123.24718,
+			"rooms_seats": 94
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26228,
+			"rooms_lon": -123.24718,
+			"rooms_seats": 200
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26229,
+			"rooms_lon": -123.24342,
+			"rooms_seats": 14
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26229,
+			"rooms_lon": -123.24342,
+			"rooms_seats": 72
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26229,
+			"rooms_lon": -123.24342,
+			"rooms_seats": 167
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26229,
+			"rooms_lon": -123.24342,
+			"rooms_seats": 236
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26236,
+			"rooms_lon": -123.24494,
+			"rooms_seats": 125
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 22
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 26
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 34
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 45
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 62
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26273,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 100
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26274,
+			"rooms_lon": -123.25224,
+			"rooms_seats": 80
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26274,
+			"rooms_lon": -123.25224,
+			"rooms_seats": 150
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26274,
+			"rooms_lon": -123.25224,
+			"rooms_seats": 350
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26293,
+			"rooms_lon": -123.25431,
+			"rooms_seats": 187
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26293,
+			"rooms_lon": -123.25431,
+			"rooms_seats": 188
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26372,
+			"rooms_lon": -123.25099,
+			"rooms_seats": 144
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 34
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 38
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 280
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 12
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 27
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 28
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 43
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 54
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26414,
+			"rooms_lon": -123.24959,
+			"rooms_seats": 99
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 12
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 14
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 28
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2642,
+			"rooms_lon": -123.24842,
+			"rooms_seats": 66
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2643,
+			"rooms_lon": -123.25505,
+			"rooms_seats": 12
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2643,
+			"rooms_lon": -123.25505,
+			"rooms_seats": 31
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2643,
+			"rooms_lon": -123.25505,
+			"rooms_seats": 68
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 14
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 21
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 88
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 181
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 503
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26479,
+			"rooms_lon": -123.25249,
+			"rooms_seats": 76
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26479,
+			"rooms_lon": -123.25249,
+			"rooms_seats": 228
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 35
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 37
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 53
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 58
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 80
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 260
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26517,
+			"rooms_lon": -123.24937,
+			"rooms_seats": 102
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26517,
+			"rooms_lon": -123.24937,
+			"rooms_seats": 325
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26541,
+			"rooms_lon": -123.24608,
+			"rooms_seats": 160
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26545,
+			"rooms_lon": -123.25533,
+			"rooms_seats": 42
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26545,
+			"rooms_lon": -123.25533,
+			"rooms_seats": 75
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26545,
+			"rooms_lon": -123.25533,
+			"rooms_seats": 183
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26545,
+			"rooms_lon": -123.25533,
+			"rooms_seats": 205
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2659,
+			"rooms_lon": -123.25308,
+			"rooms_seats": 240
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2659,
+			"rooms_lon": -123.25308,
+			"rooms_seats": 265
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 21
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 39
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 42
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 72
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 100
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 225
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.266089,
+			"rooms_lon": -123.254816,
+			"rooms_seats": 106
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2661,
+			"rooms_lon": -123.25165,
+			"rooms_seats": 375
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26627,
+			"rooms_lon": -123.25374,
+			"rooms_seats": 36
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26627,
+			"rooms_lon": -123.25374,
+			"rooms_seats": 150
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26627,
+			"rooms_lon": -123.25374,
+			"rooms_seats": 155
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26627,
+			"rooms_lon": -123.25374,
+			"rooms_seats": 257
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2663,
+			"rooms_lon": -123.2466,
+			"rooms_seats": 25
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2663,
+			"rooms_lon": -123.2466,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.266463,
+			"rooms_lon": -123.255534,
+			"rooms_seats": 25
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.266463,
+			"rooms_lon": -123.255534,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.266463,
+			"rooms_lon": -123.255534,
+			"rooms_seats": 224
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2666,
+			"rooms_lon": -123.25655,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2666,
+			"rooms_lon": -123.25655,
+			"rooms_seats": 21
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 10
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 12
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 50
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 112
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 154
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26767,
+			"rooms_lon": -123.25583,
+			"rooms_seats": 51
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26767,
+			"rooms_lon": -123.25583,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26767,
+			"rooms_lon": -123.25583,
+			"rooms_seats": 80
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26767,
+			"rooms_lon": -123.25583,
+			"rooms_seats": 94
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 18
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 26
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 31
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 42
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 48
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 56
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 131
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 181
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 275
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26862,
+			"rooms_lon": -123.25237,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26862,
+			"rooms_lon": -123.25237,
+			"rooms_seats": 70
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26867,
+			"rooms_lon": -123.25692,
+			"rooms_seats": 48
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26867,
+			"rooms_lon": -123.25692,
+			"rooms_seats": 55
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26958,
+			"rooms_lon": -123.25741,
+			"rooms_seats": 26
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26958,
+			"rooms_lon": -123.25741,
+			"rooms_seats": 33
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26958,
+			"rooms_lon": -123.25741,
+			"rooms_seats": 37
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.26958,
+			"rooms_lon": -123.25741,
+			"rooms_seats": 90
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2699,
+			"rooms_lon": -123.25318,
+			"rooms_seats": 44
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2699,
+			"rooms_lon": -123.25318,
+			"rooms_seats": 50
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.2699,
+			"rooms_lon": -123.25318,
+			"rooms_seats": 94
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.27106,
+			"rooms_lon": -123.25042,
+			"rooms_seats": 50
+		},
+		{
+			"countRoomHref": 1,
+			"rooms_lat": 49.27106,
+			"rooms_lon": -123.25042,
+			"rooms_seats": 100
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26044,
+			"rooms_lon": -123.24886,
+			"rooms_seats": 65
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26048,
+			"rooms_lon": -123.24944,
+			"rooms_seats": 48
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 6
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 32
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26125,
+			"rooms_lon": -123.24807,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26176,
+			"rooms_lon": -123.24935,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26236,
+			"rooms_lon": -123.24494,
+			"rooms_seats": 350
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26293,
+			"rooms_lon": -123.25431,
+			"rooms_seats": 190
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.2643,
+			"rooms_lon": -123.25505,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.2643,
+			"rooms_lon": -123.25505,
+			"rooms_seats": 29
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 12
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26479,
+			"rooms_lon": -123.25249,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 32
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 44
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 70
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.2659,
+			"rooms_lon": -123.25308,
+			"rooms_seats": 90
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.2659,
+			"rooms_lon": -123.25308,
+			"rooms_seats": 114
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26605,
+			"rooms_lon": -123.25623,
+			"rooms_seats": 60
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26627,
+			"rooms_lon": -123.25374,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.266463,
+			"rooms_lon": -123.255534,
+			"rooms_seats": 48
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26767,
+			"rooms_lon": -123.25583,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 108
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 150
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.26867,
+			"rooms_lon": -123.25692,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 2,
+			"rooms_lat": 49.2699,
+			"rooms_lon": -123.25318,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26048,
+			"rooms_lon": -123.24944,
+			"rooms_seats": 72
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.264,
+			"rooms_lon": -123.2559,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 10
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26478,
+			"rooms_lon": -123.24673,
+			"rooms_seats": 120
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 41
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 68
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.2661,
+			"rooms_lon": -123.25165,
+			"rooms_seats": 54
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.266463,
+			"rooms_lon": -123.255534,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 50
+		},
+		{
+			"countRoomHref": 3,
+			"rooms_lat": 49.2683,
+			"rooms_lon": -123.24894,
+			"rooms_seats": 299
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 20
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26486,
+			"rooms_lon": -123.25364,
+			"rooms_seats": 54
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 65
+		},
+		{
+			"countRoomHref": 4,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 78
+		},
+		{
+			"countRoomHref": 5,
+			"rooms_lat": 49.26048,
+			"rooms_lon": -123.24944,
+			"rooms_seats": 16
+		},
+		{
+			"countRoomHref": 5,
+			"rooms_lat": 49.264,
+			"rooms_lon": -123.2559,
+			"rooms_seats": 24
+		},
+		{
+			"countRoomHref": 6,
+			"rooms_lat": 49.26766,
+			"rooms_lon": -123.2521,
+			"rooms_seats": 8
+		},
+		{
+			"countRoomHref": 6,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 32
+		},
+		{
+			"countRoomHref": 7,
+			"rooms_lat": 49.26229,
+			"rooms_lon": -123.24342,
+			"rooms_seats": 7
+		},
+		{
+			"countRoomHref": 8,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 22
+		},
+		{
+			"countRoomHref": 8,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 30
+		},
+		{
+			"countRoomHref": 9,
+			"rooms_lat": 49.26293,
+			"rooms_lon": -123.25431,
+			"rooms_seats": 27
+		},
+		{
+			"countRoomHref": 9,
+			"rooms_lat": 49.26293,
+			"rooms_lon": -123.25431,
+			"rooms_seats": 47
+		},
+		{
+			"countRoomHref": 10,
+			"rooms_lat": 49.26048,
+			"rooms_lon": -123.24944,
+			"rooms_seats": 25
+		},
+		{
+			"countRoomHref": 10,
+			"rooms_lat": 49.26114,
+			"rooms_lon": -123.25027,
+			"rooms_seats": 8
+		},
+		{
+			"countRoomHref": 11,
+			"rooms_lat": 49.26398,
+			"rooms_lon": -123.2531,
+			"rooms_seats": 40
+		},
+		{
+			"countRoomHref": 11,
+			"rooms_lat": 49.26826,
+			"rooms_lon": -123.25468,
+			"rooms_seats": 40
+		}
+	]
+}
