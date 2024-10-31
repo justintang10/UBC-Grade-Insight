@@ -1,0 +1,4285 @@
+{
+	"title": "invalidColumnsKeyNotInGroupOrApply",
+	"input": {
+		"WHERE": {
+			"GT": {
+				"sections_avg": 90
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"avgAvg",
+				"uniqueYears",
+				"maxAvg",
+				"maxYear"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"maxAvg",
+					"maxYear",
+					"sections_title"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"avgAvg": {
+						"AVG": "sections_avg"
+					}
+				},
+				{
+					"uniqueYears": {
+						"COUNT": "sections_year"
+					}
+				},
+				{
+					"maxAvg": {
+						"MAX": "sections_avg"
+					}
+				},
+				{
+					"maxYear": {
+						"MAX": "sections_year"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_title": "algb topology i",
+			"avgAvg": 95.21,
+			"uniqueYears": 4,
+			"maxAvg": 99.78,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "career planning",
+			"avgAvg": 92.37,
+			"uniqueYears": 9,
+			"maxAvg": 99.19,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "work int health",
+			"avgAvg": 98.98,
+			"uniqueYears": 2,
+			"maxAvg": 98.98,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "educ stds autism",
+			"avgAvg": 93.84,
+			"uniqueYears": 8,
+			"maxAvg": 98.8,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "multimedia sys",
+			"avgAvg": 94.88,
+			"uniqueYears": 3,
+			"maxAvg": 98.75,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "cl pro prim care",
+			"avgAvg": 95.12,
+			"uniqueYears": 8,
+			"maxAvg": 98.71,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "assess lrn diffi",
+			"avgAvg": 93.75,
+			"uniqueYears": 10,
+			"maxAvg": 98.7,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "fam nrs pract",
+			"avgAvg": 95.99,
+			"uniqueYears": 7,
+			"maxAvg": 98.58,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "dev el sk df&hrd",
+			"avgAvg": 98.45,
+			"uniqueYears": 2,
+			"maxAvg": 98.45,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "thesis",
+			"avgAvg": 94.12,
+			"uniqueYears": 6,
+			"maxAvg": 98,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "acad assess schl",
+			"avgAvg": 93.92,
+			"uniqueYears": 7,
+			"maxAvg": 97.78,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem in autism",
+			"avgAvg": 93.01,
+			"uniqueYears": 3,
+			"maxAvg": 97.69,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "coll&uni teachng",
+			"avgAvg": 93.56,
+			"uniqueYears": 9,
+			"maxAvg": 97.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "res mthd in educ",
+			"avgAvg": 92.27,
+			"uniqueYears": 10,
+			"maxAvg": 97.5,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "algb geometry i",
+			"avgAvg": 96.24,
+			"uniqueYears": 3,
+			"maxAvg": 97.48,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "eth&profl issues",
+			"avgAvg": 94.3,
+			"uniqueYears": 10,
+			"maxAvg": 97.33,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "diff geometry i",
+			"avgAvg": 93.05,
+			"uniqueYears": 7,
+			"maxAvg": 97.25,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "harmonic anal i",
+			"avgAvg": 94.66,
+			"uniqueYears": 4,
+			"maxAvg": 97.09,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cor des ed res",
+			"avgAvg": 93.45,
+			"uniqueYears": 9,
+			"maxAvg": 97.09,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "masters thesis",
+			"avgAvg": 92.01,
+			"uniqueYears": 8,
+			"maxAvg": 97,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "sociocult determ",
+			"avgAvg": 95.54,
+			"uniqueYears": 2,
+			"maxAvg": 96.96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "aud&non-txt arch",
+			"avgAvg": 96.94,
+			"uniqueYears": 2,
+			"maxAvg": 96.94,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "audi prctcm iv",
+			"avgAvg": 93.85,
+			"uniqueYears": 7,
+			"maxAvg": 96.9,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intro excp child",
+			"avgAvg": 93.88,
+			"uniqueYears": 7,
+			"maxAvg": 96.9,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "probability ii",
+			"avgAvg": 93.2,
+			"uniqueYears": 6,
+			"maxAvg": 96.83,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "survlnc&monitrng",
+			"avgAvg": 94.75,
+			"uniqueYears": 3,
+			"maxAvg": 96.8,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "seminar",
+			"avgAvg": 91.48,
+			"uniqueYears": 10,
+			"maxAvg": 96.59,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cnsl mat cr prov",
+			"avgAvg": 93.43,
+			"uniqueYears": 6,
+			"maxAvg": 96.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ubc chamb string",
+			"avgAvg": 96.5,
+			"uniqueYears": 2,
+			"maxAvg": 96.5,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "indig, tech&ed",
+			"avgAvg": 93.46,
+			"uniqueYears": 8,
+			"maxAvg": 96.47,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "nat resrce mngmt",
+			"avgAvg": 93.9,
+			"uniqueYears": 6,
+			"maxAvg": 96.47,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adlt edu pract",
+			"avgAvg": 93.91,
+			"uniqueYears": 3,
+			"maxAvg": 96.46,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "algebra ii",
+			"avgAvg": 94.44,
+			"uniqueYears": 4,
+			"maxAvg": 96.44,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "mo pict prod i",
+			"avgAvg": 96.4,
+			"uniqueYears": 2,
+			"maxAvg": 96.4,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ds intl forstry",
+			"avgAvg": 96.36,
+			"uniqueYears": 2,
+			"maxAvg": 96.36,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "specific lrn dis",
+			"avgAvg": 92.77,
+			"uniqueYears": 9,
+			"maxAvg": 96.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "prgm devl cnsl",
+			"avgAvg": 93.45,
+			"uniqueYears": 6,
+			"maxAvg": 96.33,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "msc major essay",
+			"avgAvg": 92.4,
+			"uniqueYears": 4,
+			"maxAvg": 96.33,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "dynam struct 2",
+			"avgAvg": 93.39,
+			"uniqueYears": 3,
+			"maxAvg": 96.27,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "prt diff equa i",
+			"avgAvg": 93.02,
+			"uniqueYears": 7,
+			"maxAvg": 96.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hydrmtllgcl rctr",
+			"avgAvg": 95.63,
+			"uniqueYears": 3,
+			"maxAvg": 96.25,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "hn dev: inf-adlt",
+			"avgAvg": 92.14,
+			"uniqueYears": 4,
+			"maxAvg": 96.23,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "classroom mgmt",
+			"avgAvg": 92.87,
+			"uniqueYears": 10,
+			"maxAvg": 96.21,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "social analysis",
+			"avgAvg": 96.04,
+			"uniqueYears": 3,
+			"maxAvg": 96.15,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "dev wkshp/sem",
+			"avgAvg": 92.56,
+			"uniqueYears": 3,
+			"maxAvg": 96.11,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "acad libraries",
+			"avgAvg": 96.1,
+			"uniqueYears": 2,
+			"maxAvg": 96.1,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hlth & soc care",
+			"avgAvg": 93.42,
+			"uniqueYears": 2,
+			"maxAvg": 96.09,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "phyl asp phy act",
+			"avgAvg": 95.07,
+			"uniqueYears": 5,
+			"maxAvg": 96.06,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "tch'g hghly able",
+			"avgAvg": 92.62,
+			"uniqueYears": 7,
+			"maxAvg": 96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ms thesis",
+			"avgAvg": 92.5,
+			"uniqueYears": 4,
+			"maxAvg": 96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "kin project",
+			"avgAvg": 92.37,
+			"uniqueYears": 5,
+			"maxAvg": 96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "health psych",
+			"avgAvg": 94.14,
+			"uniqueYears": 6,
+			"maxAvg": 96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "basic princ meas",
+			"avgAvg": 92.57,
+			"uniqueYears": 8,
+			"maxAvg": 96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "eng mtls lab",
+			"avgAvg": 92.51,
+			"uniqueYears": 7,
+			"maxAvg": 96,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "log & crit think",
+			"avgAvg": 93.75,
+			"uniqueYears": 2,
+			"maxAvg": 96,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "tech math sci",
+			"avgAvg": 94.21,
+			"uniqueYears": 5,
+			"maxAvg": 95.96,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "exp des anl ed",
+			"avgAvg": 93.44,
+			"uniqueYears": 10,
+			"maxAvg": 95.9,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "cur dev e df&hrd",
+			"avgAvg": 93.67,
+			"uniqueYears": 5,
+			"maxAvg": 95.83,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "schl counselling",
+			"avgAvg": 95.17,
+			"uniqueYears": 3,
+			"maxAvg": 95.78,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "fn & educ change",
+			"avgAvg": 93.75,
+			"uniqueYears": 7,
+			"maxAvg": 95.78,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "math mdl com dis",
+			"avgAvg": 93.96,
+			"uniqueYears": 4,
+			"maxAvg": 95.75,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "eth & prof clin",
+			"avgAvg": 93.49,
+			"uniqueYears": 6,
+			"maxAvg": 95.75,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "prep writ career",
+			"avgAvg": 93.2,
+			"uniqueYears": 5,
+			"maxAvg": 95.7,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "tech for vis imp",
+			"avgAvg": 95.67,
+			"uniqueYears": 2,
+			"maxAvg": 95.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "orch repertoire",
+			"avgAvg": 93.33,
+			"uniqueYears": 5,
+			"maxAvg": 95.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "functional analy",
+			"avgAvg": 93.17,
+			"uniqueYears": 5,
+			"maxAvg": 95.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "curric issu",
+			"avgAvg": 92.54,
+			"uniqueYears": 9,
+			"maxAvg": 95.63,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mgmt sc meth",
+			"avgAvg": 93.61,
+			"uniqueYears": 5,
+			"maxAvg": 95.6,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "ds tec ii sc c&p",
+			"avgAvg": 91.99,
+			"uniqueYears": 3,
+			"maxAvg": 95.58,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "lie theory i",
+			"avgAvg": 92.81,
+			"uniqueYears": 4,
+			"maxAvg": 95.56,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "thermodynamics",
+			"avgAvg": 92.94,
+			"uniqueYears": 3,
+			"maxAvg": 95.54,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "augmt&alt comm",
+			"avgAvg": 92.95,
+			"uniqueYears": 4,
+			"maxAvg": 95.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "surv bhvr dis ch",
+			"avgAvg": 92.87,
+			"uniqueYears": 10,
+			"maxAvg": 95.47,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "quant fld theory",
+			"avgAvg": 92.65,
+			"uniqueYears": 7,
+			"maxAvg": 95.43,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "able&creatv lrnr",
+			"avgAvg": 94.52,
+			"uniqueYears": 4,
+			"maxAvg": 95.41,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "clin make iv",
+			"avgAvg": 94.84,
+			"uniqueYears": 3,
+			"maxAvg": 95.37,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "",
+			"avgAvg": 92.56,
+			"uniqueYears": 10,
+			"maxAvg": 95.36,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "counsl adolescnt",
+			"avgAvg": 92.27,
+			"uniqueYears": 5,
+			"maxAvg": 95.36,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "math operations",
+			"avgAvg": 91.82,
+			"uniqueYears": 7,
+			"maxAvg": 95.31,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "thy cognt assess",
+			"avgAvg": 92.88,
+			"uniqueYears": 9,
+			"maxAvg": 95.31,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "islnd wild mgmt",
+			"avgAvg": 94.03,
+			"uniqueYears": 5,
+			"maxAvg": 95.29,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "tchg st visl imp",
+			"avgAvg": 95.27,
+			"uniqueYears": 2,
+			"maxAvg": 95.27,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "intro psychthrpy",
+			"avgAvg": 92.4,
+			"uniqueYears": 6,
+			"maxAvg": 95.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ed prg hghly abl",
+			"avgAvg": 92.47,
+			"uniqueYears": 8,
+			"maxAvg": 95.22,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "scenery prod i",
+			"avgAvg": 92.77,
+			"uniqueYears": 3,
+			"maxAvg": 95.2,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "dev neuropsych",
+			"avgAvg": 94.34,
+			"uniqueYears": 4,
+			"maxAvg": 95.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "med tech project",
+			"avgAvg": 93.03,
+			"uniqueYears": 3,
+			"maxAvg": 95.15,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "intr stat rs edu",
+			"avgAvg": 91.55,
+			"uniqueYears": 7,
+			"maxAvg": 95.11,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "an meth epid res",
+			"avgAvg": 92.26,
+			"uniqueYears": 3,
+			"maxAvg": 95.11,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "com hlth prom",
+			"avgAvg": 93.45,
+			"uniqueYears": 9,
+			"maxAvg": 95.09,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "admn of injectns",
+			"avgAvg": 93.35,
+			"uniqueYears": 4,
+			"maxAvg": 95.07,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "spc tpcs macroec",
+			"avgAvg": 92.41,
+			"uniqueYears": 6,
+			"maxAvg": 95,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "adlt psychpathlg",
+			"avgAvg": 92.88,
+			"uniqueYears": 4,
+			"maxAvg": 95,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "spec tpcs kin",
+			"avgAvg": 92.56,
+			"uniqueYears": 4,
+			"maxAvg": 95,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mult des anal rs",
+			"avgAvg": 93.19,
+			"uniqueYears": 5,
+			"maxAvg": 95,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ict educ ethics",
+			"avgAvg": 92.34,
+			"uniqueYears": 4,
+			"maxAvg": 95,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "directed study",
+			"avgAvg": 92.16,
+			"uniqueYears": 4,
+			"maxAvg": 95,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ubc singers",
+			"avgAvg": 94.33,
+			"uniqueYears": 7,
+			"maxAvg": 95,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "master eng proj",
+			"avgAvg": 95,
+			"uniqueYears": 2,
+			"maxAvg": 95,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "m.sc major essay",
+			"avgAvg": 95,
+			"uniqueYears": 2,
+			"maxAvg": 95,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "mntl hlth concrn",
+			"avgAvg": 95,
+			"uniqueYears": 2,
+			"maxAvg": 95,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "eval src evidenc",
+			"avgAvg": 93.2,
+			"uniqueYears": 2,
+			"maxAvg": 95,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "msc thesis",
+			"avgAvg": 92.94,
+			"uniqueYears": 2,
+			"maxAvg": 95,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "coaching effctv",
+			"avgAvg": 94.92,
+			"uniqueYears": 1,
+			"maxAvg": 94.92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "res meth educ",
+			"avgAvg": 91.44,
+			"uniqueYears": 8,
+			"maxAvg": 94.88,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "prg child sp lrn",
+			"avgAvg": 92.32,
+			"uniqueYears": 5,
+			"maxAvg": 94.86,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "txt pol& id cdev",
+			"avgAvg": 92.82,
+			"uniqueYears": 4,
+			"maxAvg": 94.86,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "ths prop: biotec",
+			"avgAvg": 94.75,
+			"uniqueYears": 2,
+			"maxAvg": 94.75,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "stats methlgy i",
+			"avgAvg": 94.06,
+			"uniqueYears": 5,
+			"maxAvg": 94.75,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "mt-anl qnt rs sy",
+			"avgAvg": 94.3,
+			"uniqueYears": 3,
+			"maxAvg": 94.75,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "power syst dynam",
+			"avgAvg": 91.9,
+			"uniqueYears": 4,
+			"maxAvg": 94.71,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv human gene",
+			"avgAvg": 92.4,
+			"uniqueYears": 3,
+			"maxAvg": 94.7,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "hier lin modelng",
+			"avgAvg": 93.52,
+			"uniqueYears": 5,
+			"maxAvg": 94.69,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "probability i",
+			"avgAvg": 92.39,
+			"uniqueYears": 6,
+			"maxAvg": 94.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ind skl vis imp",
+			"avgAvg": 92.78,
+			"uniqueYears": 4,
+			"maxAvg": 94.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "curric as&interv",
+			"avgAvg": 92.13,
+			"uniqueYears": 8,
+			"maxAvg": 94.56,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pr mental health",
+			"avgAvg": 92.2,
+			"uniqueYears": 5,
+			"maxAvg": 94.56,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "frst ntns rsorcs",
+			"avgAvg": 94.5,
+			"uniqueYears": 2,
+			"maxAvg": 94.5,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv rad biophys",
+			"avgAvg": 92.42,
+			"uniqueYears": 3,
+			"maxAvg": 94.5,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "computl ling 1",
+			"avgAvg": 94.5,
+			"uniqueYears": 2,
+			"maxAvg": 94.5,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "lrn'g disablties",
+			"avgAvg": 92.19,
+			"uniqueYears": 9,
+			"maxAvg": 94.48,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "rsrch methdlgy",
+			"avgAvg": 94.44,
+			"uniqueYears": 2,
+			"maxAvg": 94.44,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "audi adv prc ii",
+			"avgAvg": 93.22,
+			"uniqueYears": 2,
+			"maxAvg": 94.44,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "constr strat",
+			"avgAvg": 91.63,
+			"uniqueYears": 8,
+			"maxAvg": 94.42,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "prev spts inj i",
+			"avgAvg": 93.94,
+			"uniqueYears": 3,
+			"maxAvg": 94.42,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "tpc int-cel traf",
+			"avgAvg": 92.03,
+			"uniqueYears": 6,
+			"maxAvg": 94.4,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sbst use addictn",
+			"avgAvg": 94.36,
+			"uniqueYears": 2,
+			"maxAvg": 94.36,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intr dyn systems",
+			"avgAvg": 94.33,
+			"uniqueYears": 2,
+			"maxAvg": 94.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ecolg plant bioc",
+			"avgAvg": 91.9,
+			"uniqueYears": 4,
+			"maxAvg": 94.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cr-fc grwth&dev",
+			"avgAvg": 94.33,
+			"uniqueYears": 2,
+			"maxAvg": 94.33,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "found ed tech",
+			"avgAvg": 91.39,
+			"uniqueYears": 8,
+			"maxAvg": 94.29,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "project & report",
+			"avgAvg": 92.1,
+			"uniqueYears": 4,
+			"maxAvg": 94.27,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "surgical rsrch",
+			"avgAvg": 92.39,
+			"uniqueYears": 7,
+			"maxAvg": 94.25,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "prin behav anlys",
+			"avgAvg": 93.76,
+			"uniqueYears": 3,
+			"maxAvg": 94.25,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "intro musc thry",
+			"avgAvg": 93.63,
+			"uniqueYears": 2,
+			"maxAvg": 94.25,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "typ atyp inf/ch",
+			"avgAvg": 91.89,
+			"uniqueYears": 8,
+			"maxAvg": 94.23,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "phrm in practc 1",
+			"avgAvg": 94.23,
+			"uniqueYears": 2,
+			"maxAvg": 94.23,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv hlth assess",
+			"avgAvg": 92.22,
+			"uniqueYears": 9,
+			"maxAvg": 94.21,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "crit spec ed",
+			"avgAvg": 93.04,
+			"uniqueYears": 11,
+			"maxAvg": 94.2,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "research problem",
+			"avgAvg": 92.57,
+			"uniqueYears": 4,
+			"maxAvg": 94.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "curr hist contxt",
+			"avgAvg": 92.21,
+			"uniqueYears": 3,
+			"maxAvg": 94.17,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "ldrshp, ethics",
+			"avgAvg": 94.15,
+			"uniqueYears": 2,
+			"maxAvg": 94.15,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "ed st dvl ds inc",
+			"avgAvg": 91.79,
+			"uniqueYears": 5,
+			"maxAvg": 94.08,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "intrv ch&ad bh d",
+			"avgAvg": 92.54,
+			"uniqueYears": 4,
+			"maxAvg": 94.08,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "appl hlth serv",
+			"avgAvg": 92.48,
+			"uniqueYears": 4,
+			"maxAvg": 94.08,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "educ theories",
+			"avgAvg": 92.23,
+			"uniqueYears": 3,
+			"maxAvg": 94.06,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "tech arts hum",
+			"avgAvg": 92.02,
+			"uniqueYears": 5,
+			"maxAvg": 94,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "rsc trd edu admn",
+			"avgAvg": 92.22,
+			"uniqueYears": 4,
+			"maxAvg": 94,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "info tech&archvs",
+			"avgAvg": 92.81,
+			"uniqueYears": 4,
+			"maxAvg": 94,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hearing sci ii",
+			"avgAvg": 92.24,
+			"uniqueYears": 6,
+			"maxAvg": 94,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "contemp players",
+			"avgAvg": 91.76,
+			"uniqueYears": 5,
+			"maxAvg": 94,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "rehab learning",
+			"avgAvg": 92.21,
+			"uniqueYears": 4,
+			"maxAvg": 94,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "thry of automata",
+			"avgAvg": 92.55,
+			"uniqueYears": 5,
+			"maxAvg": 94,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "chldren&families",
+			"avgAvg": 94,
+			"uniqueYears": 2,
+			"maxAvg": 94,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "fisheries mngmt",
+			"avgAvg": 94,
+			"uniqueYears": 2,
+			"maxAvg": 94,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "msn major essay",
+			"avgAvg": 94,
+			"uniqueYears": 1,
+			"maxAvg": 94,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "electronics lab",
+			"avgAvg": 93.91,
+			"uniqueYears": 2,
+			"maxAvg": 93.93,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "comm disorders",
+			"avgAvg": 93.41,
+			"uniqueYears": 3,
+			"maxAvg": 93.91,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "hn dev, lrn, cul",
+			"avgAvg": 91.74,
+			"uniqueYears": 7,
+			"maxAvg": 93.88,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "dev scale&measur",
+			"avgAvg": 92.84,
+			"uniqueYears": 3,
+			"maxAvg": 93.86,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv int seminar",
+			"avgAvg": 91.65,
+			"uniqueYears": 3,
+			"maxAvg": 93.82,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "fluor microscpy",
+			"avgAvg": 91.91,
+			"uniqueYears": 9,
+			"maxAvg": 93.8,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "nanosc model&sim",
+			"avgAvg": 92.03,
+			"uniqueYears": 3,
+			"maxAvg": 93.8,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "algebra i",
+			"avgAvg": 92.2,
+			"uniqueYears": 3,
+			"maxAvg": 93.8,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "phyl ms aud func",
+			"avgAvg": 93.06,
+			"uniqueYears": 5,
+			"maxAvg": 93.79,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem sociol educ",
+			"avgAvg": 92.5,
+			"uniqueYears": 3,
+			"maxAvg": 93.78,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "crit apprais lit",
+			"avgAvg": 93.75,
+			"uniqueYears": 2,
+			"maxAvg": 93.75,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "audi prctcm iii",
+			"avgAvg": 91.81,
+			"uniqueYears": 5,
+			"maxAvg": 93.75,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "as in s&s disord",
+			"avgAvg": 92.13,
+			"uniqueYears": 3,
+			"maxAvg": 93.75,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "syst rev hlth rs",
+			"avgAvg": 93.73,
+			"uniqueYears": 2,
+			"maxAvg": 93.73,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "kinder curriclm",
+			"avgAvg": 93.72,
+			"uniqueYears": 2,
+			"maxAvg": 93.72,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "trends & topics",
+			"avgAvg": 92.64,
+			"uniqueYears": 2,
+			"maxAvg": 93.72,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "asmnt spec needs",
+			"avgAvg": 92.02,
+			"uniqueYears": 5,
+			"maxAvg": 93.71,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "cross-cltr cnsl",
+			"avgAvg": 92.09,
+			"uniqueYears": 8,
+			"maxAvg": 93.7,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "incl bl vis-imp",
+			"avgAvg": 93.1,
+			"uniqueYears": 3,
+			"maxAvg": 93.69,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "prof,eth&lgl iss",
+			"avgAvg": 92.61,
+			"uniqueYears": 5,
+			"maxAvg": 93.67,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "grad prac",
+			"avgAvg": 93.67,
+			"uniqueYears": 2,
+			"maxAvg": 93.67,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "adv immunogeneti",
+			"avgAvg": 91.86,
+			"uniqueYears": 5,
+			"maxAvg": 93.6,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "dsgn&anl smp&sub",
+			"avgAvg": 93.59,
+			"uniqueYears": 2,
+			"maxAvg": 93.59,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "cad algrthm i cr",
+			"avgAvg": 93,
+			"uniqueYears": 5,
+			"maxAvg": 93.58,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "rev res curr&ped",
+			"avgAvg": 91.62,
+			"uniqueYears": 6,
+			"maxAvg": 93.56,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pediatric audio",
+			"avgAvg": 93.12,
+			"uniqueYears": 3,
+			"maxAvg": 93.54,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "problty & stat",
+			"avgAvg": 92.25,
+			"uniqueYears": 3,
+			"maxAvg": 93.52,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "complex analy",
+			"avgAvg": 92.69,
+			"uniqueYears": 4,
+			"maxAvg": 93.5,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "honours thesis",
+			"avgAvg": 92.25,
+			"uniqueYears": 7,
+			"maxAvg": 93.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "m.sc. thesis",
+			"avgAvg": 92.03,
+			"uniqueYears": 3,
+			"maxAvg": 93.5,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "primary care iii",
+			"avgAvg": 91.31,
+			"uniqueYears": 6,
+			"maxAvg": 93.5,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "linear vibrtns",
+			"avgAvg": 93.5,
+			"uniqueYears": 2,
+			"maxAvg": 93.5,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "adv geotechnics",
+			"avgAvg": 93.47,
+			"uniqueYears": 2,
+			"maxAvg": 93.47,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "soc & econ measu",
+			"avgAvg": 92.34,
+			"uniqueYears": 5,
+			"maxAvg": 93.47,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "hist poplr music",
+			"avgAvg": 93.45,
+			"uniqueYears": 2,
+			"maxAvg": 93.45,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "prob-bsd lrn bio",
+			"avgAvg": 92.24,
+			"uniqueYears": 5,
+			"maxAvg": 93.45,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "org&admin hi edu",
+			"avgAvg": 92.61,
+			"uniqueYears": 3,
+			"maxAvg": 93.44,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ldrshp ethcs pol",
+			"avgAvg": 93.14,
+			"uniqueYears": 4,
+			"maxAvg": 93.41,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "fst ntns soc iss",
+			"avgAvg": 91.8,
+			"uniqueYears": 3,
+			"maxAvg": 93.4,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "adu edu pro",
+			"avgAvg": 93.4,
+			"uniqueYears": 2,
+			"maxAvg": 93.4,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "pln pe,sp&ex prg",
+			"avgAvg": 91.95,
+			"uniqueYears": 3,
+			"maxAvg": 93.37,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "contem players",
+			"avgAvg": 93.2,
+			"uniqueYears": 3,
+			"maxAvg": 93.35,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "labour economics",
+			"avgAvg": 91.73,
+			"uniqueYears": 3,
+			"maxAvg": 93.33,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "meas health care",
+			"avgAvg": 92.42,
+			"uniqueYears": 3,
+			"maxAvg": 93.33,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "quantum mech ii",
+			"avgAvg": 93.31,
+			"uniqueYears": 2,
+			"maxAvg": 93.31,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "home ec: 2nd ii",
+			"avgAvg": 93.3,
+			"uniqueYears": 2,
+			"maxAvg": 93.3,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "pulmonry pthphyl",
+			"avgAvg": 92.35,
+			"uniqueYears": 4,
+			"maxAvg": 93.29,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "curric iss&thry",
+			"avgAvg": 91.37,
+			"uniqueYears": 8,
+			"maxAvg": 93.25,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "item respns thry",
+			"avgAvg": 91.73,
+			"uniqueYears": 3,
+			"maxAvg": 93.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "genome analysis",
+			"avgAvg": 91.16,
+			"uniqueYears": 8,
+			"maxAvg": 93.25,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "advancd span iii",
+			"avgAvg": 92.42,
+			"uniqueYears": 3,
+			"maxAvg": 93.25,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "std in sign lang",
+			"avgAvg": 93.03,
+			"uniqueYears": 3,
+			"maxAvg": 93.23,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "intr hindi-urdu",
+			"avgAvg": 92.48,
+			"uniqueYears": 3,
+			"maxAvg": 93.22,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "thr lng&lit rsrc",
+			"avgAvg": 91.75,
+			"uniqueYears": 3,
+			"maxAvg": 93.2,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "lang dev life",
+			"avgAvg": 93.2,
+			"uniqueYears": 2,
+			"maxAvg": 93.2,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "hlth tech asmnt",
+			"avgAvg": 93.2,
+			"uniqueYears": 2,
+			"maxAvg": 93.2,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "crit anly sci ed",
+			"avgAvg": 91.67,
+			"uniqueYears": 3,
+			"maxAvg": 93.2,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "tech comm skills",
+			"avgAvg": 91.07,
+			"uniqueYears": 5,
+			"maxAvg": 93.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem r prpty dv&p",
+			"avgAvg": 91.77,
+			"uniqueYears": 10,
+			"maxAvg": 93.12,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "des tech",
+			"avgAvg": 91.66,
+			"uniqueYears": 9,
+			"maxAvg": 93.11,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "combinatorial op",
+			"avgAvg": 92.89,
+			"uniqueYears": 3,
+			"maxAvg": 93.11,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "socl&emtl assess",
+			"avgAvg": 92.37,
+			"uniqueYears": 7,
+			"maxAvg": 93.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "exptl med method",
+			"avgAvg": 92.17,
+			"uniqueYears": 6,
+			"maxAvg": 93.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "concepts in onco",
+			"avgAvg": 91.6,
+			"uniqueYears": 7,
+			"maxAvg": 93.07,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "eco-based mgmt",
+			"avgAvg": 91.68,
+			"uniqueYears": 3,
+			"maxAvg": 93.07,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "sound design",
+			"avgAvg": 91.89,
+			"uniqueYears": 3,
+			"maxAvg": 93.05,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "food theor app",
+			"avgAvg": 91.56,
+			"uniqueYears": 8,
+			"maxAvg": 93.05,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "tops public plcy",
+			"avgAvg": 93.04,
+			"uniqueYears": 2,
+			"maxAvg": 93.04,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hmec ii sec c&p",
+			"avgAvg": 91.32,
+			"uniqueYears": 4,
+			"maxAvg": 93.04,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "thry&rs soc cont",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "ital lit cult",
+			"avgAvg": 92.88,
+			"uniqueYears": 3,
+			"maxAvg": 93,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "perinatal epidem",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "master's thesis",
+			"avgAvg": 91.35,
+			"uniqueYears": 5,
+			"maxAvg": 93,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "ecol plnt bioch",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "behav economics",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "tec comm skls ii",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "mch tool str&vib",
+			"avgAvg": 92.5,
+			"uniqueYears": 3,
+			"maxAvg": 93,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "semicon thy appl",
+			"avgAvg": 92,
+			"uniqueYears": 3,
+			"maxAvg": 93,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "adv std min area",
+			"avgAvg": 93,
+			"uniqueYears": 2,
+			"maxAvg": 93,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "math prblm slvng",
+			"avgAvg": 92.07,
+			"uniqueYears": 3,
+			"maxAvg": 92.96,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "soc-psych fndtns",
+			"avgAvg": 92.45,
+			"uniqueYears": 4,
+			"maxAvg": 92.92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "career counselng",
+			"avgAvg": 91.53,
+			"uniqueYears": 5,
+			"maxAvg": 92.91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mtrl manufact",
+			"avgAvg": 92.89,
+			"uniqueYears": 2,
+			"maxAvg": 92.89,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "soc wrk & justce",
+			"avgAvg": 90.8,
+			"uniqueYears": 4,
+			"maxAvg": 92.88,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "obsv&doc erly ch",
+			"avgAvg": 92.87,
+			"uniqueYears": 2,
+			"maxAvg": 92.87,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "rsch surgical pr",
+			"avgAvg": 92.83,
+			"uniqueYears": 2,
+			"maxAvg": 92.83,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "env phil & educ",
+			"avgAvg": 92.83,
+			"uniqueYears": 2,
+			"maxAvg": 92.83,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "prof prct larc",
+			"avgAvg": 92.8,
+			"uniqueYears": 2,
+			"maxAvg": 92.8,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "qual mth res des",
+			"avgAvg": 92.78,
+			"uniqueYears": 2,
+			"maxAvg": 92.78,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "masc thesis",
+			"avgAvg": 91.24,
+			"uniqueYears": 5,
+			"maxAvg": 92.75,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "mth&mdl ptrl&gch",
+			"avgAvg": 92.75,
+			"uniqueYears": 2,
+			"maxAvg": 92.75,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "fdns highr educ",
+			"avgAvg": 92.73,
+			"uniqueYears": 2,
+			"maxAvg": 92.73,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "comp animal phyl",
+			"avgAvg": 91.75,
+			"uniqueYears": 4,
+			"maxAvg": 92.71,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cog lang proc ed",
+			"avgAvg": 91.82,
+			"uniqueYears": 4,
+			"maxAvg": 92.7,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "vocal techniques",
+			"avgAvg": 92.67,
+			"uniqueYears": 2,
+			"maxAvg": 92.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "seismic rsp strc",
+			"avgAvg": 91.78,
+			"uniqueYears": 3,
+			"maxAvg": 92.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "meas thry&integr",
+			"avgAvg": 92.63,
+			"uniqueYears": 2,
+			"maxAvg": 92.63,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "thry&prc prg evl",
+			"avgAvg": 92.63,
+			"uniqueYears": 2,
+			"maxAvg": 92.63,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "rdngs orch rep",
+			"avgAvg": 92.63,
+			"uniqueYears": 2,
+			"maxAvg": 92.63,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "rl div hlth expr",
+			"avgAvg": 91.97,
+			"uniqueYears": 3,
+			"maxAvg": 92.62,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "adv comp archtct",
+			"avgAvg": 92.6,
+			"uniqueYears": 2,
+			"maxAvg": 92.6,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "modl dynam systm",
+			"avgAvg": 91.88,
+			"uniqueYears": 3,
+			"maxAvg": 92.59,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "tpcs path rsrch",
+			"avgAvg": 92.19,
+			"uniqueYears": 3,
+			"maxAvg": 92.58,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cond matter ii",
+			"avgAvg": 91.5,
+			"uniqueYears": 3,
+			"maxAvg": 92.58,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "crystal structre",
+			"avgAvg": 91.56,
+			"uniqueYears": 3,
+			"maxAvg": 92.57,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "tpcs sociol educ",
+			"avgAvg": 91.69,
+			"uniqueYears": 5,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "solid earth sci",
+			"avgAvg": 92.5,
+			"uniqueYears": 2,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "market structure",
+			"avgAvg": 91.5,
+			"uniqueYears": 3,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intro sanskrit",
+			"avgAvg": 92.5,
+			"uniqueYears": 2,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "discourse & talk",
+			"avgAvg": 92.07,
+			"uniqueYears": 3,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ad top vlsi desg",
+			"avgAvg": 92.5,
+			"uniqueYears": 2,
+			"maxAvg": 92.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem hum mtr perf",
+			"avgAvg": 91.88,
+			"uniqueYears": 3,
+			"maxAvg": 92.5,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "prin chem separ",
+			"avgAvg": 91.47,
+			"uniqueYears": 3,
+			"maxAvg": 92.5,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "amplification ii",
+			"avgAvg": 92.45,
+			"uniqueYears": 2,
+			"maxAvg": 92.45,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "case res&analys",
+			"avgAvg": 92.45,
+			"uniqueYears": 1,
+			"maxAvg": 92.45,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "fdmt inj biomech",
+			"avgAvg": 92.43,
+			"uniqueYears": 2,
+			"maxAvg": 92.43,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "costume constr",
+			"avgAvg": 92.36,
+			"uniqueYears": 3,
+			"maxAvg": 92.41,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "gen&cell therapy",
+			"avgAvg": 92.4,
+			"uniqueYears": 2,
+			"maxAvg": 92.4,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "family counsl ii",
+			"avgAvg": 91.8,
+			"uniqueYears": 7,
+			"maxAvg": 92.4,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "discrete math",
+			"avgAvg": 91.8,
+			"uniqueYears": 4,
+			"maxAvg": 92.4,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "student seminar",
+			"avgAvg": 91.3,
+			"uniqueYears": 5,
+			"maxAvg": 92.4,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "rs mth&sem orbi",
+			"avgAvg": 91.77,
+			"uniqueYears": 3,
+			"maxAvg": 92.4,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "complex analy i",
+			"avgAvg": 92.4,
+			"uniqueYears": 2,
+			"maxAvg": 92.4,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "prog pln & eval",
+			"avgAvg": 91.83,
+			"uniqueYears": 4,
+			"maxAvg": 92.39,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "animal dvl gntcs",
+			"avgAvg": 92.36,
+			"uniqueYears": 2,
+			"maxAvg": 92.36,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "admn ldrshp nurs",
+			"avgAvg": 92.12,
+			"uniqueYears": 3,
+			"maxAvg": 92.33,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "audi adv prc i",
+			"avgAvg": 91.42,
+			"uniqueYears": 2,
+			"maxAvg": 92.33,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "appl lear theor",
+			"avgAvg": 90.9,
+			"uniqueYears": 8,
+			"maxAvg": 92.3,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "third-year russ",
+			"avgAvg": 92.3,
+			"uniqueYears": 2,
+			"maxAvg": 92.3,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "mthds asymp anal",
+			"avgAvg": 91.62,
+			"uniqueYears": 3,
+			"maxAvg": 92.3,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "urbn trans systm",
+			"avgAvg": 92.3,
+			"uniqueYears": 2,
+			"maxAvg": 92.3,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "acquired lng dis",
+			"avgAvg": 91.69,
+			"uniqueYears": 3,
+			"maxAvg": 92.29,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem medical anth",
+			"avgAvg": 92.19,
+			"uniqueYears": 3,
+			"maxAvg": 92.29,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "clinical clerkship",
+			"avgAvg": 92.29,
+			"uniqueYears": 2,
+			"maxAvg": 92.29,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "drug safety",
+			"avgAvg": 91.06,
+			"uniqueYears": 6,
+			"maxAvg": 92.28,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "frst busn enterp",
+			"avgAvg": 92.27,
+			"uniqueYears": 2,
+			"maxAvg": 92.27,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "info services i",
+			"avgAvg": 90.72,
+			"uniqueYears": 3,
+			"maxAvg": 92.26,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem theor",
+			"avgAvg": 92.25,
+			"uniqueYears": 2,
+			"maxAvg": 92.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cultural studies",
+			"avgAvg": 92.25,
+			"uniqueYears": 2,
+			"maxAvg": 92.25,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "tpc cytosk&cl mo",
+			"avgAvg": 92.19,
+			"uniqueYears": 3,
+			"maxAvg": 92.25,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "int sem in sw th",
+			"avgAvg": 91.55,
+			"uniqueYears": 2,
+			"maxAvg": 92.23,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "ind peo frst lnd",
+			"avgAvg": 92.22,
+			"uniqueYears": 2,
+			"maxAvg": 92.22,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "pcol anaesthesia",
+			"avgAvg": 91.49,
+			"uniqueYears": 4,
+			"maxAvg": 92.2,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "contxt ed policy",
+			"avgAvg": 92.2,
+			"uniqueYears": 2,
+			"maxAvg": 92.2,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "prin&meth rsch i",
+			"avgAvg": 91.33,
+			"uniqueYears": 3,
+			"maxAvg": 92.19,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "lit review ii",
+			"avgAvg": 91.49,
+			"uniqueYears": 3,
+			"maxAvg": 92.17,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "intro tech prod",
+			"avgAvg": 92.15,
+			"uniqueYears": 2,
+			"maxAvg": 92.15,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "genetics& ethics",
+			"avgAvg": 92.14,
+			"uniqueYears": 2,
+			"maxAvg": 92.14,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "curr iss oral hl",
+			"avgAvg": 91.84,
+			"uniqueYears": 2,
+			"maxAvg": 92.13,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "micb eco genomic",
+			"avgAvg": 92.12,
+			"uniqueYears": 2,
+			"maxAvg": 92.12,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "ch&ad psyco-path",
+			"avgAvg": 90.8,
+			"uniqueYears": 5,
+			"maxAvg": 92.11,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "role tcher guid",
+			"avgAvg": 90.75,
+			"uniqueYears": 5,
+			"maxAvg": 92.1,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "biology research",
+			"avgAvg": 91,
+			"uniqueYears": 7,
+			"maxAvg": 92.1,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "imprv pblic hlth",
+			"avgAvg": 92.08,
+			"uniqueYears": 2,
+			"maxAvg": 92.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cnt tme stchastc",
+			"avgAvg": 91.91,
+			"uniqueYears": 3,
+			"maxAvg": 92.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "urb dsgn thr&met",
+			"avgAvg": 91.36,
+			"uniqueYears": 5,
+			"maxAvg": 92.07,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "landsc plan&mgmt",
+			"avgAvg": 92.07,
+			"uniqueYears": 2,
+			"maxAvg": 92.07,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "tech in hlthcare",
+			"avgAvg": 92.06,
+			"uniqueYears": 2,
+			"maxAvg": 92.06,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "clinical dec ii",
+			"avgAvg": 92.04,
+			"uniqueYears": 2,
+			"maxAvg": 92.04,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "urbn engr m&m",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "py-sc asp ph act",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ptl dif eqn flud",
+			"avgAvg": 91.25,
+			"uniqueYears": 3,
+			"maxAvg": 92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "graduating paper",
+			"avgAvg": 90.9,
+			"uniqueYears": 4,
+			"maxAvg": 92,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "fnd bdy dsgn:bsc",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "child's lit",
+			"avgAvg": 91.46,
+			"uniqueYears": 5,
+			"maxAvg": 92,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "bndry-lyr metrly",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "perinatl epidlgy",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "adv eng acoustcs",
+			"avgAvg": 91.25,
+			"uniqueYears": 3,
+			"maxAvg": 92,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "topics plnt bioc",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "proj mec studies",
+			"avgAvg": 92,
+			"uniqueYears": 2,
+			"maxAvg": 92,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "home/schl/cmnty",
+			"avgAvg": 91.93,
+			"uniqueYears": 1,
+			"maxAvg": 91.93,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "motivation educ",
+			"avgAvg": 91.3,
+			"uniqueYears": 5,
+			"maxAvg": 91.9,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "clinical dec i",
+			"avgAvg": 90.81,
+			"uniqueYears": 5,
+			"maxAvg": 91.89,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "anat phys stats",
+			"avgAvg": 90.95,
+			"uniqueYears": 6,
+			"maxAvg": 91.89,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "bioenrgtc ph act",
+			"avgAvg": 91.37,
+			"uniqueYears": 3,
+			"maxAvg": 91.88,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "clin pharcknetcs",
+			"avgAvg": 91.23,
+			"uniqueYears": 4,
+			"maxAvg": 91.88,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "tpcs appl biolgy",
+			"avgAvg": 91.86,
+			"uniqueYears": 1,
+			"maxAvg": 91.86,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "tpcs app econ i",
+			"avgAvg": 91.86,
+			"uniqueYears": 2,
+			"maxAvg": 91.86,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "arch learn systs",
+			"avgAvg": 90.71,
+			"uniqueYears": 5,
+			"maxAvg": 91.86,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "quantum elctrdyn",
+			"avgAvg": 91.85,
+			"uniqueYears": 2,
+			"maxAvg": 91.85,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "econ thry ii",
+			"avgAvg": 91.36,
+			"uniqueYears": 3,
+			"maxAvg": 91.84,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "adv hum mole gen",
+			"avgAvg": 91.14,
+			"uniqueYears": 3,
+			"maxAvg": 91.83,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "tpcs biomed eng",
+			"avgAvg": 91.83,
+			"uniqueYears": 2,
+			"maxAvg": 91.83,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "practice praxis",
+			"avgAvg": 91.83,
+			"uniqueYears": 2,
+			"maxAvg": 91.83,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "stats methods",
+			"avgAvg": 91.82,
+			"uniqueYears": 2,
+			"maxAvg": 91.82,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "sowk practice ii",
+			"avgAvg": 91.82,
+			"uniqueYears": 1,
+			"maxAvg": 91.82,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "ldrshp educ org",
+			"avgAvg": 90.72,
+			"uniqueYears": 6,
+			"maxAvg": 91.81,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ldrship pub hlth",
+			"avgAvg": 90.81,
+			"uniqueYears": 3,
+			"maxAvg": 91.81,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "expl methodology",
+			"avgAvg": 90.69,
+			"uniqueYears": 6,
+			"maxAvg": 91.8,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "basic intvw skls",
+			"avgAvg": 90.92,
+			"uniqueYears": 3,
+			"maxAvg": 91.8,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "appl heterog cat",
+			"avgAvg": 91.8,
+			"uniqueYears": 2,
+			"maxAvg": 91.8,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "clbrtv piano ii",
+			"avgAvg": 90.95,
+			"uniqueYears": 4,
+			"maxAvg": 91.8,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "systmtc pcol lab",
+			"avgAvg": 91.16,
+			"uniqueYears": 4,
+			"maxAvg": 91.8,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "clinical skills",
+			"avgAvg": 91.79,
+			"uniqueYears": 2,
+			"maxAvg": 91.79,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "expermntl micb",
+			"avgAvg": 91.79,
+			"uniqueYears": 2,
+			"maxAvg": 91.79,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "macroecon ii",
+			"avgAvg": 91.79,
+			"uniqueYears": 2,
+			"maxAvg": 91.79,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "software eng",
+			"avgAvg": 91.79,
+			"uniqueYears": 2,
+			"maxAvg": 91.79,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "hearng and noise",
+			"avgAvg": 91.38,
+			"uniqueYears": 3,
+			"maxAvg": 91.75,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "elem number thry",
+			"avgAvg": 91.75,
+			"uniqueYears": 2,
+			"maxAvg": 91.75,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "relativty & elec",
+			"avgAvg": 91.75,
+			"uniqueYears": 2,
+			"maxAvg": 91.75,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "tpcs flu disord",
+			"avgAvg": 90.97,
+			"uniqueYears": 4,
+			"maxAvg": 91.73,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "stat infrnce i",
+			"avgAvg": 91.73,
+			"uniqueYears": 2,
+			"maxAvg": 91.73,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "group counsling",
+			"avgAvg": 90.9,
+			"uniqueYears": 5,
+			"maxAvg": 91.71,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "soci environ",
+			"avgAvg": 91.05,
+			"uniqueYears": 3,
+			"maxAvg": 91.7,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "leis & disbl prs",
+			"avgAvg": 91.7,
+			"uniqueYears": 2,
+			"maxAvg": 91.7,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "sch lrc prog",
+			"avgAvg": 91.53,
+			"uniqueYears": 3,
+			"maxAvg": 91.68,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "self-tuning ctrl",
+			"avgAvg": 91.15,
+			"uniqueYears": 4,
+			"maxAvg": 91.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "fnc hmn ant h&n",
+			"avgAvg": 91.67,
+			"uniqueYears": 2,
+			"maxAvg": 91.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "serv for chld",
+			"avgAvg": 91.63,
+			"uniqueYears": 2,
+			"maxAvg": 91.63,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "phar care aborig",
+			"avgAvg": 91.13,
+			"uniqueYears": 4,
+			"maxAvg": 91.63,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "grn nanoelec dev",
+			"avgAvg": 90.85,
+			"uniqueYears": 3,
+			"maxAvg": 91.63,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "dgtl img & text",
+			"avgAvg": 91.17,
+			"uniqueYears": 3,
+			"maxAvg": 91.6,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "clinical res des",
+			"avgAvg": 91.6,
+			"uniqueYears": 2,
+			"maxAvg": 91.6,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "honours seminar",
+			"avgAvg": 90.84,
+			"uniqueYears": 5,
+			"maxAvg": 91.6,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "bioanalyt chem",
+			"avgAvg": 91.47,
+			"uniqueYears": 3,
+			"maxAvg": 91.6,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "shpbld proj mgmt",
+			"avgAvg": 91.16,
+			"uniqueYears": 3,
+			"maxAvg": 91.57,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cave mn sys: d&p",
+			"avgAvg": 91.56,
+			"uniqueYears": 2,
+			"maxAvg": 91.56,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv conc pharmac",
+			"avgAvg": 90.71,
+			"uniqueYears": 7,
+			"maxAvg": 91.56,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "num anly prtl df",
+			"avgAvg": 91.56,
+			"uniqueYears": 2,
+			"maxAvg": 91.56,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "adv tpcs stl str",
+			"avgAvg": 91.56,
+			"uniqueYears": 2,
+			"maxAvg": 91.56,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "tech mlc biol&ex",
+			"avgAvg": 90.99,
+			"uniqueYears": 5,
+			"maxAvg": 91.55,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ethics mtrnycare",
+			"avgAvg": 91.2,
+			"uniqueYears": 4,
+			"maxAvg": 91.5,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "sc dsgn std i",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mth e: bynd erly",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mech erth quake",
+			"avgAvg": 91.13,
+			"uniqueYears": 3,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "major proj prt 1",
+			"avgAvg": 91,
+			"uniqueYears": 4,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "inst mthd chalng",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "analyt num thry",
+			"avgAvg": 91.29,
+			"uniqueYears": 4,
+			"maxAvg": 91.5,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ph d resrch sem",
+			"avgAvg": 90.86,
+			"uniqueYears": 4,
+			"maxAvg": 91.5,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "counslng adults",
+			"avgAvg": 90.85,
+			"uniqueYears": 5,
+			"maxAvg": 91.5,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "cog/beh interven",
+			"avgAvg": 91.42,
+			"uniqueYears": 3,
+			"maxAvg": 91.5,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "meas in practice",
+			"avgAvg": 91.25,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "endo micro-surg",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "dante's div com",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "behav assessment",
+			"avgAvg": 91.5,
+			"uniqueYears": 2,
+			"maxAvg": 91.5,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "power elec dsgn",
+			"avgAvg": 91.5,
+			"uniqueYears": 1,
+			"maxAvg": 91.5,
+			"maxYear": 1900
+		},
+		{
+			"sections_title": "com adult educ",
+			"avgAvg": 90.96,
+			"uniqueYears": 6,
+			"maxAvg": 91.48,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "mus&mov elem c&p",
+			"avgAvg": 91.48,
+			"uniqueYears": 2,
+			"maxAvg": 91.48,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "prob mgmt models",
+			"avgAvg": 91.47,
+			"uniqueYears": 2,
+			"maxAvg": 91.47,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "hlth promo prac",
+			"avgAvg": 91.47,
+			"uniqueYears": 2,
+			"maxAvg": 91.47,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "desig & analys 2",
+			"avgAvg": 91.46,
+			"uniqueYears": 2,
+			"maxAvg": 91.46,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "stdy educ organ",
+			"avgAvg": 90.8,
+			"uniqueYears": 4,
+			"maxAvg": 91.45,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv conc rehb rs",
+			"avgAvg": 91.44,
+			"uniqueYears": 2,
+			"maxAvg": 91.44,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "prof comms strat",
+			"avgAvg": 91.43,
+			"uniqueYears": 2,
+			"maxAvg": 91.43,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "hlth srv res i",
+			"avgAvg": 91.06,
+			"uniqueYears": 2,
+			"maxAvg": 91.4,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "astronomical lab",
+			"avgAvg": 91.4,
+			"uniqueYears": 2,
+			"maxAvg": 91.4,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "acous & art phon",
+			"avgAvg": 91.4,
+			"uniqueYears": 2,
+			"maxAvg": 91.4,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "qlt rsrch mthd",
+			"avgAvg": 90.91,
+			"uniqueYears": 4,
+			"maxAvg": 91.38,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "forecasting mgmt",
+			"avgAvg": 91.38,
+			"uniqueYears": 2,
+			"maxAvg": 91.38,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "real analysis ii",
+			"avgAvg": 91.38,
+			"uniqueYears": 2,
+			"maxAvg": 91.38,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "assess plan eval",
+			"avgAvg": 90.93,
+			"uniqueYears": 2,
+			"maxAvg": 91.36,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "qlt mthd ed psy",
+			"avgAvg": 90.75,
+			"uniqueYears": 3,
+			"maxAvg": 91.36,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "top food nu hea",
+			"avgAvg": 91.36,
+			"uniqueYears": 1,
+			"maxAvg": 91.36,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "text tech",
+			"avgAvg": 90.56,
+			"uniqueYears": 6,
+			"maxAvg": 91.35,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intr mod diff ge",
+			"avgAvg": 90.81,
+			"uniqueYears": 3,
+			"maxAvg": 91.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "eng report",
+			"avgAvg": 91.16,
+			"uniqueYears": 2,
+			"maxAvg": 91.33,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "sp-lg pth prc i",
+			"avgAvg": 91.33,
+			"uniqueYears": 2,
+			"maxAvg": 91.33,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "cur iss ntr&dis",
+			"avgAvg": 91.33,
+			"uniqueYears": 2,
+			"maxAvg": 91.33,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "microelectromech",
+			"avgAvg": 91.01,
+			"uniqueYears": 3,
+			"maxAvg": 91.32,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "adv tpcs tmbr st",
+			"avgAvg": 91.32,
+			"uniqueYears": 2,
+			"maxAvg": 91.32,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "prev spts inj ii",
+			"avgAvg": 90.7,
+			"uniqueYears": 4,
+			"maxAvg": 91.3,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "lit review i",
+			"avgAvg": 91.04,
+			"uniqueYears": 2,
+			"maxAvg": 91.3,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "stat sig proc",
+			"avgAvg": 90.83,
+			"uniqueYears": 3,
+			"maxAvg": 91.29,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "reas & dec-mking",
+			"avgAvg": 91.27,
+			"uniqueYears": 2,
+			"maxAvg": 91.27,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "vid eth ed res",
+			"avgAvg": 90.73,
+			"uniqueYears": 3,
+			"maxAvg": 91.27,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "phono intervent",
+			"avgAvg": 90.8,
+			"uniqueYears": 3,
+			"maxAvg": 91.27,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "resource-bsd tch",
+			"avgAvg": 91.08,
+			"uniqueYears": 3,
+			"maxAvg": 91.26,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "select libr res",
+			"avgAvg": 91.26,
+			"uniqueYears": 2,
+			"maxAvg": 91.26,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "elm prticle phys",
+			"avgAvg": 91.25,
+			"uniqueYears": 2,
+			"maxAvg": 91.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "endo lit rev ii",
+			"avgAvg": 90.88,
+			"uniqueYears": 3,
+			"maxAvg": 91.25,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "implant therapy",
+			"avgAvg": 91.11,
+			"uniqueYears": 2,
+			"maxAvg": 91.25,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "alg in bioin",
+			"avgAvg": 91.25,
+			"uniqueYears": 2,
+			"maxAvg": 91.25,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "aborig pb health",
+			"avgAvg": 91.25,
+			"uniqueYears": 2,
+			"maxAvg": 91.25,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "assm intrv techn",
+			"avgAvg": 91.04,
+			"uniqueYears": 3,
+			"maxAvg": 91.25,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "dgtl libraries",
+			"avgAvg": 91.24,
+			"uniqueYears": 2,
+			"maxAvg": 91.24,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "database design",
+			"avgAvg": 91.23,
+			"uniqueYears": 2,
+			"maxAvg": 91.23,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "machine learn i",
+			"avgAvg": 90.88,
+			"uniqueYears": 3,
+			"maxAvg": 91.22,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "comp comm protcl",
+			"avgAvg": 90.67,
+			"uniqueYears": 3,
+			"maxAvg": 91.22,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "design & bioassy",
+			"avgAvg": 90.56,
+			"uniqueYears": 4,
+			"maxAvg": 91.22,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "plant genomics",
+			"avgAvg": 91.21,
+			"uniqueYears": 2,
+			"maxAvg": 91.21,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "can soci plcy",
+			"avgAvg": 90.63,
+			"uniqueYears": 4,
+			"maxAvg": 91.2,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pain res & thera",
+			"avgAvg": 91.2,
+			"uniqueYears": 2,
+			"maxAvg": 91.2,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "2nd lang assess: c&e app",
+			"avgAvg": 91.2,
+			"uniqueYears": 2,
+			"maxAvg": 91.2,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "stat mth hydrlgy",
+			"avgAvg": 91.17,
+			"uniqueYears": 2,
+			"maxAvg": 91.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "psnl soc dv adlt",
+			"avgAvg": 90.73,
+			"uniqueYears": 3,
+			"maxAvg": 91.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "int field school",
+			"avgAvg": 90.89,
+			"uniqueYears": 3,
+			"maxAvg": 91.17,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pharm mgmt",
+			"avgAvg": 90.83,
+			"uniqueYears": 3,
+			"maxAvg": 91.16,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pertrb diff equa",
+			"avgAvg": 90.96,
+			"uniqueYears": 4,
+			"maxAvg": 91.14,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "fsh econ & mgmnt",
+			"avgAvg": 91.14,
+			"uniqueYears": 2,
+			"maxAvg": 91.14,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "biol p hlth prac",
+			"avgAvg": 90.6,
+			"uniqueYears": 4,
+			"maxAvg": 91.14,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "int thry counsel",
+			"avgAvg": 90.96,
+			"uniqueYears": 3,
+			"maxAvg": 91.13,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "network analysis",
+			"avgAvg": 90.69,
+			"uniqueYears": 3,
+			"maxAvg": 91.13,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "perf study ii",
+			"avgAvg": 91.1,
+			"uniqueYears": 2,
+			"maxAvg": 91.1,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "ord diff equtns",
+			"avgAvg": 91.1,
+			"uniqueYears": 1,
+			"maxAvg": 91.1,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "topcs macroecon",
+			"avgAvg": 91.08,
+			"uniqueYears": 2,
+			"maxAvg": 91.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "aural rehb i",
+			"avgAvg": 90.92,
+			"uniqueYears": 3,
+			"maxAvg": 91.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mvmt exp yg chld",
+			"avgAvg": 91.07,
+			"uniqueYears": 2,
+			"maxAvg": 91.07,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "adv steel design",
+			"avgAvg": 91.06,
+			"uniqueYears": 2,
+			"maxAvg": 91.06,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "cs phar sci iv",
+			"avgAvg": 90.53,
+			"uniqueYears": 3,
+			"maxAvg": 91.02,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "thy rea adu lea",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "tech cel&dev bio",
+			"avgAvg": 90.79,
+			"uniqueYears": 3,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sch adv rsrch pr",
+			"avgAvg": 91,
+			"uniqueYears": 1,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "diag audio ii",
+			"avgAvg": 90.72,
+			"uniqueYears": 3,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "bayesn dcsn anl",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv quant design",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "m.eng. grad papr",
+			"avgAvg": 91,
+			"uniqueYears": 1,
+			"maxAvg": 91,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "biolgy of cancer",
+			"avgAvg": 90.76,
+			"uniqueYears": 3,
+			"maxAvg": 91,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "directed reading",
+			"avgAvg": 90.67,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "m.a. sc. thesis",
+			"avgAvg": 91,
+			"uniqueYears": 3,
+			"maxAvg": 91,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "adv volcanology",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "commnty & popltn",
+			"avgAvg": 91,
+			"uniqueYears": 1,
+			"maxAvg": 91,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "air polutn cntrl",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "anly civl sys",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "plant molec lab",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "adv field earth",
+			"avgAvg": 91,
+			"uniqueYears": 2,
+			"maxAvg": 91,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "forest oper's i",
+			"avgAvg": 91,
+			"uniqueYears": 1,
+			"maxAvg": 91,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "lang dev&dis sch",
+			"avgAvg": 90.95,
+			"uniqueYears": 2,
+			"maxAvg": 90.95,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "intro to pcol",
+			"avgAvg": 90.93,
+			"uniqueYears": 2,
+			"maxAvg": 90.93,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "hist anth thght",
+			"avgAvg": 90.92,
+			"uniqueYears": 2,
+			"maxAvg": 90.92,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "stat meth hd bio",
+			"avgAvg": 90.9,
+			"uniqueYears": 2,
+			"maxAvg": 90.9,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv can soc plcy",
+			"avgAvg": 90.89,
+			"uniqueYears": 2,
+			"maxAvg": 90.89,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "pharcgy prm care",
+			"avgAvg": 90.88,
+			"uniqueYears": 3,
+			"maxAvg": 90.88,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "dir fld st sp&ph",
+			"avgAvg": 90.88,
+			"uniqueYears": 2,
+			"maxAvg": 90.88,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "adv microsys des",
+			"avgAvg": 90.88,
+			"uniqueYears": 2,
+			"maxAvg": 90.88,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "high ed pol",
+			"avgAvg": 90.87,
+			"uniqueYears": 2,
+			"maxAvg": 90.87,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "quant an fish i",
+			"avgAvg": 90.49,
+			"uniqueYears": 4,
+			"maxAvg": 90.86,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "tpcs cell comm",
+			"avgAvg": 90.86,
+			"uniqueYears": 2,
+			"maxAvg": 90.86,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "iss public hlth",
+			"avgAvg": 90.59,
+			"uniqueYears": 3,
+			"maxAvg": 90.84,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "or microbi&immun",
+			"avgAvg": 90.83,
+			"uniqueYears": 2,
+			"maxAvg": 90.83,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "rdtn dosimetry",
+			"avgAvg": 90.83,
+			"uniqueYears": 2,
+			"maxAvg": 90.83,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "dig comm&tpcs ag",
+			"avgAvg": 90.83,
+			"uniqueYears": 2,
+			"maxAvg": 90.83,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "fin el heat tran",
+			"avgAvg": 90.83,
+			"uniqueYears": 2,
+			"maxAvg": 90.83,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "sup indg inftnts",
+			"avgAvg": 90.81,
+			"uniqueYears": 2,
+			"maxAvg": 90.81,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "primary care ii",
+			"avgAvg": 90.61,
+			"uniqueYears": 3,
+			"maxAvg": 90.81,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "research seminar",
+			"avgAvg": 90.54,
+			"uniqueYears": 3,
+			"maxAvg": 90.8,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "bibliog & resrch",
+			"avgAvg": 90.59,
+			"uniqueYears": 3,
+			"maxAvg": 90.75,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "wavelets",
+			"avgAvg": 90.63,
+			"uniqueYears": 3,
+			"maxAvg": 90.75,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "ths: biotech tpc",
+			"avgAvg": 90.75,
+			"uniqueYears": 2,
+			"maxAvg": 90.75,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "int nut fld stdy",
+			"avgAvg": 90.75,
+			"uniqueYears": 2,
+			"maxAvg": 90.75,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "cardiovas path",
+			"avgAvg": 90.75,
+			"uniqueYears": 2,
+			"maxAvg": 90.75,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "t & l kind & prm",
+			"avgAvg": 90.75,
+			"uniqueYears": 2,
+			"maxAvg": 90.75,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "quant mech chem",
+			"avgAvg": 90.75,
+			"uniqueYears": 2,
+			"maxAvg": 90.75,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "sem in botany",
+			"avgAvg": 90.71,
+			"uniqueYears": 2,
+			"maxAvg": 90.71,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "land water semnr",
+			"avgAvg": 90.71,
+			"uniqueYears": 2,
+			"maxAvg": 90.71,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "artif intell 2",
+			"avgAvg": 90.71,
+			"uniqueYears": 2,
+			"maxAvg": 90.71,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "rdiothrpy phy ii",
+			"avgAvg": 90.7,
+			"uniqueYears": 2,
+			"maxAvg": 90.7,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sp-lg pth pr iii",
+			"avgAvg": 90.57,
+			"uniqueYears": 4,
+			"maxAvg": 90.7,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "min & soc",
+			"avgAvg": 90.69,
+			"uniqueYears": 2,
+			"maxAvg": 90.69,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mole & cell biol",
+			"avgAvg": 90.68,
+			"uniqueYears": 2,
+			"maxAvg": 90.68,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hazard anal food",
+			"avgAvg": 90.68,
+			"uniqueYears": 2,
+			"maxAvg": 90.68,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "chrn hlth iss",
+			"avgAvg": 90.68,
+			"uniqueYears": 2,
+			"maxAvg": 90.68,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "econometrics",
+			"avgAvg": 90.68,
+			"uniqueYears": 2,
+			"maxAvg": 90.68,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "soc detrmin hlth",
+			"avgAvg": 90.56,
+			"uniqueYears": 3,
+			"maxAvg": 90.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "mangmt info orgs",
+			"avgAvg": 90.47,
+			"uniqueYears": 2,
+			"maxAvg": 90.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intr tch ch lit",
+			"avgAvg": 90.67,
+			"uniqueYears": 1,
+			"maxAvg": 90.67,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv mineralogy",
+			"avgAvg": 90.67,
+			"uniqueYears": 2,
+			"maxAvg": 90.67,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "research in cnps",
+			"avgAvg": 90.67,
+			"uniqueYears": 2,
+			"maxAvg": 90.67,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "rehab theory",
+			"avgAvg": 90.67,
+			"uniqueYears": 2,
+			"maxAvg": 90.67,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "rsrch evidence",
+			"avgAvg": 90.65,
+			"uniqueYears": 1,
+			"maxAvg": 90.65,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "res tch & lrn sc",
+			"avgAvg": 90.64,
+			"uniqueYears": 2,
+			"maxAvg": 90.64,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "educ prc nurs",
+			"avgAvg": 90.63,
+			"uniqueYears": 1,
+			"maxAvg": 90.63,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "lab expl earth",
+			"avgAvg": 90.44,
+			"uniqueYears": 3,
+			"maxAvg": 90.62,
+			"maxYear": 2016
+		},
+		{
+			"sections_title": "first nat soc is",
+			"avgAvg": 90.62,
+			"uniqueYears": 1,
+			"maxAvg": 90.62,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "case integr i",
+			"avgAvg": 90.61,
+			"uniqueYears": 2,
+			"maxAvg": 90.61,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "qst, theor, mthd",
+			"avgAvg": 90.6,
+			"uniqueYears": 2,
+			"maxAvg": 90.6,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "dyn mdl elec",
+			"avgAvg": 90.42,
+			"uniqueYears": 3,
+			"maxAvg": 90.58,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "urbn restructing",
+			"avgAvg": 90.53,
+			"uniqueYears": 3,
+			"maxAvg": 90.57,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "hlth & human sec",
+			"avgAvg": 90.57,
+			"uniqueYears": 2,
+			"maxAvg": 90.57,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv tpcs mole bi",
+			"avgAvg": 90.33,
+			"uniqueYears": 3,
+			"maxAvg": 90.57,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "real analysis i",
+			"avgAvg": 90.57,
+			"uniqueYears": 2,
+			"maxAvg": 90.57,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "mth ed: crnt iss",
+			"avgAvg": 90.56,
+			"uniqueYears": 2,
+			"maxAvg": 90.56,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "min eco fin",
+			"avgAvg": 90.52,
+			"uniqueYears": 2,
+			"maxAvg": 90.52,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "clin endo yr 2",
+			"avgAvg": 90.5,
+			"uniqueYears": 2,
+			"maxAvg": 90.5,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "basic russian ii",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.5,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "energy enginring",
+			"avgAvg": 90.5,
+			"uniqueYears": 2,
+			"maxAvg": 90.5,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "ldr adm aim educ",
+			"avgAvg": 90.5,
+			"uniqueYears": 1,
+			"maxAvg": 90.5,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "coast terr esyst",
+			"avgAvg": 90.48,
+			"uniqueYears": 2,
+			"maxAvg": 90.48,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "scene painting i",
+			"avgAvg": 90.46,
+			"uniqueYears": 2,
+			"maxAvg": 90.46,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "compensation",
+			"avgAvg": 90.46,
+			"uniqueYears": 2,
+			"maxAvg": 90.46,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "masc thesis dev",
+			"avgAvg": 90.45,
+			"uniqueYears": 2,
+			"maxAvg": 90.45,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "biophys pharm i",
+			"avgAvg": 90.45,
+			"uniqueYears": 2,
+			"maxAvg": 90.45,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "size of things",
+			"avgAvg": 90.44,
+			"uniqueYears": 2,
+			"maxAvg": 90.44,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "envr'tl lab anly",
+			"avgAvg": 90.44,
+			"uniqueYears": 2,
+			"maxAvg": 90.44,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "econ, cont, fina",
+			"avgAvg": 90.44,
+			"uniqueYears": 2,
+			"maxAvg": 90.44,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "teaching of psyc",
+			"avgAvg": 90.44,
+			"uniqueYears": 1,
+			"maxAvg": 90.44,
+			"maxYear": 1900
+		},
+		{
+			"sections_title": "diag img & rdoph",
+			"avgAvg": 90.43,
+			"uniqueYears": 2,
+			"maxAvg": 90.43,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "complex analysis",
+			"avgAvg": 90.43,
+			"uniqueYears": 2,
+			"maxAvg": 90.43,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "oral pathology",
+			"avgAvg": 90.42,
+			"uniqueYears": 2,
+			"maxAvg": 90.42,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "dta anl at,er&oc",
+			"avgAvg": 90.24,
+			"uniqueYears": 2,
+			"maxAvg": 90.4,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "viral infec humn",
+			"avgAvg": 90.39,
+			"uniqueYears": 2,
+			"maxAvg": 90.39,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "intro to conserv",
+			"avgAvg": 90.25,
+			"uniqueYears": 3,
+			"maxAvg": 90.39,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "costum constr ii",
+			"avgAvg": 90.39,
+			"uniqueYears": 2,
+			"maxAvg": 90.39,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "trns sys pl&anly",
+			"avgAvg": 90.39,
+			"uniqueYears": 2,
+			"maxAvg": 90.39,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "hltcr systm anyl",
+			"avgAvg": 90.38,
+			"uniqueYears": 2,
+			"maxAvg": 90.38,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "disord sp prod",
+			"avgAvg": 90.38,
+			"uniqueYears": 2,
+			"maxAvg": 90.38,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "membrane str&fnc",
+			"avgAvg": 90.29,
+			"uniqueYears": 3,
+			"maxAvg": 90.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "h gwaii cse stdy",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "sem reprd biol",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "num tec oc,at&er",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "crt anly iss&mth",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv rock engnrng",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "honours essay",
+			"avgAvg": 90.3,
+			"uniqueYears": 3,
+			"maxAvg": 90.33,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "comm networks",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "test constructio",
+			"avgAvg": 90.33,
+			"uniqueYears": 2,
+			"maxAvg": 90.33,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "intro rsrch educ",
+			"avgAvg": 90.32,
+			"uniqueYears": 2,
+			"maxAvg": 90.32,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "tech stat conslt",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "intermd sanskrit",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "res mthds kin",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "adv gsat concept",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "org lrn res",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "cntrl com dis",
+			"avgAvg": 90.29,
+			"uniqueYears": 2,
+			"maxAvg": 90.29,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "transprt'n eng 2",
+			"avgAvg": 90.26,
+			"uniqueYears": 2,
+			"maxAvg": 90.26,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "pharmacokinetics",
+			"avgAvg": 90.26,
+			"uniqueYears": 2,
+			"maxAvg": 90.26,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "optimiz eng syst",
+			"avgAvg": 90.25,
+			"uniqueYears": 2,
+			"maxAvg": 90.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "drugs &intercell",
+			"avgAvg": 90.25,
+			"uniqueYears": 2,
+			"maxAvg": 90.25,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "endo lit rev i",
+			"avgAvg": 90.25,
+			"uniqueYears": 2,
+			"maxAvg": 90.25,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "intro exper phys",
+			"avgAvg": 90.25,
+			"uniqueYears": 1,
+			"maxAvg": 90.25,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "mltvar&vctr calc",
+			"avgAvg": 90.25,
+			"uniqueYears": 2,
+			"maxAvg": 90.25,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "med lab toxiclgy",
+			"avgAvg": 90.25,
+			"uniqueYears": 2,
+			"maxAvg": 90.25,
+			"maxYear": 2008
+		},
+		{
+			"sections_title": "complex fluids",
+			"avgAvg": 90.24,
+			"uniqueYears": 2,
+			"maxAvg": 90.24,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "digtl med: intro",
+			"avgAvg": 90.24,
+			"uniqueYears": 2,
+			"maxAvg": 90.24,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "app mng scie i",
+			"avgAvg": 90.23,
+			"uniqueYears": 2,
+			"maxAvg": 90.23,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "matrx struc anly",
+			"avgAvg": 90.22,
+			"uniqueYears": 2,
+			"maxAvg": 90.22,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "montry thry pol",
+			"avgAvg": 90.19,
+			"uniqueYears": 3,
+			"maxAvg": 90.21,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "aborignl forestr",
+			"avgAvg": 90.21,
+			"uniqueYears": 2,
+			"maxAvg": 90.21,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "3d mdl cost est",
+			"avgAvg": 90.2,
+			"uniqueYears": 1,
+			"maxAvg": 90.2,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "mech nat defrmtn",
+			"avgAvg": 90.2,
+			"uniqueYears": 2,
+			"maxAvg": 90.2,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "adv geo fld dyn",
+			"avgAvg": 90.2,
+			"uniqueYears": 2,
+			"maxAvg": 90.2,
+			"maxYear": 2007
+		},
+		{
+			"sections_title": "exer physolgy ii",
+			"avgAvg": 90.19,
+			"uniqueYears": 1,
+			"maxAvg": 90.19,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "jazz ensemble",
+			"avgAvg": 90.19,
+			"uniqueYears": 1,
+			"maxAvg": 90.19,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "natural res econ",
+			"avgAvg": 90.18,
+			"uniqueYears": 2,
+			"maxAvg": 90.18,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adul educ",
+			"avgAvg": 90.17,
+			"uniqueYears": 2,
+			"maxAvg": 90.18,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "fuel cell system",
+			"avgAvg": 90.17,
+			"uniqueYears": 2,
+			"maxAvg": 90.17,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "dramaturgy",
+			"avgAvg": 90.14,
+			"uniqueYears": 2,
+			"maxAvg": 90.14,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "adv compsit mtrl",
+			"avgAvg": 90.14,
+			"uniqueYears": 2,
+			"maxAvg": 90.14,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "complex adapt sy",
+			"avgAvg": 90.13,
+			"uniqueYears": 2,
+			"maxAvg": 90.13,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "adv int sem in sw th",
+			"avgAvg": 90.13,
+			"uniqueYears": 1,
+			"maxAvg": 90.13,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "adv speech scie",
+			"avgAvg": 90.12,
+			"uniqueYears": 2,
+			"maxAvg": 90.12,
+			"maxYear": 2014
+		},
+		{
+			"sections_title": "work & learning",
+			"avgAvg": 90.11,
+			"uniqueYears": 1,
+			"maxAvg": 90.11,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "opt&dcs anl civl",
+			"avgAvg": 90.11,
+			"uniqueYears": 2,
+			"maxAvg": 90.11,
+			"maxYear": 2012
+		},
+		{
+			"sections_title": "doctoral seminar",
+			"avgAvg": 90.1,
+			"uniqueYears": 1,
+			"maxAvg": 90.1,
+			"maxYear": 2010
+		},
+		{
+			"sections_title": "health care team",
+			"avgAvg": 90.09,
+			"uniqueYears": 2,
+			"maxAvg": 90.09,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "art song int prf",
+			"avgAvg": 90.08,
+			"uniqueYears": 2,
+			"maxAvg": 90.08,
+			"maxYear": 2015
+		},
+		{
+			"sections_title": "dentalhyg prac i",
+			"avgAvg": 90.08,
+			"uniqueYears": 2,
+			"maxAvg": 90.08,
+			"maxYear": 2013
+		},
+		{
+			"sections_title": "urban transport",
+			"avgAvg": 90.08,
+			"uniqueYears": 2,
+			"maxAvg": 90.08,
+			"maxYear": 2009
+		},
+		{
+			"sections_title": "trad adult edu",
+			"avgAvg": 90.06,
+			"uniqueYears": 2,
+			"maxAvg": 90.06,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "soil dynamics",
+			"avgAvg": 90.06,
+			"uniqueYears": 2,
+			"maxAvg": 90.06,
+			"maxYear": 2011
+		},
+		{
+			"sections_title": "stat lit nursing",
+			"avgAvg": 90.06,
+			"uniqueYears": 2,
+			"maxAvg": 90.06,
+			"maxYear": 2009
+		}
+	]
+}

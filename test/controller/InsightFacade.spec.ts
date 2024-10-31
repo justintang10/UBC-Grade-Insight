@@ -554,8 +554,11 @@ describe("InsightFacade", function () {
 								break;
 							}
 						}
+
 						expect(inExpected).to.equal(true);
 					}
+
+					// expect(result).to.deep.equal(expected);
 				})
 				.catch((err) => {
 					if (!errorExpected) {
@@ -623,13 +626,19 @@ describe("InsightFacade", function () {
 		it("[valid/validRoomDupSortKeys.json] validRoomDupSortKeys", checkQuery);
 		it("[valid/validRoomManyTiebreakers.json] validRoomManyTiebreakers", checkQuery);
 		it("[valid/validRoomMultipleTieBreakersNumbers.json] validRoomMultipleTieBreakersNumbers", checkQuery);
+		it("[valid/validLotsOfAggregations.json] validLotsOfAggregations.json", checkQuery);
+		it("[valid/validLotsOfAggregationSortDown.json] validLotsOfAggregationSortDown.json", checkQuery);
+		it("[valid/randomValidQuery.json] randomValidQuery.json", checkQuery);
+		it("[valid/validNoApplies.json] validNoApplies.json", checkQuery);
+		it("[valid/validNoApplyMultipleGroupBy.json] validNoApplyMultipleGroupBy.json", checkQuery);
+		it("[valid/validAggregationsNoSorting.json] validAggregationsNoSorting.json", checkQuery);
+
 		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
 		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
 		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
 		it("[valid/validAverageLat.json] validAverageLat", checkQuery);
 		it("[valid/validAverageLon.json] validAverageLon", checkQuery);
 
-		
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
 		it("[invalid/avgQueriedWithIs.json] SELECT avg WHERE avg IS 80", checkQuery);
@@ -673,7 +682,7 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
 		it("[invalid/invalidWhereArray.json] invalidWhereArray", checkQuery);
 		it("[invalid/invalidWhereEmptyString.json] invalidWhereEmptyString", checkQuery);
-		
+
 		//QUERY EBNF C2
 		it("[invalid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
 		it("[invalid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
@@ -695,5 +704,6 @@ describe("InsightFacade", function () {
 		it("[invalid/invalidApplyTokenTypeMAX.json] invalidApplyTokenTypeMAX.json", checkQuery);
 		it("[invalid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
 		it("[invalid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
+		it("[invalid/invalidColumnsKeyNotInGroupOrApply.json] invalidColumnsKeyNotInGroupOrApply.json", checkQuery);
 	});
 });

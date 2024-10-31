@@ -1,5 +1,6 @@
 import { InsightError } from "../controller/IInsightFacade";
 import { getAndCheckColumnName, isMField, isSField, QueryComparison } from "./queryEngineUtils";
+import Decimal from "decimal.js";
 
 export function handleAggregationCalculation(aggregation: any, sections: any, isSections: boolean): number {
 	const aggregationInside = Object.values(aggregation)[0] as any;
@@ -84,15 +85,15 @@ export function handleMin(columnName: any, sections: any): number {
 }
 
 export function handleAvg(columnName: any, sections: any): number {
-	let sum = 0;
+	let sum = new Decimal(0);
 
 	for (const section of sections) {
 		const value = section.getMField(columnName);
-		sum += value;
+		const decimalValue = new Decimal(value);
+		sum = Decimal.add(sum, decimalValue);
 	}
-	const decimalCount = 2;
-	sum = Number(sum.toFixed(decimalCount)); // deal with floating point error
-	const avg = sum / sections.length;
+	const decimalCount = 2; // deal with floating point error
+	const avg = sum.toNumber() / sections.length;
 	return Number(avg.toFixed(decimalCount));
 }
 
