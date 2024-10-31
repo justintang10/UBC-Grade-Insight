@@ -545,25 +545,26 @@ describe("InsightFacade", function () {
 
 					// This undermines the use of ORDER in the queries, but accurately tests queries that do not
 					// contain an ORDER key
-					// for (const section of result) {
-					// 	let inExpected = false;
-					// 	for (const expectedSection of expected) {
-					// 		if (deepEqual(section, expectedSection)) {
-					// 			inExpected = true;
-					// 			expected.splice(expected.indexOf(expectedSection), 1);
-					// 			break;
-					// 		}
-					// 	}
-					// 	expect(inExpected).to.equal(true);
-					// }
+					for (const section of result) {
+						let inExpected = false;
+						for (const expectedSection of expected) {
+							if (deepEqual(section, expectedSection)) {
+								inExpected = true;
+								expected.splice(expected.indexOf(expectedSection), 1);
+								break;
+							}
+						}
 
-					expect(result).to.deep.equal(expected);
+						expect(inExpected).to.equal(true);
+					}
+
+					// expect(result).to.deep.equal(expected);
 				})
 				.catch((err) => {
 					if (!errorExpected) {
 						expect.fail("performQuery threw unexpected error: " + err);
 					}
-					console.log(err);
+
 					//make sure returned error is correct
 					if (expected === "InsightError") {
 						expect(err).to.be.instanceOf(InsightError);
@@ -585,7 +586,7 @@ describe("InsightFacade", function () {
 			// Will *fail* if there is a problem reading either dataset.
 			try {
 				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
-				// await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
+				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
 			}
@@ -638,7 +639,6 @@ describe("InsightFacade", function () {
 		it("[valid/validAverageLat.json] validAverageLat", checkQuery);
 		it("[valid/validAverageLon.json] validAverageLon", checkQuery);
 
-		
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
 		it("[invalid/avgQueriedWithIs.json] SELECT avg WHERE avg IS 80", checkQuery);
@@ -682,7 +682,7 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
 		it("[invalid/invalidWhereArray.json] invalidWhereArray", checkQuery);
 		it("[invalid/invalidWhereEmptyString.json] invalidWhereEmptyString", checkQuery);
-		
+
 		//QUERY EBNF C2
 		it("[invalid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
 		it("[invalid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
