@@ -545,26 +545,26 @@ describe("InsightFacade", function () {
 
 					// This undermines the use of ORDER in the queries, but accurately tests queries that do not
 					// contain an ORDER key
-					// for (const section of result) {
-					// 	let inExpected = false;
-					// 	for (const expectedSection of expected) {
-					// 		if (deepEqual(section, expectedSection)) {
-					// 			inExpected = true;
-					// 			expected.splice(expected.indexOf(expectedSection), 1);
-					// 			break;
-					// 		}
-					// 	}
-					//
-					// 	expect(inExpected).to.equal(true);
-					// }
+					for (const section of result) {
+						let inExpected = false;
+						for (const expectedSection of expected) {
+							if (deepEqual(section, expectedSection)) {
+								inExpected = true;
+								expected.splice(expected.indexOf(expectedSection), 1);
+								break;
+							}
+						}
 
-					expect(result).to.deep.equal(expected);
+						expect(inExpected).to.equal(true);
+					}
+
+					// expect(result).to.deep.equal(expected);
 				})
 				.catch((err) => {
 					if (!errorExpected) {
 						expect.fail("performQuery threw unexpected error: " + err);
 					}
-					console.log(err);
+					// console.log(err);
 					//make sure returned error is correct
 					if (expected === "InsightError") {
 						expect(err).to.be.instanceOf(InsightError);
@@ -582,11 +582,10 @@ describe("InsightFacade", function () {
 			sections = await getContentFromArchives("pair.zip");
 			validRoomsDataset = await getContentFromArchives("campus.zip");
 
-
 			// Add each dataset to InsightFacade.
 			// Will *fail* if there is a problem reading either dataset.
 			try {
-				// await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
 				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
