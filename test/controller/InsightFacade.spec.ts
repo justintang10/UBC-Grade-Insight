@@ -582,7 +582,7 @@ describe("InsightFacade", function () {
 			// Add each dataset to InsightFacade.
 			// Will *fail* if there is a problem reading either dataset.
 			try {
-				// await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
 				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
