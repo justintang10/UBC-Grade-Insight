@@ -87,14 +87,19 @@ export function getDatasetId(queryOptions: any): string {
 		throw new InsightError("Invalid Query: Columns cannot be an empty array");
 	}
 
-	// traverse down options->columns->columns[0] to check which dataset is being used???? super scuffed
-	const columnName: string = queryOptions.COLUMNS[0];
+	const listColumns = queryOptions.COLUMNS;
 	let datasetId = "";
-	for (let i = 0; i < columnName.length; i++) {
-		if (columnName.charAt(i) === "_") {
-			datasetId = columnName.substring(0, i);
+	for (const column of listColumns) {
+		const columnSplit = column.split("_");
+		if (columnSplit.length > 1) {
+			datasetId = columnSplit[0];
 		}
 	}
+	// for (let i = 0; i < columnName.length; i++) {
+	// 	if (columnName.charAt(i) === "_") {
+	// 		datasetId = columnName.substring(0, i);
+	// 	}
+	// }
 	if (datasetId === "") {
 		throw new InsightError("Invalid Query: Dataset ID cannot be empty");
 	}
@@ -277,3 +282,19 @@ export function parseMapKeyToObj(mapKey: string): InsightResult {
 		}
 	}
 */
+
+export function translateTransformedToInsightResult(columns: any, sections: any): InsightResult[] {
+	const result: InsightResult[] = [];
+
+	for (const section of sections) {
+		const insightResult: InsightResult = {};
+
+		for (const datasetColumnPair of columns) {
+			insightResult[datasetColumnPair] = section[datasetColumnPair];
+		}
+
+		result.push(insightResult);
+	}
+
+	return result;
+}

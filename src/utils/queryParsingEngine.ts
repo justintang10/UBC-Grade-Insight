@@ -10,6 +10,7 @@ import {
 	sortByMultipleColumns,
 	sortByOrder,
 	translateToInsightResult,
+	translateTransformedToInsightResult,
 } from "./queryEngineUtils";
 import { handleAggregationCalculation, handleGroup } from "./queryParsingAggregationEngine";
 
@@ -305,7 +306,9 @@ export function handleOptions(
 
 	let result = sections;
 
-	if (!isTransformed) {
+	if (isTransformed) {
+		result = translateTransformedToInsightResult(columns, sections);
+	} else {
 		result = translateToInsightResult(columns, sections, datasetId, isSections);
 	}
 
