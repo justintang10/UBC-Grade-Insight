@@ -43,10 +43,10 @@ export function handleGroup(group: any, sections: any, isSections: boolean): Map
 			const columnName = getAndCheckColumnName(column, QueryComparison.EITHER, isSections);
 			if (isMField(columnName, isSections)) {
 				const field = section.getMField(columnName);
-				key = key + column + ":" + field + "~";
+				key = key + column + ":" + field + "~Number`";
 			} else if (isSField(columnName, isSections)) {
 				const field = section.getSField(columnName);
-				key = key + column + ":" + field + "~";
+				key = key + column + ":" + field + "~String`";
 			} else {
 				throw new InsightError("Invalid Query: invalid key in GROUP");
 			}

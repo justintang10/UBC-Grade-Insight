@@ -1,0 +1,511 @@
+{
+	"title": "No Title Specified",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"IS": {
+						"rooms_furniture": "*Tables*"
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_fullname",
+				"rooms_type",
+				"maxSeats",
+				"uniqueSeats"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"maxSeats"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_fullname",
+				"rooms_type"
+			],
+			"APPLY": [
+				{
+					"maxSeats": {
+						"MAX": "rooms_seats"
+					}
+				},
+				{
+					"uniqueSeats": {
+						"COUNT": "rooms_seats"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_fullname": "Robert F. Osborne Centre",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 442,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Hebb",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 375,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Life Sciences Centre",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 350,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Student Recreation Centre",
+			"rooms_type": "TBD",
+			"maxSeats": 299,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 260,
+			"uniqueSeats": 5
+		},
+		{
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 236,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Leonard S. Klinck (also known as CSCI)",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 205,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Chemical and Biological Engineering Building",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 200,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 190,
+			"uniqueSeats": 3
+		},
+		{
+			"rooms_fullname": "Friedman Building",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 160,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Hugh Dempster Pavilion",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 160,
+			"uniqueSeats": 3
+		},
+		{
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 154,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "MacLeod",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 136,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Woodward (Instructional Resources Centre-IRC)",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 120,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 112,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Buchanan",
+			"rooms_type": "Case Style",
+			"maxSeats": 108,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 100,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Geography",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 100,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Iona Building",
+			"rooms_type": "Case Style",
+			"maxSeats": 100,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Allard Hall (LAW)",
+			"rooms_type": "Case Style",
+			"maxSeats": 94,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "MacLeod",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 84,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Earth Sciences Building",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 80,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 80,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 80,
+			"uniqueSeats": 6
+		},
+		{
+			"rooms_fullname": "Buchanan",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 78,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Biological Sciences",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 76,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Leonard S. Klinck (also known as CSCI)",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 75,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "MacMillan",
+			"rooms_type": "Case Style",
+			"maxSeats": 72,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Orchard Commons",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 72,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 72,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Brock Hall Annex",
+			"rooms_type": "Tiered Large Group",
+			"maxSeats": 70,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "School of Population and Public Health",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 66,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Forest Sciences Centre",
+			"rooms_type": "Case Style",
+			"maxSeats": 65,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Frank Forward",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 63,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_type": "Case Style",
+			"maxSeats": 62,
+			"uniqueSeats": 3
+		},
+		{
+			"rooms_fullname": "Chemical and Biological Engineering Building",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 60,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"rooms_type": "Case Style",
+			"maxSeats": 60,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Mathematics",
+			"rooms_type": "Small Group",
+			"maxSeats": 60,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Neville Scarfe",
+			"rooms_type": "Small Group",
+			"maxSeats": 60,
+			"uniqueSeats": 6
+		},
+		{
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 55,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Hebb",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 54,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Earth and Ocean Sciences - Main",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 50,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Iona Building",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 50,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_type": "Case Style",
+			"maxSeats": 50,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Mathematics",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 48,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "MacMillan",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 47,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 47,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Allard Hall (LAW)",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 44,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Frank Forward",
+			"rooms_type": "Small Group",
+			"maxSeats": 44,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Buchanan",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 42,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Hugh Dempster Pavilion",
+			"rooms_type": "Small Group",
+			"maxSeats": 40,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"rooms_type": "Small Group",
+			"maxSeats": 40,
+			"uniqueSeats": 6
+		},
+		{
+			"rooms_fullname": "MacLeod",
+			"rooms_type": "Small Group",
+			"maxSeats": 40,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Ponderosa Commons: Oak House",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 40,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Robert F. Osborne Centre",
+			"rooms_type": "Small Group",
+			"maxSeats": 40,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Geography",
+			"rooms_type": "Small Group",
+			"maxSeats": 39,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Anthropology and Sociology",
+			"rooms_type": "Small Group",
+			"maxSeats": 37,
+			"uniqueSeats": 3
+		},
+		{
+			"rooms_fullname": "Forest Sciences Centre",
+			"rooms_type": "Small Group",
+			"maxSeats": 36,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Hennings",
+			"rooms_type": "Small Group",
+			"maxSeats": 36,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"rooms_type": "Small Group",
+			"maxSeats": 35,
+			"uniqueSeats": 3
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"rooms_type": "TBD",
+			"maxSeats": 32,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "MacMillan",
+			"rooms_type": "Small Group",
+			"maxSeats": 32,
+			"uniqueSeats": 4
+		},
+		{
+			"rooms_fullname": "Buchanan",
+			"rooms_type": "Small Group",
+			"maxSeats": 31,
+			"uniqueSeats": 5
+		},
+		{
+			"rooms_fullname": "School of Population and Public Health",
+			"rooms_type": "Small Group",
+			"maxSeats": 30,
+			"uniqueSeats": 5
+		},
+		{
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"rooms_type": "Small Group",
+			"maxSeats": 30,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Woodward (Instructional Resources Centre-IRC)",
+			"rooms_type": "Small Group",
+			"maxSeats": 30,
+			"uniqueSeats": 5
+		},
+		{
+			"rooms_fullname": "Food, Nutrition and Health",
+			"rooms_type": "Small Group",
+			"maxSeats": 28,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "West Mall Swing Space",
+			"rooms_type": "Small Group",
+			"maxSeats": 27,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"rooms_type": "Small Group",
+			"maxSeats": 26,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Orchard Commons",
+			"rooms_type": "Active Learning",
+			"maxSeats": 25,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Brock Hall Annex",
+			"rooms_type": "Open Design General Purpose",
+			"maxSeats": 24,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Ponderosa Commons: Oak House",
+			"rooms_type": "Small Group",
+			"maxSeats": 24,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Auditorium Annex",
+			"rooms_type": "Small Group",
+			"maxSeats": 21,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Frederic Lasserre",
+			"rooms_type": "Small Group",
+			"maxSeats": 20,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Biological Sciences",
+			"rooms_type": "Small Group",
+			"maxSeats": 16,
+			"uniqueSeats": 1
+		},
+		{
+			"rooms_fullname": "Jack Bell Building for the School of Social Work",
+			"rooms_type": "Small Group",
+			"maxSeats": 16,
+			"uniqueSeats": 2
+		},
+		{
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"rooms_type": "Small Group",
+			"maxSeats": 14,
+			"uniqueSeats": 2
+		}
+	]
+}

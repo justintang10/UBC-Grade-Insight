@@ -427,7 +427,7 @@ export function handleTransformations(
 	} else if (group.length === 0) {
 		throw new InsightError("Invalid Query: GROUP must have at least 1 key");
 	} else if (apply === null || Object.prototype.toString.call(apply) !== "[object Array]") {
-		throw new InsightError("Invalid Query: APPLY must be a nonempty array");
+		throw new InsightError("Invalid Query: APPLY must be an array");
 	}
 
 	const applyKeys = apply.map((obj: {}) => Object.keys(obj)[0]);
