@@ -632,7 +632,13 @@ describe("InsightFacade", function () {
 		it("[valid/validNoApplyMultipleGroupBy.json] validNoApplyMultipleGroupBy.json", checkQuery);
 		it("[valid/validAggregationsNoSorting.json] validAggregationsNoSorting.json", checkQuery);
 
+		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
+		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
+		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
+		it("[valid/validAverageLat.json] validAverageLat", checkQuery);
+		it("[valid/validAverageLon.json] validAverageLon", checkQuery);
 
+		
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
 		it("[invalid/avgQueriedWithIs.json] SELECT avg WHERE avg IS 80", checkQuery);
@@ -674,10 +680,9 @@ describe("InsightFacade", function () {
 		it("[invalid/queryOfNegationWithInvalidFilterKey.json] Query of negation with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithInvalidKey.json] Query of scomparison with invalid filter key", checkQuery);
 		it("[invalid/queryOfScomparisonWithMfield.json] Query of scomparison with an mfield", checkQuery);
-
-		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
-		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
-		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
+		it("[invalid/invalidWhereArray.json] invalidWhereArray", checkQuery);
+		it("[invalid/invalidWhereEmptyString.json] invalidWhereEmptyString", checkQuery);
+		
 		//QUERY EBNF C2
 		it("[invalid/invalidOptionsSORTKeyEmptyArray.json] invalidOptionsSORTKeyEmptyArray.json", checkQuery);
 		it("[invalid/invalidOptionsSORTInvalidDir.json] invalidOptionsSORTInvalidDir.json", checkQuery);
