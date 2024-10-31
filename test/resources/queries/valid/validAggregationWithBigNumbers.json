@@ -1,0 +1,72 @@
+{
+	"title": "No Title Specified",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_year",
+				"sumYears"
+			],
+			"ORDER": "sections_year"
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_year"
+			],
+			"APPLY": [
+				{
+					"sumYears": {
+						"SUM": "sections_year"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_year": 1900,
+			"sumYears": 46779900
+		},
+		{
+			"sections_year": 2007,
+			"sumYears": 5382774
+		},
+		{
+			"sections_year": 2008,
+			"sumYears": 6036048
+		},
+		{
+			"sections_year": 2009,
+			"sumYears": 7935550
+		},
+		{
+			"sections_year": 2010,
+			"sumYears": 8653050
+		},
+		{
+			"sections_year": 2011,
+			"sumYears": 9017324
+		},
+		{
+			"sections_year": 2012,
+			"sumYears": 9673696
+		},
+		{
+			"sections_year": 2013,
+			"sumYears": 10044870
+		},
+		{
+			"sections_year": 2014,
+			"sumYears": 10726564
+		},
+		{
+			"sections_year": 2015,
+			"sumYears": 11032125
+		},
+		{
+			"sections_year": 2016,
+			"sumYears": 1945440
+		}
+	]
+}

@@ -564,7 +564,7 @@ describe("InsightFacade", function () {
 					if (!errorExpected) {
 						expect.fail("performQuery threw unexpected error: " + err);
 					}
-
+					// console.log(err);
 					//make sure returned error is correct
 					if (expected === "InsightError") {
 						expect(err).to.be.instanceOf(InsightError);
@@ -632,12 +632,21 @@ describe("InsightFacade", function () {
 		it("[valid/validNoApplies.json] validNoApplies.json", checkQuery);
 		it("[valid/validNoApplyMultipleGroupBy.json] validNoApplyMultipleGroupBy.json", checkQuery);
 		it("[valid/validAggregationsNoSorting.json] validAggregationsNoSorting.json", checkQuery);
+		it("[valid/C2ExampleQuery.json] C2ExampleQuery.json", checkQuery);
 
 		it("[valid/C2SimpleAggregation.json] Simple aggregation query", checkQuery);
 		it("[valid/C2AggregationApply2Aggregations.json] Aggregation with 2 applies", checkQuery);
 		it("[valid/C2AggregationGroupBy2Columns.json] Aggregation with 2 columns in GROUP", checkQuery);
 		it("[valid/validAverageLat.json] validAverageLat", checkQuery);
 		it("[valid/validAverageLon.json] validAverageLon", checkQuery);
+		it("[valid/validAggregationWithBigNumbers.json] validAggregationWithBigNumbers.json", checkQuery);
+		it("[valid/sumAvgs.json] sumAvgs.json", checkQuery);
+		it("[valid/roomsAllColumns.json] roomsAllColumns.json", checkQuery);
+		it("[valid/MaxMinEqual.json] MaxMinEqual.json", checkQuery);
+		it("[valid/uniqueSeats.json] uniqueSeats.json", checkQuery);
+		it("[valid/uniqueString.json] uniqueString.json", checkQuery);
+		it("[valid/testingNumbers.json] testingNumbers.json", checkQuery);
+		it("[valid/testingNumberApply.json] testingNumberApply.json", checkQuery);
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
@@ -705,5 +714,7 @@ describe("InsightFacade", function () {
 		it("[invalid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
 		it("[invalid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
 		it("[invalid/invalidColumnsKeyNotInGroupOrApply.json] invalidColumnsKeyNotInGroupOrApply.json", checkQuery);
+		it("[invalid/orderKeysMissing.json] orderKeysMissing.json", checkQuery);
+		it("[invalid/invalidKeyInGroup.json] invalidKeyInGroup.json", checkQuery);
 	});
 });

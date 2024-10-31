@@ -256,21 +256,22 @@ export function translateToInsightResult(
 	return result;
 }
 
-// key is "sections_avg:90,sections_title:310"
+// mapKey looks something like "sections_avg:90~Number`sections_title:CPSC310~String`"
 export function parseMapKeyToObj(mapKey: string): InsightResult {
 	const result: InsightResult = {};
 	while (mapKey.length > 0) {
-		const nextCommaIndex = mapKey.indexOf("~");
-		const keyValuePair = mapKey.substring(0, nextCommaIndex);
+		const endOfColumn = mapKey.indexOf("`");
+		const endKeyValuePair = mapKey.indexOf("~");
+		const keyValuePair = mapKey.substring(0, endKeyValuePair);
 		const colonIndex = keyValuePair.indexOf(":");
 		const key = keyValuePair.substring(0, colonIndex);
-		let value = keyValuePair.substring(colonIndex + 1, keyValuePair.length) as number | string;
-		if (!Number.isNaN(Number(value)) && value !== "") {
-			// cast value to number if it is a valid number
+		let value = keyValuePair.substring(colonIndex + 1, keyValuePair.length) as string | number;
+		const type = mapKey.substring(endKeyValuePair + 1, endOfColumn);
+		if (type === "Number") {
 			value = Number(value);
 		}
 		result[key] = value;
-		mapKey = mapKey.substring(nextCommaIndex + 1, mapKey.length);
+		mapKey = mapKey.substring(endOfColumn + 1, mapKey.length);
 	}
 	return result;
 }

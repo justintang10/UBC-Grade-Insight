@@ -1,0 +1,237 @@
+{
+	"title": "No Title Specified",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"IS": {
+						"rooms_furniture": "*Tables*"
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_fullname",
+				"maxSeats",
+				"uniqueTypes"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"maxSeats"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_fullname"
+			],
+			"APPLY": [
+				{
+					"maxSeats": {
+						"MAX": "rooms_seats"
+					}
+				},
+				{
+					"uniqueTypes": {
+						"COUNT": "rooms_type"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_fullname": "Robert F. Osborne Centre",
+			"maxSeats": 442,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Hebb",
+			"maxSeats": 375,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Life Sciences Centre",
+			"maxSeats": 350,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Student Recreation Centre",
+			"maxSeats": 299,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Henry Angus",
+			"maxSeats": 260,
+			"uniqueTypes": 5
+		},
+		{
+			"rooms_fullname": "Pharmaceutical Sciences Building",
+			"maxSeats": 236,
+			"uniqueTypes": 3
+		},
+		{
+			"rooms_fullname": "Leonard S. Klinck (also known as CSCI)",
+			"maxSeats": 205,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Chemical and Biological Engineering Building",
+			"maxSeats": 200,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "West Mall Swing Space",
+			"maxSeats": 190,
+			"uniqueTypes": 3
+		},
+		{
+			"rooms_fullname": "Friedman Building",
+			"maxSeats": 160,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Hugh Dempster Pavilion",
+			"maxSeats": 160,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Irving K Barber Learning Centre",
+			"maxSeats": 154,
+			"uniqueTypes": 4
+		},
+		{
+			"rooms_fullname": "MacLeod",
+			"maxSeats": 136,
+			"uniqueTypes": 3
+		},
+		{
+			"rooms_fullname": "Woodward (Instructional Resources Centre-IRC)",
+			"maxSeats": 120,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Buchanan",
+			"maxSeats": 108,
+			"uniqueTypes": 4
+		},
+		{
+			"rooms_fullname": "Civil and Mechanical Engineering",
+			"maxSeats": 100,
+			"uniqueTypes": 3
+		},
+		{
+			"rooms_fullname": "Geography",
+			"maxSeats": 100,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Iona Building",
+			"maxSeats": 100,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Allard Hall (LAW)",
+			"maxSeats": 94,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Earth Sciences Building",
+			"maxSeats": 80,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Frederic Lasserre",
+			"maxSeats": 80,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Biological Sciences",
+			"maxSeats": 76,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "MacMillan",
+			"maxSeats": 72,
+			"uniqueTypes": 3
+		},
+		{
+			"rooms_fullname": "Orchard Commons",
+			"maxSeats": 72,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Brock Hall Annex",
+			"maxSeats": 70,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "School of Population and Public Health",
+			"maxSeats": 66,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Forest Sciences Centre",
+			"maxSeats": 65,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Frank Forward",
+			"maxSeats": 63,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Mathematics",
+			"maxSeats": 60,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Neville Scarfe",
+			"maxSeats": 60,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "The Leon and Thea Koerner University Centre",
+			"maxSeats": 55,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Earth and Ocean Sciences - Main",
+			"maxSeats": 50,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Ponderosa Commons: Oak House",
+			"maxSeats": 40,
+			"uniqueTypes": 2
+		},
+		{
+			"rooms_fullname": "Anthropology and Sociology",
+			"maxSeats": 37,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Hennings",
+			"maxSeats": 36,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Food, Nutrition and Health",
+			"maxSeats": 28,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Auditorium Annex",
+			"maxSeats": 21,
+			"uniqueTypes": 1
+		},
+		{
+			"rooms_fullname": "Jack Bell Building for the School of Social Work",
+			"maxSeats": 16,
+			"uniqueTypes": 1
+		}
+	]
+}
