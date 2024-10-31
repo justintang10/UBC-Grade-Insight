@@ -1,0 +1,60 @@
+{
+	"title": "invalidColumnsKeyNotInGroupOrApply",
+	"input": {
+		"WHERE": {
+			"GT": {
+				"sections_avg": 90
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"sections_avg",
+				"sections_instructor",
+				"avgYears",
+				"sumYears",
+				"maxAvg",
+				"minYear"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"maxAvg",
+					"minYear",
+					"sections_title",
+					"sections_avg"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title",
+				"sections_instructor"
+			],
+			"APPLY": [
+				{
+					"avgYears": {
+						"AVG": "sections_year"
+					}
+				},
+				{
+					"sumYears": {
+						"SUM": "sections_year"
+					}
+				},
+				{
+					"maxAvg": {
+						"MAX": "sections_avg"
+					}
+				},
+				{
+					"minYear": {
+						"MIN": "sections_year"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

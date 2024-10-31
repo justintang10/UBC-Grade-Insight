@@ -545,23 +545,25 @@ describe("InsightFacade", function () {
 
 					// This undermines the use of ORDER in the queries, but accurately tests queries that do not
 					// contain an ORDER key
-					for (const section of result) {
-						let inExpected = false;
-						for (const expectedSection of expected) {
-							if (deepEqual(section, expectedSection)) {
-								inExpected = true;
-								expected.splice(expected.indexOf(expectedSection), 1);
-								break;
-							}
-						}
-						expect(inExpected).to.equal(true);
-					}
+					// for (const section of result) {
+					// 	let inExpected = false;
+					// 	for (const expectedSection of expected) {
+					// 		if (deepEqual(section, expectedSection)) {
+					// 			inExpected = true;
+					// 			expected.splice(expected.indexOf(expectedSection), 1);
+					// 			break;
+					// 		}
+					// 	}
+					// 	expect(inExpected).to.equal(true);
+					// }
+
+					expect(result).to.deep.equal(expected);
 				})
 				.catch((err) => {
 					if (!errorExpected) {
 						expect.fail("performQuery threw unexpected error: " + err);
 					}
-
+					console.log(err);
 					//make sure returned error is correct
 					if (expected === "InsightError") {
 						expect(err).to.be.instanceOf(InsightError);
@@ -582,8 +584,8 @@ describe("InsightFacade", function () {
 			// Add each dataset to InsightFacade.
 			// Will *fail* if there is a problem reading either dataset.
 			try {
-				// await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
-				await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				// await facade.addDataset("rooms", validRoomsDataset, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
 			}
@@ -623,6 +625,13 @@ describe("InsightFacade", function () {
 		it("[valid/validRoomDupSortKeys.json] validRoomDupSortKeys", checkQuery);
 		it("[valid/validRoomManyTiebreakers.json] validRoomManyTiebreakers", checkQuery);
 		it("[valid/validRoomMultipleTieBreakersNumbers.json] validRoomMultipleTieBreakersNumbers", checkQuery);
+		it("[valid/validLotsOfAggregations.json] validLotsOfAggregations.json", checkQuery);
+		it("[valid/validLotsOfAggregationSortDown.json] validLotsOfAggregationSortDown.json", checkQuery);
+		it("[valid/randomValidQuery.json] randomValidQuery.json", checkQuery);
+		it("[valid/validNoApplies.json] validNoApplies.json", checkQuery);
+		it("[valid/validNoApplyMultipleGroupBy.json] validNoApplyMultipleGroupBy.json", checkQuery);
+		it("[valid/validAggregationsNoSorting.json] validAggregationsNoSorting.json", checkQuery);
+
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
@@ -690,5 +699,6 @@ describe("InsightFacade", function () {
 		it("[invalid/invalidApplyTokenTypeMAX.json] invalidApplyTokenTypeMAX.json", checkQuery);
 		it("[invalid/invalidApplyTokenTypeMIN.json] invalidApplyTokenTypeMIN.json", checkQuery);
 		it("[invalid/invalidApplyTokenTypeSUM.json] invalidApplyTokenTypeSUM.json", checkQuery);
+		it("[invalid/invalidColumnsKeyNotInGroupOrApply.json] invalidColumnsKeyNotInGroupOrApply.json", checkQuery);
 	});
 });
