@@ -564,7 +564,7 @@ describe("InsightFacade", function () {
 					if (!errorExpected) {
 						expect.fail("performQuery threw unexpected error: " + err);
 					}
-					console.log(err);
+					// console.log(err);
 					//make sure returned error is correct
 					if (expected === "InsightError") {
 						expect(err).to.be.instanceOf(InsightError);
@@ -653,6 +653,8 @@ describe("InsightFacade", function () {
 		it("[valid/validMaxMinSeats.json] validMaxMinSeats.json", checkQuery);
 		it("[valid/validAllMaxMins.json] validAllMaxMins.json", checkQuery);
 		it("[valid/validAllMaxMins2.json] validAllMaxMins2.json", checkQuery);
+		it("[valid/randoTestt.json] randoTestt.json", checkQuery);
+		it("[valid/validAggregationKeyOnlyColumns.json] validAggregationKeyOnlyColumns.json", checkQuery);
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
@@ -723,5 +725,6 @@ describe("InsightFacade", function () {
 		it("[invalid/orderKeysMissing.json] orderKeysMissing.json", checkQuery);
 		it("[invalid/invalidKeyInGroup.json] invalidKeyInGroup.json", checkQuery);
 		it("[invalid/invalidNumberApplyType.json] invalidNumberApplyType.json", checkQuery);
+		it("[invalid/datasetNotFound.json] datasetNotFound.json", checkQuery);
 	});
 });
