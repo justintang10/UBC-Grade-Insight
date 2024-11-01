@@ -71,37 +71,32 @@ export function doesInputStringMatch(inputString: string, value: string): boolea
 	return inputString === value;
 }
 
-export function getDatasetId(queryOptions: any): string {
-	let hasColumns = false;
-	let columns: any;
-	for (const queryKey in queryOptions) {
-		if (queryKey === "COLUMNS") {
-			hasColumns = true;
-			columns = queryOptions[queryKey];
+export function getDatasetId(queryOptions: any, queryTransformations: any): string {
+	let datasetId = "";
+	try {
+		const listColumns = queryOptions.COLUMNS;
+		for (const column of listColumns) {
+			const columnSplit = column.split("_");
+			if (columnSplit.length > 1) {
+				datasetId = columnSplit[0];
+			}
 		}
-	}
-	if (!hasColumns) {
-		throw new InsightError("Invalid Query: Missing COLUMNS");
-	}
-	if (columns.length <= 0) {
-		throw new InsightError("Invalid Query: Columns cannot be an empty array");
+	} catch {
+		throw new InsightError("Invalid Query: COLUMNS not found");
 	}
 
-	const listColumns = queryOptions.COLUMNS;
-	let datasetId = "";
-	for (const column of listColumns) {
-		const columnSplit = column.split("_");
-		if (columnSplit.length > 1) {
-			datasetId = columnSplit[0];
-		}
-	}
-	// for (let i = 0; i < columnName.length; i++) {
-	// 	if (columnName.charAt(i) === "_") {
-	// 		datasetId = columnName.substring(0, i);
-	// 	}
-	// }
 	if (datasetId === "") {
-		throw new InsightError("Invalid Query: Dataset ID cannot be empty");
+		try {
+			const group = queryTransformations.GROUP;
+			for (const column of group) {
+				const columnSplit = column.split("_");
+				if (columnSplit.length > 1) {
+					datasetId = columnSplit[0];
+				}
+			}
+		} catch {
+			throw new InsightError("Invalid Query: Dataset ID could not be found!");
+		}
 	}
 
 	return datasetId;

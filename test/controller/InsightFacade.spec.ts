@@ -647,6 +647,14 @@ describe("InsightFacade", function () {
 		it("[valid/uniqueString.json] uniqueString.json", checkQuery);
 		it("[valid/testingNumbers.json] testingNumbers.json", checkQuery);
 		it("[valid/testingNumberApply.json] testingNumberApply.json", checkQuery);
+		it("[valid/validRoomsAllColumnsApply.json] validRoomsAllColumnsApply.json", checkQuery);
+		it("[valid/validMaxMinLat.json] validMaxMinLat.json", checkQuery);
+		it("[valid/validMaxMinLon.json] validMaxMinLon.json", checkQuery);
+		it("[valid/validMaxMinSeats.json] validMaxMinSeats.json", checkQuery);
+		it("[valid/validAllMaxMins.json] validAllMaxMins.json", checkQuery);
+		it("[valid/validAllMaxMins2.json] validAllMaxMins2.json", checkQuery);
+		it("[valid/randoTestt.json] randoTestt.json", checkQuery);
+		it("[valid/validAggregationKeyOnlyColumns.json] validAggregationKeyOnlyColumns.json", checkQuery);
 
 		//invalids
 		it("[invalid/avgAsString.json] SELECT avg WHERE avg = '43'", checkQuery);
@@ -716,5 +724,7 @@ describe("InsightFacade", function () {
 		it("[invalid/invalidColumnsKeyNotInGroupOrApply.json] invalidColumnsKeyNotInGroupOrApply.json", checkQuery);
 		it("[invalid/orderKeysMissing.json] orderKeysMissing.json", checkQuery);
 		it("[invalid/invalidKeyInGroup.json] invalidKeyInGroup.json", checkQuery);
+		it("[invalid/invalidNumberApplyType.json] invalidNumberApplyType.json", checkQuery);
+		it("[invalid/datasetNotFound.json] datasetNotFound.json", checkQuery);
 	});
 });

@@ -124,12 +124,12 @@ export default class InsightFacade implements IInsightFacade {
 				transformations = query[key];
 			}
 		}
-		if (where === null || options === null) {
+		if (where === null || options === null || Object.prototype.toString.call(where) !== "[object Object]") {
 			throw new InsightError("Invalid Query: Missing WHERE or OPTIONS");
 		}
 
 		// Get first datasetId to retrieve sections
-		const datasetId = getDatasetId(options); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
+		const datasetId = getDatasetId(options, transformations); // ALSO CHECKS IF COLUMNS EXISTS AND IS NONEMPTY
 
 		// Get all data (an array of either sections or rooms) from given dataset
 		const allSections = await this.getDataFromDataset(datasetId);

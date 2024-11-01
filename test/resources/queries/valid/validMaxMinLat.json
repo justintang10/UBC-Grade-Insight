@@ -1,0 +1,249 @@
+{
+	"title": "validMaxMinLat",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_lat",
+				"maxlat",
+				"minlat"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"rooms_lat"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_lat"
+			],
+			"APPLY": [
+				{
+					"maxlat": {
+						"MAX": "rooms_lat"
+					}
+				},
+				{
+					"minlat": {
+						"MIN": "rooms_lat"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_lat": 49.27106,
+			"maxlat": 49.27106,
+			"minlat": 49.27106
+		},
+		{
+			"rooms_lat": 49.2699,
+			"maxlat": 49.2699,
+			"minlat": 49.2699
+		},
+		{
+			"rooms_lat": 49.26958,
+			"maxlat": 49.26958,
+			"minlat": 49.26958
+		},
+		{
+			"rooms_lat": 49.26867,
+			"maxlat": 49.26867,
+			"minlat": 49.26867
+		},
+		{
+			"rooms_lat": 49.26862,
+			"maxlat": 49.26862,
+			"minlat": 49.26862
+		},
+		{
+			"rooms_lat": 49.2683,
+			"maxlat": 49.2683,
+			"minlat": 49.2683
+		},
+		{
+			"rooms_lat": 49.26826,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_lat": 49.26767,
+			"maxlat": 49.26767,
+			"minlat": 49.26767
+		},
+		{
+			"rooms_lat": 49.26766,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_lat": 49.2666,
+			"maxlat": 49.2666,
+			"minlat": 49.2666
+		},
+		{
+			"rooms_lat": 49.266463,
+			"maxlat": 49.266463,
+			"minlat": 49.266463
+		},
+		{
+			"rooms_lat": 49.2663,
+			"maxlat": 49.2663,
+			"minlat": 49.2663
+		},
+		{
+			"rooms_lat": 49.26627,
+			"maxlat": 49.26627,
+			"minlat": 49.26627
+		},
+		{
+			"rooms_lat": 49.2661,
+			"maxlat": 49.2661,
+			"minlat": 49.2661
+		},
+		{
+			"rooms_lat": 49.266089,
+			"maxlat": 49.266089,
+			"minlat": 49.266089
+		},
+		{
+			"rooms_lat": 49.26605,
+			"maxlat": 49.26605,
+			"minlat": 49.26605
+		},
+		{
+			"rooms_lat": 49.2659,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_lat": 49.26545,
+			"maxlat": 49.26545,
+			"minlat": 49.26545
+		},
+		{
+			"rooms_lat": 49.26541,
+			"maxlat": 49.26541,
+			"minlat": 49.26541
+		},
+		{
+			"rooms_lat": 49.26517,
+			"maxlat": 49.26517,
+			"minlat": 49.26517
+		},
+		{
+			"rooms_lat": 49.26486,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_lat": 49.26479,
+			"maxlat": 49.26479,
+			"minlat": 49.26479
+		},
+		{
+			"rooms_lat": 49.26478,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_lat": 49.2643,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_lat": 49.2642,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_lat": 49.26414,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_lat": 49.264,
+			"maxlat": 49.264,
+			"minlat": 49.264
+		},
+		{
+			"rooms_lat": 49.26398,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_lat": 49.26372,
+			"maxlat": 49.26372,
+			"minlat": 49.26372
+		},
+		{
+			"rooms_lat": 49.26293,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_lat": 49.26274,
+			"maxlat": 49.26274,
+			"minlat": 49.26274
+		},
+		{
+			"rooms_lat": 49.26273,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_lat": 49.26236,
+			"maxlat": 49.26236,
+			"minlat": 49.26236
+		},
+		{
+			"rooms_lat": 49.26229,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_lat": 49.26228,
+			"maxlat": 49.26228,
+			"minlat": 49.26228
+		},
+		{
+			"rooms_lat": 49.26207,
+			"maxlat": 49.26207,
+			"minlat": 49.26207
+		},
+		{
+			"rooms_lat": 49.26176,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_lat": 49.26125,
+			"maxlat": 49.26125,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_lat": 49.26114,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_lat": 49.26048,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_lat": 49.26047,
+			"maxlat": 49.26047,
+			"minlat": 49.26047
+		},
+		{
+			"rooms_lat": 49.26044,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		}
+	]
+}

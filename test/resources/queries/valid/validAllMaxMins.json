@@ -1,0 +1,2808 @@
+{
+	"title": "validAllMaxMins",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_number",
+				"maxseats",
+				"minseats",
+				"maxlon",
+				"minlon",
+				"maxlat",
+				"minlat"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"rooms_number"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_number"
+			],
+			"APPLY": [
+				{
+					"maxseats": {
+						"MAX": "rooms_seats"
+					}
+				},
+				{
+					"minseats": {
+						"MIN": "rooms_seats"
+					}
+				},
+				{
+					"maxlon": {
+						"MAX": "rooms_lon"
+					}
+				},
+				{
+					"minlon": {
+						"MIN": "rooms_lon"
+					}
+				},
+				{
+					"maxlat": {
+						"MAX": "rooms_lat"
+					}
+				},
+				{
+					"minlat": {
+						"MIN": "rooms_lat"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_number": "G66",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G65",
+			"maxseats": 12,
+			"minseats": 12,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G59",
+			"maxseats": 10,
+			"minseats": 10,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G57",
+			"maxseats": 12,
+			"minseats": 12,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G55",
+			"maxseats": 10,
+			"minseats": 10,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G53",
+			"maxseats": 10,
+			"minseats": 10,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G44",
+			"maxseats": 14,
+			"minseats": 14,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "G41",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "D325",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D323",
+			"maxseats": 31,
+			"minseats": 31,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D322",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D319",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D317",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D316",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D315",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D314",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D313",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D312",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D307",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D306",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D304",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D301",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D300",
+			"maxseats": 114,
+			"minseats": 114,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "D229",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D228",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D222",
+			"maxseats": 65,
+			"minseats": 65,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D221",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D219",
+			"maxseats": 65,
+			"minseats": 65,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D218",
+			"maxseats": 65,
+			"minseats": 65,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D217",
+			"maxseats": 65,
+			"minseats": 65,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D216",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D214",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D213",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D209",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D207",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D205",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D204",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D201",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "D200",
+			"maxseats": 114,
+			"minseats": 114,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "C126",
+			"maxseats": 90,
+			"minseats": 90,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "C124",
+			"maxseats": 90,
+			"minseats": 90,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "B79",
+			"maxseats": 21,
+			"minseats": 21,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "B75",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "B319",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B318",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B316",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B315",
+			"maxseats": 78,
+			"minseats": 78,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B313",
+			"maxseats": 78,
+			"minseats": 78,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B312",
+			"maxseats": 18,
+			"minseats": 18,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B310",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B309",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B308",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B307",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B306",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B304",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B303",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B302",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B250",
+			"maxseats": 240,
+			"minseats": 240,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "B219",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B218",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B216",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B215",
+			"maxseats": 78,
+			"minseats": 78,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B213",
+			"maxseats": 78,
+			"minseats": 78,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B211",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B210",
+			"maxseats": 48,
+			"minseats": 48,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B209",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B208",
+			"maxseats": 56,
+			"minseats": 56,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B151",
+			"maxseats": 66,
+			"minseats": 66,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "B150",
+			"maxseats": 265,
+			"minseats": 265,
+			"maxlon": -123.25308,
+			"minlon": -123.25308,
+			"maxlat": 49.2659,
+			"minlat": 49.2659
+		},
+		{
+			"rooms_number": "B142",
+			"maxseats": 26,
+			"minseats": 26,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B141",
+			"maxseats": 42,
+			"minseats": 42,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "B138",
+			"maxseats": 14,
+			"minseats": 14,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "B136",
+			"maxseats": 12,
+			"minseats": 12,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "B112",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "B108",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "B101",
+			"maxseats": 44,
+			"minseats": 44,
+			"maxlon": -123.25318,
+			"minlon": -123.25318,
+			"maxlat": 49.2699,
+			"minlat": 49.2699
+		},
+		{
+			"rooms_number": "A203",
+			"maxseats": 108,
+			"minseats": 108,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A202",
+			"maxseats": 108,
+			"minseats": 108,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A201",
+			"maxseats": 181,
+			"minseats": 181,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A104",
+			"maxseats": 150,
+			"minseats": 150,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A103",
+			"maxseats": 131,
+			"minseats": 131,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A102",
+			"maxseats": 150,
+			"minseats": 150,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A101",
+			"maxseats": 275,
+			"minseats": 275,
+			"maxlon": -123.25468,
+			"minlon": -123.25468,
+			"maxlat": 49.26826,
+			"minlat": 49.26826
+		},
+		{
+			"rooms_number": "A",
+			"maxseats": 442,
+			"minseats": 442,
+			"maxlon": -123.24467,
+			"minlon": -123.24467,
+			"maxlat": 49.26047,
+			"minlat": 49.26047
+		},
+		{
+			"rooms_number": "633",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.25042,
+			"minlon": -123.25042,
+			"maxlat": 49.27106,
+			"minlat": 49.27106
+		},
+		{
+			"rooms_number": "60",
+			"maxseats": 99,
+			"minseats": 99,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "6",
+			"maxseats": 181,
+			"minseats": 181,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "5C",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25583,
+			"minlon": -123.25583,
+			"maxlat": 49.26767,
+			"minlat": 49.26767
+		},
+		{
+			"rooms_number": "519",
+			"maxseats": 35,
+			"minseats": 35,
+			"maxlon": -123.25179,
+			"minlon": -123.25179,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "50",
+			"maxseats": 43,
+			"minseats": 43,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "5",
+			"maxseats": 120,
+			"minseats": 120,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "462",
+			"maxseats": 42,
+			"minseats": 42,
+			"maxlon": -123.25533,
+			"minlon": -123.25533,
+			"maxlat": 49.26545,
+			"minlat": 49.26545
+		},
+		{
+			"rooms_number": "461",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "460",
+			"maxseats": 75,
+			"minseats": 16,
+			"maxlon": -123.2521,
+			"minlon": -123.25533,
+			"maxlat": 49.26766,
+			"minlat": 49.26545
+		},
+		{
+			"rooms_number": "437",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "435",
+			"maxseats": 53,
+			"minseats": 53,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "434",
+			"maxseats": 44,
+			"minseats": 44,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "432",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "410",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "409",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "408",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "4074",
+			"maxseats": 72,
+			"minseats": 72,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4072",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "407",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "4068",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4062",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "406",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "4058",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4052",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "405",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "4018",
+			"maxseats": 48,
+			"minseats": 48,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4016",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4004",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "4002",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "40",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "4",
+			"maxseats": 120,
+			"minseats": 120,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "360M",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360L",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360K",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360J",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360H",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360G",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360F",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360E",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360D",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360C",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360B",
+			"maxseats": 6,
+			"minseats": 6,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "360A",
+			"maxseats": 6,
+			"minseats": 6,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "358",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "354",
+			"maxseats": 44,
+			"minseats": 44,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "350",
+			"maxseats": 58,
+			"minseats": 58,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "347",
+			"maxseats": 70,
+			"minseats": 70,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "345",
+			"maxseats": 68,
+			"minseats": 68,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "343",
+			"maxseats": 68,
+			"minseats": 68,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "339",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "335",
+			"maxseats": 41,
+			"minseats": 41,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "334",
+			"maxseats": 60,
+			"minseats": 60,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "332",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "326",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25505,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_number": "324",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25505,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_number": "3208",
+			"maxseats": 72,
+			"minseats": 72,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "320",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "317",
+			"maxseats": 44,
+			"minseats": 44,
+			"maxlon": -123.25179,
+			"minlon": -123.25179,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "3124",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3122",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3120",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3118",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3116",
+			"maxseats": 14,
+			"minseats": 14,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3115",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3114",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "3112",
+			"maxseats": 7,
+			"minseats": 7,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "310",
+			"maxseats": 160,
+			"minseats": 27,
+			"maxlon": -123.24807,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_number": "309",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "308",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "3074",
+			"maxseats": 72,
+			"minseats": 72,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "3072",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "307",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "3068",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "3062",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "306",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "3058",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "3052",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "305",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "304",
+			"maxseats": 36,
+			"minseats": 36,
+			"maxlon": -123.25374,
+			"minlon": -123.25374,
+			"maxlat": 49.26627,
+			"minlat": 49.26627
+		},
+		{
+			"rooms_number": "303",
+			"maxseats": 63,
+			"minseats": 63,
+			"maxlon": -123.25179,
+			"minlon": -123.25179,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "302",
+			"maxseats": 30,
+			"minseats": 30,
+			"maxlon": -123.25374,
+			"minlon": -123.25374,
+			"maxlat": 49.26627,
+			"minlat": 49.26627
+		},
+		{
+			"rooms_number": "3018",
+			"maxseats": 48,
+			"minseats": 48,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "3016",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "301",
+			"maxseats": 100,
+			"minseats": 30,
+			"maxlon": -123.24807,
+			"minlon": -123.25374,
+			"maxlat": 49.27106,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_number": "3004",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "3002",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_number": "30",
+			"maxseats": 28,
+			"minseats": 28,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "3",
+			"maxseats": 88,
+			"minseats": 88,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "296",
+			"maxseats": 37,
+			"minseats": 37,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "295",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "293",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "292",
+			"maxseats": 35,
+			"minseats": 35,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "291",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "266",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "265",
+			"maxseats": 10,
+			"minseats": 10,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "264",
+			"maxseats": 12,
+			"minseats": 12,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "263",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "261",
+			"maxseats": 112,
+			"minseats": 112,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "260",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "256",
+			"maxseats": 32,
+			"minseats": 32,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "254",
+			"maxseats": 84,
+			"minseats": 80,
+			"maxlon": -123.24935,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "2519",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25249,
+			"minlon": -123.25249,
+			"maxlat": 49.26479,
+			"minlat": 49.26479
+		},
+		{
+			"rooms_number": "243",
+			"maxseats": 68,
+			"minseats": 68,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "242",
+			"maxseats": 60,
+			"minseats": 21,
+			"maxlon": -123.24935,
+			"minlon": -123.25623,
+			"maxlat": 49.26605,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "241",
+			"maxseats": 70,
+			"minseats": 70,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "237",
+			"maxseats": 41,
+			"minseats": 41,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "2367",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.25237,
+			"minlon": -123.25237,
+			"maxlat": 49.26862,
+			"minlat": 49.26862
+		},
+		{
+			"rooms_number": "2365",
+			"maxseats": 70,
+			"minseats": 70,
+			"maxlon": -123.25237,
+			"minlon": -123.25237,
+			"maxlat": 49.26862,
+			"minlat": 49.26862
+		},
+		{
+			"rooms_number": "235",
+			"maxseats": 41,
+			"minseats": 41,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "234",
+			"maxseats": 60,
+			"minseats": 60,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "232",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "228",
+			"maxseats": 136,
+			"minseats": 136,
+			"maxlon": -123.24935,
+			"minlon": -123.24935,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "225",
+			"maxseats": 25,
+			"minseats": 25,
+			"maxlon": -123.255534,
+			"minlon": -123.255534,
+			"maxlat": 49.266463,
+			"minlat": 49.266463
+		},
+		{
+			"rooms_number": "224",
+			"maxseats": 31,
+			"minseats": 31,
+			"maxlon": -123.25505,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_number": "223",
+			"maxseats": 29,
+			"minseats": 29,
+			"maxlon": -123.25505,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_number": "222",
+			"maxseats": 190,
+			"minseats": 29,
+			"maxlon": -123.25431,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "221",
+			"maxseats": 190,
+			"minseats": 190,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "220C",
+			"maxseats": 299,
+			"minseats": 299,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.2683,
+			"minlat": 49.2683
+		},
+		{
+			"rooms_number": "220B",
+			"maxseats": 299,
+			"minseats": 299,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.2683,
+			"minlat": 49.2683
+		},
+		{
+			"rooms_number": "220A",
+			"maxseats": 299,
+			"minseats": 299,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.2683,
+			"minlat": 49.2683
+		},
+		{
+			"rooms_number": "2200",
+			"maxseats": 76,
+			"minseats": 76,
+			"maxlon": -123.25249,
+			"minlon": -123.25249,
+			"maxlat": 49.26479,
+			"minlat": 49.26479
+		},
+		{
+			"rooms_number": "220",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.24935,
+			"minlon": -123.24935,
+			"maxlat": 49.26176,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "214",
+			"maxseats": 60,
+			"minseats": 39,
+			"maxlon": -123.24935,
+			"minlon": -123.25623,
+			"maxlat": 49.26605,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "212",
+			"maxseats": 72,
+			"minseats": 72,
+			"maxlon": -123.25623,
+			"minlon": -123.25623,
+			"maxlat": 49.26605,
+			"minlat": 49.26605
+		},
+		{
+			"rooms_number": "211",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25583,
+			"minlon": -123.25583,
+			"maxlat": 49.26767,
+			"minlat": 49.26767
+		},
+		{
+			"rooms_number": "210",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "209",
+			"maxseats": 60,
+			"minseats": 60,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "208",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.2466,
+			"minlon": -123.2531,
+			"maxlat": 49.2663,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "207",
+			"maxseats": 90,
+			"minseats": 40,
+			"maxlon": -123.2531,
+			"minlon": -123.25741,
+			"maxlat": 49.26958,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "206",
+			"maxseats": 40,
+			"minseats": 25,
+			"maxlon": -123.2466,
+			"minlon": -123.2531,
+			"maxlat": 49.2663,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "205",
+			"maxseats": 37,
+			"minseats": 34,
+			"maxlon": -123.2531,
+			"minlon": -123.25741,
+			"maxlat": 49.26958,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "204A",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "204",
+			"maxseats": 40,
+			"minseats": 30,
+			"maxlon": -123.2531,
+			"minlon": -123.255534,
+			"maxlat": 49.266463,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "203B",
+			"maxseats": 39,
+			"minseats": 39,
+			"maxlon": -123.24467,
+			"minlon": -123.24467,
+			"maxlat": 49.26047,
+			"minlat": 49.26047
+		},
+		{
+			"rooms_number": "203A",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.24467,
+			"minlon": -123.24467,
+			"maxlat": 49.26047,
+			"minlat": 49.26047
+		},
+		{
+			"rooms_number": "203",
+			"maxseats": 48,
+			"minseats": 33,
+			"maxlon": -123.2531,
+			"minlon": -123.25741,
+			"maxlat": 49.26958,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "202",
+			"maxseats": 150,
+			"minseats": 26,
+			"maxlon": -123.24935,
+			"minlon": -123.25741,
+			"maxlat": 49.26958,
+			"minlat": 49.26176
+		},
+		{
+			"rooms_number": "2012",
+			"maxseats": 80,
+			"minseats": 80,
+			"maxlon": -123.25224,
+			"minlon": -123.25224,
+			"maxlat": 49.26274,
+			"minlat": 49.26274
+		},
+		{
+			"rooms_number": "201",
+			"maxseats": 183,
+			"minseats": 40,
+			"maxlon": -123.24807,
+			"minlon": -123.25623,
+			"maxlat": 49.26627,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_number": "2000",
+			"maxseats": 228,
+			"minseats": 228,
+			"maxlon": -123.25249,
+			"minlon": -123.25249,
+			"maxlat": 49.26479,
+			"minlat": 49.26479
+		},
+		{
+			"rooms_number": "200",
+			"maxseats": 257,
+			"minseats": 40,
+			"maxlon": -123.2531,
+			"minlon": -123.25623,
+			"maxlat": 49.26627,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "20",
+			"maxseats": 12,
+			"minseats": 12,
+			"maxlon": -123.24959,
+			"minlon": -123.24959,
+			"maxlat": 49.26414,
+			"minlat": 49.26414
+		},
+		{
+			"rooms_number": "2",
+			"maxseats": 503,
+			"minseats": 503,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "195",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "194",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "193",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "192",
+			"maxseats": 8,
+			"minseats": 8,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "191",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "185",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "182",
+			"maxseats": 154,
+			"minseats": 154,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "166",
+			"maxseats": 200,
+			"minseats": 200,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "1617",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1615",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1613",
+			"maxseats": 36,
+			"minseats": 36,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1611",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "160",
+			"maxseats": 72,
+			"minseats": 72,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "158",
+			"maxseats": 74,
+			"minseats": 24,
+			"maxlon": -123.25027,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "157",
+			"maxseats": 24,
+			"minseats": 21,
+			"maxlon": -123.2521,
+			"minlon": -123.25655,
+			"maxlat": 49.26766,
+			"minlat": 49.2666
+		},
+		{
+			"rooms_number": "156",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "155",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.2521,
+			"minlon": -123.2521,
+			"maxlat": 49.26766,
+			"minlat": 49.26766
+		},
+		{
+			"rooms_number": "154",
+			"maxseats": 47,
+			"minseats": 47,
+			"maxlon": -123.25027,
+			"minlon": -123.25027,
+			"maxlat": 49.26114,
+			"minlat": 49.26114
+		},
+		{
+			"rooms_number": "153",
+			"maxseats": 160,
+			"minseats": 160,
+			"maxlon": -123.24608,
+			"minlon": -123.24608,
+			"maxlat": 49.26541,
+			"minlat": 49.26541
+		},
+		{
+			"rooms_number": "1503",
+			"maxseats": 16,
+			"minseats": 16,
+			"maxlon": -123.25249,
+			"minlon": -123.25249,
+			"maxlat": 49.26479,
+			"minlat": 49.26479
+		},
+		{
+			"rooms_number": "147",
+			"maxseats": 60,
+			"minseats": 60,
+			"maxlon": -123.25623,
+			"minlon": -123.25623,
+			"maxlat": 49.26605,
+			"minlat": 49.26605
+		},
+		{
+			"rooms_number": "143",
+			"maxseats": 28,
+			"minseats": 28,
+			"maxlon": -123.24842,
+			"minlon": -123.24842,
+			"maxlat": 49.2642,
+			"minlat": 49.2642
+		},
+		{
+			"rooms_number": "142",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25655,
+			"minlon": -123.25655,
+			"maxlat": 49.2666,
+			"minlat": 49.2666
+		},
+		{
+			"rooms_number": "1402",
+			"maxseats": 18,
+			"minseats": 18,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "135",
+			"maxseats": 50,
+			"minseats": 50,
+			"maxlon": -123.25198,
+			"minlon": -123.25198,
+			"maxlat": 49.26228,
+			"minlat": 49.26228
+		},
+		{
+			"rooms_number": "1328",
+			"maxseats": 38,
+			"minseats": 38,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1302",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2559,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.264
+		},
+		{
+			"rooms_number": "13",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25165,
+			"minlon": -123.25165,
+			"maxlat": 49.2661,
+			"minlat": 49.2661
+		},
+		{
+			"rooms_number": "1250",
+			"maxseats": 426,
+			"minseats": 426,
+			"maxlon": -123.25314,
+			"minlon": -123.25314,
+			"maxlat": 49.26207,
+			"minlat": 49.26207
+		},
+		{
+			"rooms_number": "124",
+			"maxseats": 68,
+			"minseats": 68,
+			"maxlon": -123.25505,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.2643
+		},
+		{
+			"rooms_number": "1221",
+			"maxseats": 99,
+			"minseats": 99,
+			"maxlon": -123.24886,
+			"minlon": -123.24886,
+			"maxlat": 49.26044,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "122",
+			"maxseats": 188,
+			"minseats": 12,
+			"maxlon": -123.25431,
+			"minlon": -123.25505,
+			"maxlat": 49.2643,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "1215",
+			"maxseats": 45,
+			"minseats": 24,
+			"maxlon": -123.24894,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "1212",
+			"maxseats": 34,
+			"minseats": 34,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "1210",
+			"maxseats": 22,
+			"minseats": 22,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "121",
+			"maxseats": 187,
+			"minseats": 50,
+			"maxlon": -123.25318,
+			"minlon": -123.25431,
+			"maxlat": 49.2699,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "1206",
+			"maxseats": 26,
+			"minseats": 26,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "1204",
+			"maxseats": 62,
+			"minseats": 62,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "1202",
+			"maxseats": 100,
+			"minseats": 100,
+			"maxlon": -123.24894,
+			"minlon": -123.24894,
+			"maxlat": 49.26273,
+			"minlat": 49.26273
+		},
+		{
+			"rooms_number": "1201",
+			"maxseats": 167,
+			"minseats": 167,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "120",
+			"maxseats": 144,
+			"minseats": 144,
+			"maxlon": -123.25099,
+			"minlon": -123.25099,
+			"maxlat": 49.26372,
+			"minlat": 49.26372
+		},
+		{
+			"rooms_number": "12",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25165,
+			"minlon": -123.25165,
+			"maxlat": 49.2661,
+			"minlat": 49.2661
+		},
+		{
+			"rooms_number": "113",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25318,
+			"minlon": -123.25318,
+			"maxlat": 49.2699,
+			"minlat": 49.2699
+		},
+		{
+			"rooms_number": "112",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.25318,
+			"minlon": -123.25318,
+			"maxlat": 49.2699,
+			"minlat": 49.2699
+		},
+		{
+			"rooms_number": "1101",
+			"maxseats": 236,
+			"minseats": 236,
+			"maxlon": -123.24342,
+			"minlon": -123.24342,
+			"maxlat": 49.26229,
+			"minlat": 49.26229
+		},
+		{
+			"rooms_number": "1100",
+			"maxseats": 106,
+			"minseats": 106,
+			"maxlon": -123.254816,
+			"minlon": -123.254816,
+			"maxlat": 49.266089,
+			"minlat": 49.266089
+		},
+		{
+			"rooms_number": "110",
+			"maxseats": 120,
+			"minseats": 27,
+			"maxlon": -123.24807,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_number": "109",
+			"maxseats": 47,
+			"minseats": 30,
+			"maxlon": -123.25431,
+			"minlon": -123.25692,
+			"maxlat": 49.26867,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "108",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "107",
+			"maxseats": 51,
+			"minseats": 47,
+			"maxlon": -123.25431,
+			"minlon": -123.25692,
+			"maxlat": 49.26867,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "106",
+			"maxseats": 27,
+			"minseats": 27,
+			"maxlon": -123.25431,
+			"minlon": -123.25431,
+			"maxlat": 49.26293,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "105",
+			"maxseats": 94,
+			"minseats": 30,
+			"maxlon": -123.25318,
+			"minlon": -123.25583,
+			"maxlat": 49.2699,
+			"minlat": 49.26293
+		},
+		{
+			"rooms_number": "104",
+			"maxseats": 94,
+			"minseats": 48,
+			"maxlon": -123.255534,
+			"minlon": -123.25583,
+			"maxlat": 49.26767,
+			"minlat": 49.266463
+		},
+		{
+			"rooms_number": "103",
+			"maxseats": 60,
+			"minseats": 55,
+			"maxlon": -123.24718,
+			"minlon": -123.25692,
+			"maxlat": 49.26867,
+			"minlat": 49.26228
+		},
+		{
+			"rooms_number": "1024",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1023",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1022",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1021",
+			"maxseats": 20,
+			"minseats": 20,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1020",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "102",
+			"maxseats": 94,
+			"minseats": 60,
+			"maxlon": -123.24718,
+			"minlon": -123.25583,
+			"maxlat": 49.26767,
+			"minlat": 49.26228
+		},
+		{
+			"rooms_number": "1013",
+			"maxseats": 350,
+			"minseats": 350,
+			"maxlon": -123.25224,
+			"minlon": -123.25224,
+			"maxlat": 49.26274,
+			"minlat": 49.26274
+		},
+		{
+			"rooms_number": "1012",
+			"maxseats": 150,
+			"minseats": 150,
+			"maxlon": -123.25224,
+			"minlon": -123.25224,
+			"maxlat": 49.26274,
+			"minlat": 49.26274
+		},
+		{
+			"rooms_number": "1011",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2559,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.264
+		},
+		{
+			"rooms_number": "101",
+			"maxseats": 200,
+			"minseats": 30,
+			"maxlon": -123.24718,
+			"minlon": -123.25692,
+			"maxlat": 49.26867,
+			"minlat": 49.26125
+		},
+		{
+			"rooms_number": "1009",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2559,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.264
+		},
+		{
+			"rooms_number": "1008",
+			"maxseats": 24,
+			"minseats": 24,
+			"maxlon": -123.2559,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.264
+		},
+		{
+			"rooms_number": "1005",
+			"maxseats": 250,
+			"minseats": 40,
+			"maxlon": -123.24886,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1004",
+			"maxseats": 40,
+			"minseats": 40,
+			"maxlon": -123.2531,
+			"minlon": -123.2531,
+			"maxlat": 49.26398,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "1003",
+			"maxseats": 125,
+			"minseats": 40,
+			"maxlon": -123.24494,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1002",
+			"maxseats": 350,
+			"minseats": 24,
+			"maxlon": -123.24494,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "1001",
+			"maxseats": 350,
+			"minseats": 40,
+			"maxlon": -123.24494,
+			"minlon": -123.2559,
+			"maxlat": 49.264,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_number": "100",
+			"maxseats": 375,
+			"minseats": 224,
+			"maxlon": -123.24937,
+			"minlon": -123.25623,
+			"maxlat": 49.266463,
+			"minlat": 49.26398
+		},
+		{
+			"rooms_number": "10",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25165,
+			"minlon": -123.25165,
+			"maxlat": 49.2661,
+			"minlat": 49.2661
+		},
+		{
+			"rooms_number": "1",
+			"maxseats": 120,
+			"minseats": 120,
+			"maxlon": -123.24673,
+			"minlon": -123.24673,
+			"maxlat": 49.26478,
+			"minlat": 49.26478
+		},
+		{
+			"rooms_number": "098",
+			"maxseats": 260,
+			"minseats": 260,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "039",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_number": "037",
+			"maxseats": 54,
+			"minseats": 54,
+			"maxlon": -123.25364,
+			"minlon": -123.25364,
+			"maxlat": 49.26486,
+			"minlat": 49.26486
+		}
+	]
+}
