@@ -1,0 +1,135 @@
+{
+	"title": "validAllMaxMins2",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_type",
+				"maxseats",
+				"minseats",
+				"maxlon",
+				"minlon",
+				"maxlat",
+				"minlat"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"rooms_type"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_type"
+			],
+			"APPLY": [
+				{
+					"maxseats": {
+						"MAX": "rooms_seats"
+					}
+				},
+				{
+					"minseats": {
+						"MIN": "rooms_seats"
+					}
+				},
+				{
+					"maxlon": {
+						"MAX": "rooms_lon"
+					}
+				},
+				{
+					"minlon": {
+						"MIN": "rooms_lon"
+					}
+				},
+				{
+					"maxlat": {
+						"MAX": "rooms_lat"
+					}
+				},
+				{
+					"minlat": {
+						"MIN": "rooms_lat"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"rooms_type": "Tiered Large Group",
+			"maxseats": 503,
+			"minseats": 44,
+			"maxlon": -123.24342,
+			"minlon": -123.25623,
+			"maxlat": 49.26862,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_type": "TBD",
+			"maxseats": 299,
+			"minseats": 32,
+			"maxlon": -123.24894,
+			"minlon": -123.25364,
+			"maxlat": 49.2683,
+			"minlat": 49.26486
+		},
+		{
+			"rooms_type": "Studio Lab",
+			"maxseats": 72,
+			"minseats": 30,
+			"maxlon": -123.24944,
+			"minlon": -123.25692,
+			"maxlat": 49.26867,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_type": "Small Group",
+			"maxseats": 60,
+			"minseats": 6,
+			"maxlon": -123.24342,
+			"minlon": -123.25741,
+			"maxlat": 49.26958,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_type": "Open Design General Purpose",
+			"maxseats": 442,
+			"minseats": 16,
+			"maxlon": -123.24342,
+			"minlon": -123.25741,
+			"maxlat": 49.27106,
+			"minlat": 49.26047
+		},
+		{
+			"rooms_type": "Case Style",
+			"maxseats": 108,
+			"minseats": 34,
+			"maxlon": -123.24886,
+			"minlon": -123.25468,
+			"maxlat": 49.27106,
+			"minlat": 49.26044
+		},
+		{
+			"rooms_type": "Active Learning",
+			"maxseats": 72,
+			"minseats": 16,
+			"maxlon": -123.24944,
+			"minlon": -123.24944,
+			"maxlat": 49.26048,
+			"minlat": 49.26048
+		},
+		{
+			"rooms_type": "",
+			"maxseats": 60,
+			"minseats": 60,
+			"maxlon": -123.25583,
+			"minlon": -123.25583,
+			"maxlat": 49.26767,
+			"minlat": 49.26767
+		}
+	]
+}

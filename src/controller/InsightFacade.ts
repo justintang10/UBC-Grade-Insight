@@ -124,7 +124,7 @@ export default class InsightFacade implements IInsightFacade {
 				transformations = query[key];
 			}
 		}
-		if (where === null || options === null) {
+		if (where === null || options === null || Object.prototype.toString.call(where) !== "[object Object]" || where.length === 0) {
 			throw new InsightError("Invalid Query: Missing WHERE or OPTIONS");
 		}
 

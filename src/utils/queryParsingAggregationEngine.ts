@@ -70,6 +70,9 @@ export function handleMax(columnName: any, sections: any): number {
 			max = value;
 		}
 	}
+	if (max === Number.MIN_SAFE_INTEGER) {
+		console.log("Uh Oh!");
+	}
 	return max;
 }
 
@@ -80,6 +83,9 @@ export function handleMin(columnName: any, sections: any): number {
 		if (value < min) {
 			min = value;
 		}
+	}
+	if (min === Number.MAX_SAFE_INTEGER) {
+		console.log("Uh Oh!");
 	}
 	return min;
 }

@@ -1,0 +1,25 @@
+{
+	"title": "orderKeysMissing",
+	"input": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				"rooms_number"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"rooms_number"
+			],
+			"APPLY": [
+				{
+					"maxFName": {
+						"MAX": "rooms_number"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
