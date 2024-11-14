@@ -3,6 +3,8 @@ import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
+import { InsightDatasetKind, InsightError, NotFoundError } from "../controller/IInsightFacade";
+import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
 	private readonly port: number;
@@ -89,6 +91,10 @@ export default class Server {
 		this.express.get("/echo/:msg", Server.echo);
 
 		// TODO: your other endpoints should go here
+		this.express.put("/dataset/:id/:kind", Server.datasetAdd);
+		this.express.delete("/dataset/:id", Server.datasetDelete);
+		this.express.post("/query", Server.datasetQuery);
+		this.express.get("/datasets", Server.datasetList);
 	}
 
 	// The next two methods handle the echo service.
@@ -110,5 +116,63 @@ export default class Server {
 		} else {
 			return "Message not provided";
 		}
+	}
+
+	private static datasetAdd(req: Request, res: Response): void {
+		try {
+			const result = Server.performDatasetAdd(req.params.id, req.params.kind, req.body);
+			res.status(StatusCodes.OK).json({ result: result });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
+	}
+
+	private static async performDatasetAdd(id: string, kind: string, content: string): Promise<any[]> {
+		const facade = new InsightFacade();
+		const datasetKind = kind as InsightDatasetKind;
+		const datasetZippedContent = Buffer.from(content, "binary").toString("base64");
+		return await facade.addDataset(id, datasetZippedContent, datasetKind);
+	}
+
+	private static datasetDelete(req: Request, res: Response): void {
+		try {
+			const result = Server.performDatasetDelete(req.params.id);
+			res.status(StatusCodes.OK).json({ result: result });
+		} catch (err) {
+			if (err instanceof InsightError) {
+				res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+			} else if (err instanceof NotFoundError) {
+				res.status(StatusCodes.NOT_FOUND).json({ error: err });
+			}
+		}
+	}
+
+	private static async performDatasetDelete(id: string): Promise<any> {
+		const facade = new InsightFacade();
+		return await facade.removeDataset(id);
+	}
+
+	private static datasetQuery(req: Request, res: Response): void {
+		try {
+			const result = Server.performDatasetQuery(req.body);
+			res.status(StatusCodes.OK).json({ result: result });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
+	}
+
+	private static async performDatasetQuery(queryJson: any): Promise<any[]> {
+		const facade = new InsightFacade();
+		return await facade.performQuery(queryJson);
+	}
+
+	private static datasetList(_: Request, res: Response): void {
+		const result = Server.performDatasetList();
+		res.status(StatusCodes.OK).json({ result: result });
+	}
+
+	private static async performDatasetList(): Promise<any[]> {
+		const facade = new InsightFacade();
+		return await facade.listDatasets();
 	}
 }
