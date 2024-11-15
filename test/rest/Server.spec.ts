@@ -7,11 +7,11 @@ import { getContentFromArchives } from "../TestUtil";
 
 describe("Facade C3", function () {
 	let server: Server;
-	let sectionsBytes: string;
+	let sectionsBytes: Buffer;
 
 	before(async function () {
 		const sections = await getContentFromArchives("pair.zip");
-		sectionsBytes = Buffer.from(sections, "base64").toString("binary");
+		sectionsBytes = Buffer.from(sections, "base64");
 
 		try {
 			//start server (random unused port)
@@ -53,8 +53,8 @@ describe("Facade C3", function () {
 				.set("Content-Type", "application/x-zip-compressed")
 				.then(function (res: Response) {
 					// some logging here please!
-					//TODO: status code comes back 200 but result body is empty ????
 					Log.info(res.body.result);
+					expect(res.body.result).to.have.members(["test-id"]);
 					expect(res.status).to.be.equal(StatusCodes.OK);
 				})
 				.catch(function () {
@@ -67,5 +67,50 @@ describe("Facade C3", function () {
 		}
 	});
 
-	// The other endpoints work similarly. You should be able to find all instructions in the supertest documentation
+	it("GET test for courses dataset", function () {
+		const SERVER_URL = "localhost:49155";
+		const ENDPOINT_URL = "/datasets";
+
+		try {
+			return request(SERVER_URL)
+				.get(ENDPOINT_URL)
+				.set("Content-Type", "application/x-zip-compressed")
+				.then(function (res: Response) {
+					// some logging here please!
+					Log.info(res.body.result);
+					expect(res.body.result).to.have.length(1);
+					expect(res.status).to.be.equal(StatusCodes.OK);
+				})
+				.catch(function () {
+					// some logging here please!
+					expect.fail();
+				});
+		} catch (err) {
+			Log.error(err);
+			// and some more logging here!
+		}
+	});
+
+	it("DELETE test for courses dataset", function () {
+		const SERVER_URL = "localhost:49155";
+		const ENDPOINT_URL = "/dataset/test-id";
+
+		try {
+			return request(SERVER_URL)
+				.delete(ENDPOINT_URL)
+				.set("Content-Type", "application/x-zip-compressed")
+				.then(function (res: Response) {
+					// some logging here please!
+					Log.info(res.body.result);
+					expect(res.status).to.be.equal(StatusCodes.OK);
+				})
+				.catch(function () {
+					// some logging here please!
+					expect.fail();
+				});
+		} catch (err) {
+			Log.error(err);
+			// and some more logging here!
+		}
+	});
 });
