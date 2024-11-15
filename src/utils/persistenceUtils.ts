@@ -11,16 +11,16 @@ export function jsonToSectionsDataset(jsonData: any): SectionsDataset {
 
 	for (const section of jsonData.sections) {
 		const sectionObj = new Section(
+			section.uuid,
 			section.id,
-			section.Course,
-			section.Title,
-			section.Professor,
-			section.Subject,
-			section.Year,
-			section.Avg,
-			section.Pass,
-			section.Fail,
-			section.Audit
+			section.title,
+			section.instructor,
+			section.department,
+			section.year,
+			section.avg,
+			section.pass,
+			section.fail,
+			section.audit
 		);
 
 		sections.push(sectionObj);

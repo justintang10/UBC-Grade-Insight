@@ -44,7 +44,7 @@ describe("Facade C3", function () {
 	// Sample on how to format PUT requests
 	it("PUT test for courses dataset", function () {
 		const SERVER_URL = "localhost:49155";
-		const ENDPOINT_URL = "/dataset/test-id/sections";
+		const ENDPOINT_URL = "/dataset/sections/sections";
 
 		try {
 			return request(SERVER_URL)
@@ -54,7 +54,7 @@ describe("Facade C3", function () {
 				.then(function (res: Response) {
 					// some logging here please!
 					Log.info(res.body.result);
-					expect(res.body.result).to.have.members(["test-id"]);
+					expect(res.body.result).to.have.members(["sections"]);
 					expect(res.status).to.be.equal(StatusCodes.OK);
 				})
 				.catch(function () {
@@ -74,7 +74,6 @@ describe("Facade C3", function () {
 		try {
 			return request(SERVER_URL)
 				.get(ENDPOINT_URL)
-				.set("Content-Type", "application/x-zip-compressed")
 				.then(function (res: Response) {
 					// some logging here please!
 					Log.info(res.body.result);
@@ -91,14 +90,50 @@ describe("Facade C3", function () {
 		}
 	});
 
+	it("POST test for courses dataset (query)", function () {
+		const SERVER_URL = "localhost:49155";
+		const ENDPOINT_URL = "/query";
+		const query = {
+			WHERE: {
+				GT: {
+					sections_avg: 97,
+				},
+			},
+			OPTIONS: {
+				COLUMNS: ["sections_dept", "sections_avg"],
+				ORDER: "sections_avg",
+			},
+		};
+
+		try {
+			return request(SERVER_URL)
+				.post(ENDPOINT_URL)
+				.send(query)
+				.set("Content-Type", "application/json")
+				.then(function (res: Response) {
+					// some logging here please!
+					Log.info(res.body.result);
+					const queryResultLen = 49;
+					expect(res.body.result).to.have.length(queryResultLen);
+					expect(res.status).to.be.equal(StatusCodes.OK);
+				})
+				.catch(function () {
+					// some logging here please!
+					expect.fail();
+				});
+		} catch (err) {
+			Log.error(err);
+			// and some more logging here!
+		}
+	});
+
 	it("DELETE test for courses dataset", function () {
 		const SERVER_URL = "localhost:49155";
-		const ENDPOINT_URL = "/dataset/test-id";
+		const ENDPOINT_URL = "/dataset/sections";
 
 		try {
 			return request(SERVER_URL)
 				.delete(ENDPOINT_URL)
-				.set("Content-Type", "application/x-zip-compressed")
 				.then(function (res: Response) {
 					// some logging here please!
 					Log.info(res.body.result);
