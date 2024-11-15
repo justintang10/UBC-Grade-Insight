@@ -118,25 +118,29 @@ export default class Server {
 		}
 	}
 
-	private static datasetAdd(req: Request, res: Response): void {
+	private static async datasetAdd(req: Request, res: Response): Promise<void> {
 		try {
-			const result = Server.performDatasetAdd(req.params.id, req.params.kind, req.body);
+			const result = await Server.performDatasetAdd(req.params.id, req.params.kind, req.body);
 			res.status(StatusCodes.OK).json({ result: result });
 		} catch (err) {
 			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
 		}
 	}
 
-	private static async performDatasetAdd(id: string, kind: string, content: string): Promise<any[]> {
-		const facade = new InsightFacade();
-		const datasetKind = kind as InsightDatasetKind;
-		const datasetZippedContent = Buffer.from(content, "binary").toString("base64");
-		return await facade.addDataset(id, datasetZippedContent, datasetKind);
+	private static async performDatasetAdd(id: string, kind: string, content: Buffer): Promise<any[]> {
+		try {
+			const facade = new InsightFacade();
+			const datasetKind = kind as InsightDatasetKind;
+			const datasetZippedContent = content.toString("base64");
+			return await facade.addDataset(id, datasetZippedContent, datasetKind);
+		} catch (err) {
+			throw new InsightError("Error adding dataset: " + err);
+		}
 	}
 
-	private static datasetDelete(req: Request, res: Response): void {
+	private static async datasetDelete(req: Request, res: Response): Promise<void> {
 		try {
-			const result = Server.performDatasetDelete(req.params.id);
+			const result = await Server.performDatasetDelete(req.params.id);
 			res.status(StatusCodes.OK).json({ result: result });
 		} catch (err) {
 			if (err instanceof InsightError) {
@@ -166,13 +170,18 @@ export default class Server {
 		return await facade.performQuery(queryJson);
 	}
 
-	private static datasetList(_: Request, res: Response): void {
-		const result = Server.performDatasetList();
+	private static async datasetList(_: Request, res: Response): Promise<void> {
+		const result = await Server.performDatasetList();
 		res.status(StatusCodes.OK).json({ result: result });
 	}
 
 	private static async performDatasetList(): Promise<any[]> {
-		const facade = new InsightFacade();
-		return await facade.listDatasets();
+		try {
+			const facade = new InsightFacade();
+			const result = await facade.listDatasets();
+			return result;
+		} catch (err) {
+			throw new InsightError("Error listing datasets: " + err);
+		}
 	}
 }
