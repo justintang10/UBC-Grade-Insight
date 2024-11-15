@@ -156,9 +156,9 @@ export default class Server {
 		return await facade.removeDataset(id);
 	}
 
-	private static datasetQuery(req: Request, res: Response): void {
+	private static async datasetQuery(req: Request, res: Response): Promise<void> {
 		try {
-			const result = Server.performDatasetQuery(req.body);
+			const result = await Server.performDatasetQuery(req.body);
 			res.status(StatusCodes.OK).json({ result: result });
 		} catch (err) {
 			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
@@ -166,8 +166,13 @@ export default class Server {
 	}
 
 	private static async performDatasetQuery(queryJson: any): Promise<any[]> {
-		const facade = new InsightFacade();
-		return await facade.performQuery(queryJson);
+		try {
+			const facade = new InsightFacade();
+			const result = await facade.performQuery(queryJson);
+			return result;
+		} catch (err) {
+			throw new InsightError("Error performing query: " + err);
+		}
 	}
 
 	private static async datasetList(_: Request, res: Response): Promise<void> {
