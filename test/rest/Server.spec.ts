@@ -2,14 +2,35 @@ import { expect } from "chai";
 import request, { Response } from "supertest";
 import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
+import Server from "./../../src/rest/Server";
+import { getContentFromArchives } from "../TestUtil";
 
 describe("Facade C3", function () {
-	before(function () {
-		// TODO: start server here once and handle errors properly
+	let server: Server;
+	let sectionsBytes: string;
+
+	before(async function () {
+		const sections = await getContentFromArchives("pair.zip");
+		sectionsBytes = Buffer.from(sections, "base64").toString("binary");
+
+		try {
+			//start server (random unused port)
+			const port = 49155;
+			server = new Server(port);
+			await server.start();
+		} catch (err) {
+			Log.error("failed to start server");
+			expect.fail("Failed to start C3 server: " + err);
+		}
 	});
 
-	after(function () {
-		// TODO: stop server here once!
+	after(async function () {
+		try {
+			await server.stop();
+		} catch (err) {
+			Log.error("failed to stop server");
+			expect.fail("Failed to stop C3 server: " + err);
+		}
 	});
 
 	beforeEach(function () {
@@ -22,17 +43,18 @@ describe("Facade C3", function () {
 
 	// Sample on how to format PUT requests
 	it("PUT test for courses dataset", function () {
-		const SERVER_URL = "TBD";
-		const ENDPOINT_URL = "TBD";
-		const ZIP_FILE_DATA = "TBD";
+		const SERVER_URL = "localhost:49155";
+		const ENDPOINT_URL = "/dataset/test-id/sections";
 
 		try {
 			return request(SERVER_URL)
 				.put(ENDPOINT_URL)
-				.send(ZIP_FILE_DATA)
+				.send(sectionsBytes)
 				.set("Content-Type", "application/x-zip-compressed")
 				.then(function (res: Response) {
 					// some logging here please!
+					//TODO: status code comes back 200 but result body is empty ????
+					Log.info(res.body.result);
 					expect(res.status).to.be.equal(StatusCodes.OK);
 				})
 				.catch(function () {
