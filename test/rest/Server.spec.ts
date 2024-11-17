@@ -95,7 +95,7 @@ describe("Facade C3", function () {
 				.then(function (res: Response) {
 					// some logging here please!
 					Log.info(res.body.result);
-					expect(res.body.result).to.have.members(["sections","rooms"]);
+					expect(res.body.result).to.have.members(["sections", "rooms"]);
 					expect(res.status).to.be.equal(StatusCodes.OK);
 				})
 				.catch(function () {
@@ -165,8 +165,9 @@ describe("Facade C3", function () {
 				.get(ENDPOINT_URL)
 				.then(function (res: Response) {
 					// some logging here please!
+					const two = 2;
 					Log.info(res.body.result);
-					expect(res.body.result).to.have.length(2);
+					expect(res.body.result).to.have.length(two);
 					expect(res.status).to.be.equal(StatusCodes.OK);
 				})
 				.catch(function () {
