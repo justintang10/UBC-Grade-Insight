@@ -90,7 +90,6 @@ export default class Server {
 		// http://localhost:4321/echo/hello
 		this.express.get("/echo/:msg", Server.echo);
 
-		// TODO: your other endpoints should go here
 		this.express.put("/dataset/:id/:kind", Server.datasetAdd);
 		this.express.delete("/dataset/:id", Server.datasetDelete);
 		this.express.post("/query", Server.datasetQuery);
@@ -122,8 +121,8 @@ export default class Server {
 		try {
 			const result = await Server.performDatasetAdd(req.params.id, req.params.kind, req.body);
 			res.status(StatusCodes.OK).json({ result: result });
-		} catch (err) {
-			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		} catch (err: any) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
 		}
 	}
 
@@ -134,7 +133,7 @@ export default class Server {
 			// console.log(content);
 			const datasetZippedContent = content.toString("base64");
 			return await facade.addDataset(id, datasetZippedContent, datasetKind);
-		} catch (err) {
+		} catch (err: any) {
 			throw new InsightError("Error adding dataset: " + err);
 		}
 	}
@@ -143,11 +142,11 @@ export default class Server {
 		try {
 			const result = await Server.performDatasetDelete(req.params.id);
 			res.status(StatusCodes.OK).json({ result: result });
-		} catch (err) {
+		} catch (err: any) {
 			if (err instanceof InsightError) {
-				res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+				res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
 			} else if (err instanceof NotFoundError) {
-				res.status(StatusCodes.NOT_FOUND).json({ error: err });
+				res.status(StatusCodes.NOT_FOUND).json({ error: err.message });
 			}
 		}
 	}
@@ -161,8 +160,8 @@ export default class Server {
 		try {
 			const result = await Server.performDatasetQuery(req.body);
 			res.status(StatusCodes.OK).json({ result: result });
-		} catch (err) {
-			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		} catch (err: any) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
 		}
 	}
 
@@ -171,7 +170,7 @@ export default class Server {
 			const facade = new InsightFacade();
 			const result = await facade.performQuery(queryJson);
 			return result;
-		} catch (err) {
+		} catch (err: any) {
 			throw new InsightError("Error performing query: " + err);
 		}
 	}
