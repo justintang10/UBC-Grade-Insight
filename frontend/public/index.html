@@ -6,8 +6,50 @@
     <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
-<button id="click-me-button" class="button">Click Me!</button>
+    <div id="testplots"></div>
+    <div class="topBar">
+        <p class="header1 text bold">Your Datasets</p>
+    </div>
+    <div class="container">
+        <div class="header2 text bold">Add A Dataset</div>
+        <hr>
+        <form id="addDatasetForm" class="text">
+            <label class="header3 text">Dataset ID:</label>
+            <input id="addDatasetID" type="text" placeholder="Type dataset ID here">
+            <br>
+            <label class="header3 text">Dataset ZIP file:</label>
+            <input id="addDatasetFile" type="file" accept=".zip" />
+            <br>
+            <button id="add-dataset-button" class="button">Add Dataset</button>
+        </form>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="header2 text bold">
+            Datasets
+        </div>
+        <hr>
+        <div id="noDatasetsText" class="text">
+            No Datasets Added!
+        </div>
+		<div id="datasetsContainer">
 
-<script type="text/javascript" src="/frontend.js"></script>
+		</div>
+<!--		This is what a dataset container looks like-->
+<!--        <div class="datasetContainer text">-->
+<!--            <div>-->
+<!--                DatasetID-->
+<!--            </div>-->
+<!--            <div class="header3">-->
+<!--                <button class="viewButton">View Insights</button>-->
+<!--            </div>-->
+<!--            <div class="header3">-->
+<!--                <button class="removeButton">Remove This Dataset</button>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+    <hr>
+    <button id="click-me-button" class="button">Test Button</button>
+<script type="module" src="/frontend.js"></script>
 </body>
 </html>
