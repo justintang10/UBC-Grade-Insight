@@ -23,28 +23,28 @@ async function handleAddDatasetButton(event) {
 	const datasetID = document.getElementById("addDatasetID").value;
 	const datasetZIP = document.getElementById("addDatasetFile").files[0];
 
+	// Convert file into array buffer
 	const fileReader = new FileReader();
-	fileReader.readAsDataURL(datasetZIP);
+	fileReader.readAsArrayBuffer(datasetZIP);
 
-
+	// File reader callback
 	fileReader.onload = async function () {
 		// console.log(fileReader.result);
 
-		// const fetchOptions = {
-		// 	method: "POST",
-		// 	body: JSON.stringify({ username: "example" }),
-		// 	headers: {'Content-Type': 'application/json'},
-		// }
+		// This throws the 400 error code, "bad request"
+		// const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/sections", {
+		// 	method: "PUT",
+		// 	body: fileReader.result,
+		// });
+		//
+		// var json = await response.json()
+		// console.log(json);
 
+		// Get seems to work fine, but it's hard to tell since the add dataset request isn't working
 		const response = await fetch("http://localhost:4321/datasets");
 
 		var json = await response.json()
 		console.log(json);
-		// fetch("http://localhost:4321/datasets")
-		// 	.then((response) => {
-		// 	console.log("Response incoming!");
-		// 	console.log(response);
-		// })
 	}
 
 	fileReader.onerror = function () {
