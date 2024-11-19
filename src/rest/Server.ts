@@ -22,7 +22,7 @@ export default class Server {
 		// NOTE: you can serve static frontend files in from your express server
 		// by uncommenting the line below. This makes files in ./frontend/public
 		// accessible at http://localhost:<port>/
-		this.express.use(express.static("./frontend/public"))
+		this.express.use(express.static("./frontend/public"));
 	}
 
 	/**
@@ -131,6 +131,7 @@ export default class Server {
 		try {
 			const facade = new InsightFacade();
 			const datasetKind = kind as InsightDatasetKind;
+			// console.log(content);
 			const datasetZippedContent = content.toString("base64");
 			return await facade.addDataset(id, datasetZippedContent, datasetKind);
 		} catch (err) {

@@ -16,7 +16,45 @@ async function handleClickMe() {
 	}
 }
 
+document.getElementById("add-dataset-button").addEventListener("click", handleAddDatasetButton);
 
+async function handleAddDatasetButton(event) {
+	event.preventDefault();
+	const datasetID = document.getElementById("addDatasetID").value;
+	const datasetZIP = document.getElementById("addDatasetFile").files[0];
+
+	const fileReader = new FileReader();
+	fileReader.readAsDataURL(datasetZIP);
+
+
+	fileReader.onload = async function () {
+		// console.log(fileReader.result);
+
+		// const fetchOptions = {
+		// 	method: "POST",
+		// 	body: JSON.stringify({ username: "example" }),
+		// 	headers: {'Content-Type': 'application/json'},
+		// }
+
+		const response = await fetch("http://localhost:4321/datasets");
+
+		var json = await response.json()
+		console.log(json);
+		// fetch("http://localhost:4321/datasets")
+		// 	.then((response) => {
+		// 	console.log("Response incoming!");
+		// 	console.log(response);
+		// })
+	}
+
+	fileReader.onerror = function () {
+		console.log(fileReader.error);
+	}
+
+
+
+
+}
 
 
 

@@ -13,21 +13,15 @@
     <div class="container">
         <div class="header2 text bold">Add A Dataset</div>
         <hr>
-        <div class="header3 text">
-            Dataset ID:
-            <label>
-                <input type="text" placeholder="Type dataset ID here">
-            </label>
-        </div>
-        <div class="header3 text">
-            Upload a Dataset ZIP file:
-            <label>
-                <input type="file">
-            </label>
-        </div>
-        <div class="header3 text">
+        <form id="addDatasetForm" class="text">
+            <label class="header3 text">Dataset ID:</label>
+            <input id="addDatasetID" type="text" placeholder="Type dataset ID here">
+            <br>
+            <label class="header3 text">Dataset ZIP file:</label>
+            <input id="addDatasetFile" type="file" accept=".zip" />
+            <br>
             <button id="add-dataset-button" class="button">Add Dataset</button>
-        </div>
+        </form>
     </div>
     <hr>
     <div class="container">
