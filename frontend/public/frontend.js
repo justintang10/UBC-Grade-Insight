@@ -31,7 +31,6 @@ async function handleAddDatasetButton(event) {
 	fileReader.onload = async function () {
 		// console.log(fileReader.result);
 
-		// This throws the 400 error code, "bad request"
 		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/sections", {
 			method: "PUT",
 			headers: {"Content-Type": "application/x-zip-compressed"},
@@ -42,11 +41,6 @@ async function handleAddDatasetButton(event) {
 		// console.log(json);
 
 		await updateDatasetList();
-		// Get seems to work fine, but it's hard to tell since the add dataset request isn't working
-		// const response = await fetch("http://localhost:4321/datasets");
-		//
-		// var json = await response.json()
-		// console.log(json);
 	}
 
 	fileReader.onerror = function () {
@@ -54,13 +48,42 @@ async function handleAddDatasetButton(event) {
 	}
 }
 
+async function removeDataset(datasetID) {
+
+	const response = await fetch("http://localhost:4321/dataset/" + datasetID, {
+		method: "DELETE"
+	});
+
+	// const json = await response.json()
+	// console.log(json);
+
+	await updateDatasetList();
+}
+
+
+
+
+
+
+// Fetches dataset ids and displays them
 async function updateDatasetList() {
 	const datasetsDiv = document.getElementById("datasetsContainer");
+	datasetsDiv.innerHTML = '';
 
 	const response = await fetch("http://localhost:4321/datasets");
 
 	var json = await response.json()
 	var results = json.result;
+
+	// Show "no datasets added" div if
+	const noDatasetsText = document.getElementById("noDatasetsText");
+	if (results.length == 0) {
+		console.log("Showing");
+		noDatasetsText.style.display = "block";
+	} else {
+		console.log("Hiding");
+		noDatasetsText.style.display = "none";
+	}
 
 	for (const result of results) {
 		const datasetID = result.id;
@@ -90,6 +113,11 @@ async function updateDatasetList() {
 		removeButtonDiv.className = "header3";
 		const removeButtonButton = document.createElement("button");
 		removeButtonButton.className = "removeButton"
+		removeButtonButton.addEventListener('click',
+			function() {
+				removeDataset(datasetID);
+			}
+		)
 		const removeButtonText = document.createTextNode("Remove Dataset");
 		removeButtonButton.appendChild(removeButtonText);
 		removeButtonDiv.appendChild(removeButtonButton);
@@ -101,6 +129,10 @@ async function updateDatasetList() {
 
 
 
+// Initialize
+await updateDatasetList();
+
+// Plotting stuff
 // const plotOptions = {
 // 	y: {grid: true}
 // }
