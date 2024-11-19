@@ -32,31 +32,72 @@ async function handleAddDatasetButton(event) {
 		// console.log(fileReader.result);
 
 		// This throws the 400 error code, "bad request"
-		// const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/sections", {
-		// 	method: "PUT",
-		// 	body: fileReader.result,
-		// });
-		//
+		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/sections", {
+			method: "PUT",
+			headers: {"Content-Type": "application/x-zip-compressed"},
+			body: fileReader.result,
+		});
+
 		// var json = await response.json()
 		// console.log(json);
 
+		await updateDatasetList();
 		// Get seems to work fine, but it's hard to tell since the add dataset request isn't working
-		const response = await fetch("http://localhost:4321/datasets");
-
-		var json = await response.json()
-		console.log(json);
+		// const response = await fetch("http://localhost:4321/datasets");
+		//
+		// var json = await response.json()
+		// console.log(json);
 	}
 
 	fileReader.onerror = function () {
 		console.log(fileReader.error);
 	}
-
-
-
-
 }
 
+async function updateDatasetList() {
+	const datasetsDiv = document.getElementById("datasetsContainer");
 
+	const response = await fetch("http://localhost:4321/datasets");
+
+	var json = await response.json()
+	var results = json.result;
+
+	for (const result of results) {
+		const datasetID = result.id;
+
+		// Create container
+		const container = document.createElement("div");
+		container.className = "datasetContainer text"
+
+		// Dataset ID text
+		const idDiv = document.createElement("div");
+		const idText = document.createTextNode(datasetID);
+		idDiv.appendChild(idText);
+		container.append(idDiv);
+
+		// View insights button
+		const viewButtonDiv = document.createElement("div");
+		viewButtonDiv.className = "header3";
+		const viewButtonButton = document.createElement("button");
+		viewButtonButton.className = "viewButton"
+		const viewButtonText = document.createTextNode("View Insights");
+		viewButtonButton.appendChild(viewButtonText);
+		viewButtonDiv.appendChild(viewButtonButton);
+		container.append(viewButtonDiv);
+
+		// Remove button
+		const removeButtonDiv = document.createElement("div");
+		removeButtonDiv.className = "header3";
+		const removeButtonButton = document.createElement("button");
+		removeButtonButton.className = "removeButton"
+		const removeButtonText = document.createTextNode("Remove Dataset");
+		removeButtonButton.appendChild(removeButtonText);
+		removeButtonDiv.appendChild(removeButtonButton);
+		container.append(removeButtonDiv);
+
+		datasetsDiv.append(container);
+	}
+}
 
 
 
