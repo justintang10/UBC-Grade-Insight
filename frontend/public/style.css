@@ -1,5 +1,6 @@
 .button {
     background-color: #3f51b5;
+	border-radius: 4px;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -11,4 +12,107 @@
 
 .button:hover {
     cursor: pointer;
+	background-color: #707cb5;
+}
+
+.viewButton {
+	background-color: #3f51b5;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	align-self: flex-end;
+	font-size: 16px;
+}
+
+.viewButton:hover {
+	cursor: pointer;
+	background-color: #707cb5;
+}
+
+.removeButton {
+	background-color: darkred;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	align-self: flex-end;
+	font-size: 16px;
+}
+
+.removeButton:hover {
+	cursor: pointer;
+	background-color: #c30000;
+}
+
+.topBar {
+	background-color: #3f51b5;
+	padding: 15px 32px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.datasetContainer {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	gap: 32px;
+	background-color: #96adb5;
+	border-radius: 4px;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: left;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.container {
+	background-color: white;
+	padding: 32px 32px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.subContainer {
+	background-color: white;
+	padding: 32px 32px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header1 {
+	font-size: x-large;
+	color: white;
+}
+
+.header2 {
+	font-size: large;
+	color: black;
+}
+
+.header3 {
+	padding-bottom: 4px;
+	font-size: small;
+	color: black;
+}
+
+.text {
+	font-family: Verdana, sans-serif;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.border {
+	border: 4px solid black;
+	border-radius: 4px;
 }

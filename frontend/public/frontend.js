@@ -16,14 +16,24 @@ async function handleClickMe() {
 	}
 }
 
-const plot = Plot.rectY(
-	{length: 1000},
-	Plot.binX(
-		{y: "count"},
-		{x: Math.random}
-	)
-).plot();
 
-const div = document.querySelector("#myplot");
 
-div.append(plot);
+
+
+
+
+// const plotOptions = {
+// 	y: {grid: true}
+// }
+//
+// const plot1DData = [1, 3, 2, 5, 2, 6];
+// const plot1D = Plot.lineY(plot1DData).plot(plotOptions);
+//
+// const plot2DData = [[0, 1], [1, 3], [3, 5], [4, 2], [5, 6], [9, 2]];
+// const plot2D = Plot.line(plot2DData).plot(plotOptions);
+//
+//
+//
+// const div = document.querySelector("#testplots");
+// div.append(plot1D);
+// div.append(plot2D);

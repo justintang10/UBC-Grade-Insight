@@ -5,10 +5,53 @@
     <title>310 Frontend</title>
     <link href="/style.css" rel="stylesheet"/>
 </head>
-    <div id="myplot"></div>
 <body>
-<button id="click-me-button" class="button">Click Me!</button>
-
+    <div id="testplots"></div>
+    <div class="topBar">
+        <p class="header1 text bold">Your Datasets</p>
+    </div>
+    <div class="container">
+        <div class="header2 text bold">Add A Dataset</div>
+        <hr>
+        <div class="header3 text">
+            Dataset ID:
+            <label>
+                <input type="text" placeholder="Type dataset ID here">
+            </label>
+        </div>
+        <div class="header3 text">
+            Upload a Dataset ZIP file:
+            <label>
+                <input type="file">
+            </label>
+        </div>
+        <div class="header3 text">
+            <button id="add-dataset-button" class="button">Add Dataset</button>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="header2 text bold">
+            Datasets
+        </div>
+        <hr>
+        <div class="text">
+            No Datasets Added!
+        </div>
+        <div class="datasetContainer">
+            <div class="text">
+                DatasetID
+            </div>
+            <div class="header3 text">
+                <button class="viewButton">View Insights</button>
+            </div>
+            <div class="header3 text">
+                <button class="removeButton">Remove This Dataset</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <button id="click-me-button" class="button">Test Button</button>
 <script type="module" src="/frontend.js"></script>
 </body>
 </html>
