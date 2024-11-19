@@ -21,6 +21,7 @@ document.getElementById("add-dataset-button").addEventListener("click", handleAd
 async function handleAddDatasetButton(event) {
 	event.preventDefault();
 	const datasetID = document.getElementById("addDatasetID").value;
+	const datasetType = document.getElementById("addDatasetType").value;
 	const datasetZIP = document.getElementById("addDatasetFile").files[0];
 
 	// Convert file into array buffer
@@ -31,7 +32,7 @@ async function handleAddDatasetButton(event) {
 	fileReader.onload = async function () {
 		// console.log(fileReader.result);
 
-		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/sections", {
+		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/" + datasetType, {
 			method: "PUT",
 			headers: {"Content-Type": "application/x-zip-compressed"},
 			body: fileReader.result,
@@ -87,6 +88,7 @@ async function updateDatasetList() {
 
 	for (const result of results) {
 		const datasetID = result.id;
+		const datasetType = result.kind;
 
 		// Create container
 		const container = document.createElement("div");
@@ -97,6 +99,12 @@ async function updateDatasetList() {
 		const idText = document.createTextNode(datasetID);
 		idDiv.appendChild(idText);
 		container.append(idDiv);
+
+		// Dataset Type text
+		const typeDiv = document.createElement("div");
+		const typeText = document.createTextNode("Type: " + datasetType);
+		typeDiv.appendChild(typeText);
+		container.append(typeDiv);
 
 		// View insights button
 		const viewButtonDiv = document.createElement("div");
