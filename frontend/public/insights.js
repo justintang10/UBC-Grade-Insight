@@ -1,3 +1,4 @@
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 
 // Return to datasets page
 document.getElementById("back-button").addEventListener("click", goToDatasets);
@@ -46,7 +47,7 @@ async function getRequiredInfoFromDatasets() {
 	const depts = await deptsPromise.json();
 
 	// Busiest Professors
-	// Get all departments in dataset
+	// Get all departments in dataset, and all years in dataset
 
 	// Department Performance
 	// None
@@ -76,7 +77,12 @@ async function getRequiredInfoFromDatasets() {
 function updateInsightResultContainers() {
 	updateCourseAveragesContainer();
 	updateTopProfsContainer();
+	updateEasiestCoursesContainer();
+	updateBusiestProfessorsContainer();
 }
+
+
+
 
 function updateCourseAveragesContainer() {
 	const deptDropdown = document.getElementById("courseAverageDeptDropdown");
@@ -143,7 +149,41 @@ async function getCourseAverageInsight() {
 	const avgs = await response.json();
 	console.log("Course Averages over the years for: " + deptId + " " + courseId);
 	console.log(avgs);
+
+	// Plotting stuff
+
+
+	const plotData = [];
+	for (const sectionResult of avgs.result) {
+		if (Object.values(sectionResult)[0] == 1900) {
+			console.log("Overall Average is: ", Object.values(sectionResult)[1]);
+			continue;
+		}
+		const dataPoint = {
+			"Year": Object.values(sectionResult)[0],
+			"Course Average": Object.values(sectionResult)[1]
+		};
+		plotData.push(dataPoint);
+	}
+
+	const plotOptions = {
+		y: {grid: true},
+		x: {grid: true},
+		marks: [
+			Plot.ruleY([0, 100]), // Set Y axis range as 0, 100
+			Plot.dot(plotData, {x: "Year", y: "Course Average"})
+		]
+	}
+
+	const avgPlot = Plot.line(plotData, {x: "Year", y: "Course Average"}).plot(plotOptions);
+
+	const div = document.getElementById("courseAveragePlot");
+	div.innerHTML = "";
+	div.append(avgPlot);
 }
+
+
+
 
 function updateTopProfsContainer() {
 	const deptDropdown = document.getElementById("topProfsDeptDropdown");
@@ -209,6 +249,115 @@ async function getTopProfsInsight() {
 
 	const avgs = await response.json();
 	console.log("Top Profs for: " + deptId + " " + courseId);
+	console.log(avgs);
+}
+
+
+
+
+function updateEasiestCoursesContainer() {
+	const deptDropdown = document.getElementById("easiestCoursesDeptDropdown");
+
+	for (const dept in deptMap) {
+		const option = document.createElement("option");
+		option.value = dept;
+		option.innerHTML = dept;
+		deptDropdown.appendChild(option);
+	}
+
+
+	// View insights button
+	const getInsightButton = document.getElementById("easiestCoursesButton");
+	getInsightButton.addEventListener('click',
+		function() {
+			getEasiestCoursesInsight();
+		})
+}
+
+async function getEasiestCoursesInsight() {
+	const deptDropdown = document.getElementById("easiestCoursesDeptDropdown");
+
+	const deptId = deptDropdown.value;
+
+	// Clone query, as to not modify the original
+	const query = JSON.parse(JSON.stringify(queries.getEasiestCourses));
+	const datasetId = localStorage.getItem("CurrentDatasetID");
+	const datasetIdDept = datasetId + "_dept";
+	const is = {}
+	is[datasetIdDept] = deptId;
+	query["WHERE"] = {
+		"IS": is
+	}
+
+	const response = await fetch("http://localhost:4321/query", {
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(query),
+	});
+
+	const avgs = await response.json();
+
+	const newResult = [];
+	for (const course of avgs.result) {
+		var passRate = 0;
+		if (course["sumFails"] == 0) {
+			passRate = 100;
+		} else {
+			passRate = 100 * course["sumPasses"] / (course["sumPasses"] + course["sumFails"]);
+			passRate = Math.round(passRate * 100) / 100;
+		}
+
+		const newCourse = {};
+		newCourse[Object.keys(course)[0]] = Object.values(course)[0];
+		newCourse["passRate"] = passRate;
+		newResult.push(newCourse);
+	}
+	console.log("Courses with highest pass rates for: " + deptId);
+	console.log(newResult);
+}
+
+
+
+function updateBusiestProfessorsContainer() {
+	const deptDropdown = document.getElementById("busiestProfsDeptDropdown");
+
+	for (const dept in deptMap) {
+		const option = document.createElement("option");
+		option.value = dept;
+		option.innerHTML = dept;
+		deptDropdown.appendChild(option);
+	}
+
+	// View insights button
+	const getInsightButton = document.getElementById("busiestProfsButton");
+	getInsightButton.addEventListener('click',
+		function() {
+			getBusiestProfsInsight();
+		})
+}
+
+async function getBusiestProfsInsight() {
+	const deptDropdown = document.getElementById("busiestProfsDeptDropdown");
+
+	const deptId = deptDropdown.value;
+
+	// Clone query, as to not modify the original
+	const query = JSON.parse(JSON.stringify(queries.getBusiestProfs));
+	const datasetId = localStorage.getItem("CurrentDatasetID");
+	const datasetIdDept = datasetId + "_dept";
+	const is = {}
+	is[datasetIdDept] = deptId;
+	query["WHERE"] = {
+		"IS": is
+	}
+
+	const response = await fetch("http://localhost:4321/query", {
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(query),
+	});
+
+	const avgs = await response.json();
 	console.log(avgs);
 }
 
@@ -298,6 +447,61 @@ const queries = {
 				{
 					"courseAvg": {
 						"AVG": localStorage.getItem("CurrentDatasetID") + "_avg"
+					}
+				}
+			]
+		}
+	},
+	"getEasiestCourses": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				localStorage.getItem("CurrentDatasetID") + "_id",
+				"sumPasses",
+				"sumFails"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					localStorage.getItem("CurrentDatasetID") + "_id"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				localStorage.getItem("CurrentDatasetID") + "_id"
+			],
+			"APPLY": [
+				{
+					"sumPasses": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_pass"
+					}
+				},
+				{
+					"sumFails": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_fail"
+					}
+				}
+			]
+		}
+	},
+	"getBusiestProfs": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				localStorage.getItem("CurrentDatasetID") + "_instructor",
+				"numCourses"
+			],
+			"ORDER": "numCourses"
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				localStorage.getItem("CurrentDatasetID") + "_instructor"
+			],
+			"APPLY": [
+				{
+					"numCourses": {
+						"COUNT": localStorage.getItem("CurrentDatasetID") + "_uuid"
 					}
 				}
 			]
