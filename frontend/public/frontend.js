@@ -30,7 +30,6 @@ async function handleAddDatasetButton(event) {
 
 	// File reader callback
 	fileReader.onload = async function () {
-		// console.log(fileReader.result);
 
 		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/" + datasetType, {
 			method: "PUT",
@@ -79,10 +78,8 @@ async function updateDatasetList() {
 	// Show "no datasets added" div if
 	const noDatasetsText = document.getElementById("noDatasetsText");
 	if (results.length == 0) {
-		console.log("Showing");
 		noDatasetsText.style.display = "block";
 	} else {
-		console.log("Hiding");
 		noDatasetsText.style.display = "none";
 	}
 
@@ -111,6 +108,10 @@ async function updateDatasetList() {
 		viewButtonDiv.className = "header3";
 		const viewButtonButton = document.createElement("button");
 		viewButtonButton.className = "viewButton"
+		viewButtonButton.addEventListener('click',
+			function() {
+				goToInsights(datasetID);
+			})
 		const viewButtonText = document.createTextNode("View Insights");
 		viewButtonButton.appendChild(viewButtonText);
 		viewButtonDiv.appendChild(viewButtonButton);
@@ -124,8 +125,7 @@ async function updateDatasetList() {
 		removeButtonButton.addEventListener('click',
 			function() {
 				removeDataset(datasetID);
-			}
-		)
+			})
 		const removeButtonText = document.createTextNode("Remove Dataset");
 		removeButtonButton.appendChild(removeButtonText);
 		removeButtonDiv.appendChild(removeButtonButton);
@@ -135,6 +135,11 @@ async function updateDatasetList() {
 	}
 }
 
+function goToInsights(datasetID) {
+	localStorage.setItem("CurrentDatasetID", datasetID);
+
+	location.href = "insights.html"
+}
 
 
 // Initialize

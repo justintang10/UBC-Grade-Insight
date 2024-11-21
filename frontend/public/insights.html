@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>310 Frontend</title>
+	<link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="testplots"></div>
+<button id="back-button" class="button">Back</button>
+<div class="topBar">
+	<p id="datasetID" class="header1 text bold"></p>
+	<p class="header1-5 text bold">Dataset Insights</p>
+</div>
+<div class="container">
+	<div>
+		<p class="header2 text bold">Choose an Insight</p>
+	</div>
+	<div>
+		<button class="insightButton">Course Averages</button>
+		<button class="insightButton">Top Professors</button>
+		<button class="insightButton">Easiest Courses</button>
+		<button class="insightButton">Busiest Professors</button>
+		<button class="insightButton">Department Performance</button>
+		<button class="insightButton">Professor Audit Rates</button>
+	</div>
+<!--	Make sure button text matches ids!-->
+	<div id="Course Averages" class="insightContainer">
+		<p class="header2 text">Course Averages</p>
+		<p class="text">Select the department and course you would like to see the average for.</p>
+		<select id="courseAverageDeptDropdown"></select>
+		<select id="courseAverageCourseDropdown"></select>
+		<button id="courseAverageButton" class="button">Get Insight</button>
+		<div class="plot" id="courseAveragePlot"></div>
+	</div>
+	<div id="Top Professors" class="insightContainer">
+		<p class="header2 text">Top Professors</p>
+		<p class="text">Select the department and course you would like to see the best professors for.</p>
+		<select id="topProfsDeptDropdown"></select>
+		<select id="topProfsCourseDropdown"></select>
+		<button id="topProfsButton" class="button">Get Insight</button>
+		<div class="plot" id="topProfsPlot"></div>
+	</div>
+	<div id="Easiest Courses" class="insightContainer">
+		<p class="header2 text">Easiest Courses</p>
+		<p class="text">Select the department which you would like to see the courses with highest pass rate for.</p>
+		<select id="easiestCoursesDeptDropdown"></select>
+		<button id="easiestCoursesButton" class="button">Get Insight</button>
+		<div class="plot" id="easiestCoursesPlot"></div>
+	</div>
+	<div id="Busiest Professors" class="insightContainer">
+		<p class="header2 text">Busiest Professors</p>
+		<p class="text">Select the department which you would like to see the professors teaching the most courses.</p>
+		<select id="busiestProfsDeptDropdown"></select>
+		<button id="busiestProfsButton" class="button">Get Insight</button>
+	</div>
+	<div id="Department Performance" class="insightContainer">
+		<p class="header2 text">Department Performance</p>
+	</div>
+	<div id="Professor Audit Rates" class="insightContainer">
+		<p class="header2 text">Professor Audit Rates</p>
+	</div>
+</div>
+<hr>
+
+<script type="module" src="/insights.js"></script>
+</body>
+</html>
