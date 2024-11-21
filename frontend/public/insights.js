@@ -303,7 +303,6 @@ async function getTopProfsInsight() {
 		row.appendChild(passRateData);
 
 		table.appendChild(row);
-		console.log(row);
 	}
 
 	div.appendChild(table);
@@ -428,7 +427,6 @@ async function getEasiestCoursesInsight() {
 		row.appendChild(passRateData);
 
 		table.appendChild(row);
-		console.log(row);
 	}
 
 	div.appendChild(table);
