@@ -1,20 +1,20 @@
 import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 
-document.getElementById("click-me-button").addEventListener("click", handleClickMe);
+// document.getElementById("click-me-button").addEventListener("click", handleClickMe);
 
-async function handleClickMe() {
-	try {
-		const response = await fetch("http://localhost:4321/echo/hello");
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
-		}
+// async function handleClickMe() {
+// 	try {
+// 		const response = await fetch("http://localhost:4321/echo/hello");
+// 		if (!response.ok) {
+// 			throw new Error(`Response status: ${response.status}`);
+// 		}
 
-		const json = await response.json();
-		alert("This is a test! \n" + json["result"]);
-	} catch (e) {
-		alert("Error! \n" + e.message);
-	}
-}
+// 		const json = await response.json();
+// 		alert("This is a test! \n" + json["result"]);
+// 	} catch (e) {
+// 		alert("Error! \n" + e.message);
+// 	}
+// }
 
 document.getElementById("add-dataset-button").addEventListener("click", handleAddDatasetButton);
 
@@ -24,6 +24,13 @@ async function handleAddDatasetButton(event) {
 	const datasetType = document.getElementById("addDatasetType").value;
 	const datasetZIP = document.getElementById("addDatasetFile").files[0];
 
+	if (datasetID == "" && datasetZIP == null) {
+		alert("Please enter a dataset ID and a dataset file");
+	} else if (datasetID == "") {
+		alert("Please enter a dataset ID");
+	} else if (datasetZIP == null) {
+		alert("Please add a dataset file");
+	}
 	// Convert file into array buffer
 	const fileReader = new FileReader();
 	fileReader.readAsArrayBuffer(datasetZIP);
@@ -34,12 +41,14 @@ async function handleAddDatasetButton(event) {
 		const response = await fetch("http://localhost:4321/dataset/" + datasetID + "/" + datasetType, {
 			method: "PUT",
 			headers: {"Content-Type": "application/x-zip-compressed"},
-			body: fileReader.result,
+			body: fileReader.result
 		});
-
-		// var json = await response.json()
-		// console.log(json);
-
+		const json = await response.json()
+		if(response.status != 200) {
+			alert("Error: " + response.status + " - " + json.error)
+		} else {
+			alert("Dataset added successfully!");
+		}
 		await updateDatasetList();
 	}
 
@@ -56,7 +65,7 @@ async function removeDataset(datasetID) {
 
 	// const json = await response.json()
 	// console.log(json);
-
+	alert("Dataset removed successfully!");
 	await updateDatasetList();
 }
 
