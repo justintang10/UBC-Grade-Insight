@@ -1,4 +1,6 @@
 import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
 
 // Return to datasets page
 document.getElementById("back-button").addEventListener("click", goToDatasets);
@@ -21,6 +23,9 @@ function hideAllInsightContainers() {
 		container.style.display = "none";
 	}
 }
+
+let deptMap = {};
+let years = [];
 
 // Gets dataset info for the dropdowns and options that the user can then choose: eg. get a list of all courses, so the user can choose a course to find averages for.
 async function getRequiredInfoFromDatasets() {
@@ -48,12 +53,27 @@ async function getRequiredInfoFromDatasets() {
 
 	// Busiest Professors
 	// Get all departments in dataset, and all years in dataset
+	const yearsPromise = await fetch("http://localhost:4321/query", {
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(queries.getYears),
+	});
+	const yearsObj = await yearsPromise.json();
+
+	years = [];
+	for (const section of yearsObj.result) {
+		if (Object.values(section)[0] == 1900) {
+			continue;
+		}
+		years.push(Object.values(section)[0]);
+	}
 
 	// Department Performance
-	// None
+	// Department
 
 	// Professor Audit Rates
-	// None...?
+	// Department
+	// Get pass, fail, audit nums
 
 
 	// Make a map of "dept": ["id1", "id2", "id3"]
@@ -79,6 +99,8 @@ function updateInsightResultContainers() {
 	updateTopProfsContainer();
 	updateEasiestCoursesContainer();
 	updateBusiestProfessorsContainer();
+	updateDeptPerformanceContainer();
+	updateProfAuditsContainer();
 }
 
 
@@ -175,7 +197,7 @@ async function getCourseAverageInsight() {
 		]
 	}
 
-	const avgPlot = Plot.line(plotData, {x: "Year", y: "Course Average", marker: "circle"}).plot(plotOptions);
+	const avgPlot = Plot.line(plotData, {x: "Year", y: "Course Average", tip: "xy", marker: "circle"}).plot(plotOptions);
 
 	const div = document.getElementById("courseAveragePlot");
 	div.innerHTML = "";
@@ -264,13 +286,20 @@ async function getTopProfsInsight() {
 
 	const plotOptions = {
 		y: {grid: true},
+		color: {
+			legend: true,
+			domain: [0, 100],
+			pivot: 50,
+			type: "diverging",
+			scheme: "RdYlGn"
+		},
 		width: Math.min(innerWidth, 800),
 		marks: [
 			Plot.ruleY([0, 100]) // Set Y axis range as 0, 100
 		]
 	}
 
-	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "Course Average", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
+	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "Course Average", tip: "xy", fill: "Course Average", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
 
 	const div = document.getElementById("topProfsPlot");
 	div.innerHTML = "";
@@ -295,7 +324,7 @@ async function getTopProfsInsight() {
 		const row = document.createElement("tr");
 		const courseNameData = document.createElement("td");
 		courseNameData.className = "tableColumn";
-		courseNameData.innerHTML = deptId + Object.values(sectionResult)[0];
+		courseNameData.innerHTML = Object.values(sectionResult)[0];
 		const passRateData = document.createElement("td");
 		passRateData.className = "tableColumn";
 		passRateData.innerHTML = Object.values(sectionResult)[1];
@@ -388,14 +417,20 @@ async function getEasiestCoursesInsight() {
 
 	const plotOptions = {
 		y: {grid: true},
+		color: {
+			legend: true,
+			pivot: 50,
+			type: "diverging",
+			scheme: "RdYlGn"
+		},
 		width: Math.min(innerWidth, 800),
 		marks: [
 			Plot.ruleY([0, 100]) // Set Y axis range as 0, 100
 		]
 	}
 
-	const avgPlot = Plot.barY(newData, {x: "Course", y: "Pass Rate", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
-
+	const avgPlot = Plot.barY(newData, {x: "Course", y: "Pass Rate", tip: "xy", fill: "Pass Rate", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
+	console.log(avgPlot.scale("color"));
 	const div = document.getElementById("easiestCoursesPlot");
 	div.innerHTML = "";
 
@@ -419,7 +454,7 @@ async function getEasiestCoursesInsight() {
 		const row = document.createElement("tr");
 		const courseNameData = document.createElement("td");
 		courseNameData.className = "tableColumn";
-		courseNameData.innerHTML = deptId + Object.values(sectionResult)[0];
+		courseNameData.innerHTML = deptId + " " + Object.values(sectionResult)[0];
 		const passRateData = document.createElement("td");
 		passRateData.className = "tableColumn";
 		passRateData.innerHTML = Object.values(sectionResult)[1];
@@ -444,6 +479,15 @@ function updateBusiestProfessorsContainer() {
 		deptDropdown.appendChild(option);
 	}
 
+	const yearDropdown = document.getElementById("busiestProfsYearDropdown");
+
+	for (const year of years) {
+		const option = document.createElement("option");
+		option.value = year;
+		option.innerHTML = year;
+		yearDropdown.appendChild(option);
+	}
+
 	// View insights button
 	const getInsightButton = document.getElementById("busiestProfsButton");
 	getInsightButton.addEventListener('click',
@@ -454,17 +498,27 @@ function updateBusiestProfessorsContainer() {
 
 async function getBusiestProfsInsight() {
 	const deptDropdown = document.getElementById("busiestProfsDeptDropdown");
-
+	const yearDropdown = document.getElementById("busiestProfsYearDropdown");
 	const deptId = deptDropdown.value;
-
+	const year = Number(yearDropdown.value);
 	// Clone query, as to not modify the original
 	const query = JSON.parse(JSON.stringify(queries.getBusiestProfs));
 	const datasetId = localStorage.getItem("CurrentDatasetID");
 	const datasetIdDept = datasetId + "_dept";
-	const is = {}
-	is[datasetIdDept] = deptId;
+	const datasetIdYear = datasetId + "_year";
+	const is1 = {};
+	is1[datasetIdDept] = deptId;
+	const is2 = {};
+	is2[datasetIdYear] = year;
 	query["WHERE"] = {
-		"IS": is
+		"AND": [
+			{
+				"IS": is1
+			},
+			{
+				"EQ": is2
+			}
+		]
 	}
 
 	const response = await fetch("http://localhost:4321/query", {
@@ -473,8 +527,300 @@ async function getBusiestProfsInsight() {
 		body: JSON.stringify(query),
 	});
 
-	const avgs = await response.json();
-	console.log(avgs);
+	const profCourseCount = await response.json();
+	const result = profCourseCount.result;
+
+	const newData = [];
+	let maxCourses = 0;
+	for (const sectionResult of result) {
+		if (Object.values(sectionResult)[0] == "") { // Ignore averages
+			continue;
+		}
+		const newResult = {};
+		newResult["Instructor"] = deptId + Object.values(sectionResult)[0];
+		newResult["# Courses Taught"] = Object.values(sectionResult)[1];
+		if (maxCourses < Object.values(sectionResult)[1]) {
+			maxCourses = Object.values(sectionResult)[1];
+		}
+		newData.push(newResult);
+	}
+
+	const plotOptions = {
+		y: {grid: true},
+		color: {
+			legend: true,
+			pivot: maxCourses / 2,
+			type: "diverging",
+			scheme: "RdYlGn"
+		},
+		width: Math.min(innerWidth, 800),
+		interval: 1,
+		marks: [
+			Plot.ruleY([0]) // Set Y axis range as 0, 100
+		]
+	}
+
+	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "# Courses Taught", tip: "xy", fill: "# Courses Taught", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
+
+	const div = document.getElementById("busiestProfsPlot");
+	div.innerHTML = "";
+
+	div.append(avgPlot);
+
+	const table = document.createElement("table");
+	table.className = "table text";
+	const headerRow = document.createElement("tr");
+	const courseNameHeader = document.createElement("th");
+	courseNameHeader.className = "tableColumn";
+	courseNameHeader.innerHTML = "Instructor";
+	const passRateHeader = document.createElement("th");
+	passRateHeader.className = "tableColumn";
+	passRateHeader.innerHTML = "Number of Courses Taught";
+	headerRow.appendChild(courseNameHeader);
+	headerRow.appendChild(passRateHeader);
+
+	table.appendChild(headerRow);
+
+	for (const sectionResult of result) {
+		const row = document.createElement("tr");
+		const courseNameData = document.createElement("td");
+		courseNameData.className = "tableColumn";
+		courseNameData.innerHTML = Object.values(sectionResult)[0];
+		const passRateData = document.createElement("td");
+		passRateData.className = "tableColumn";
+		passRateData.innerHTML = Object.values(sectionResult)[1];
+		row.appendChild(courseNameData);
+		row.appendChild(passRateData);
+
+		table.appendChild(row);
+	}
+
+	div.appendChild(table);
+}
+
+function updateDeptPerformanceContainer() {
+
+	// View insights button
+	const getInsightButton = document.getElementById("deptPerformanceButton");
+	getInsightButton.addEventListener('click',
+		function() {
+			getDeptPerformanceInsight();
+		})
+}
+
+async function getDeptPerformanceInsight() {
+
+	const response = await fetch("http://localhost:4321/query", {
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(queries.getDeptPerformance),
+	});
+
+	const deptPerformance = await response.json();
+	const result = deptPerformance.result;
+	console.log(deptPerformance);
+
+	const newData = [];
+	for (const sectionResult of result) {
+		if (Object.values(sectionResult)[0] == "") { // Ignore blank depts
+			continue;
+		}
+		const newResult = {};
+		newResult["Department"] = Object.values(sectionResult)[0];
+		const numStudents = Object.values(sectionResult)[1] + Object.values(sectionResult)[2];
+		const numPass = Object.values(sectionResult)[1];
+		let passRate = 0;
+		if (numStudents > 0) {
+			passRate = numPass / numStudents * 100;
+		}
+		passRate = Math.round(passRate * 100) / 100;
+		newResult["Dept Average"] = Object.values(sectionResult)[4];
+		newResult["Pass Rate (%)"] = passRate;
+		newData.push(newResult);
+	}
+	newData.sort(function(a, b) {
+		return b["Dept Average"] - a["Dept Average"]
+	})
+
+	const plotOptions = {
+		y: {grid: true},
+		width: Math.min(innerWidth, 800),
+		interval: 1,
+		marks: [
+			Plot.ruleY([100]),
+			Plot.ruleX([100]),
+		]
+	}
+
+	const avgPlot = Plot.dot(newData, {x: "Dept Average", y: "Pass Rate (%)", stroke: "Department", sort: {x: "-y"}, marginLeft: 60, tip: "xy"}).plot(plotOptions);
+
+	const div = document.getElementById("deptPerformancePlot");
+	div.innerHTML = "";
+
+	div.append(avgPlot);
+
+	const table = document.createElement("table");
+	table.className = "table text";
+	const headerRow = document.createElement("tr");
+	const courseNameHeader = document.createElement("th");
+	courseNameHeader.className = "tableColumn";
+	courseNameHeader.innerHTML = "Department";
+	const avgHeader = document.createElement("th");
+	avgHeader.className = "tableColumn";
+	avgHeader.innerHTML = "Department Average (%)";
+	const passRateHeader = document.createElement("th");
+	passRateHeader.className = "tableColumn";
+	passRateHeader.innerHTML = "Pass Rate (%)";
+	headerRow.appendChild(courseNameHeader);
+	headerRow.appendChild(avgHeader);
+	headerRow.appendChild(passRateHeader);
+
+	table.appendChild(headerRow);
+
+	for (const sectionResult of newData) {
+		const row = document.createElement("tr");
+		const courseNameData = document.createElement("td");
+		courseNameData.className = "tableColumn";
+		courseNameData.innerHTML = Object.values(sectionResult)[0];
+		const avgData = document.createElement("td");
+		avgData.className = "tableColumn";
+		avgData.innerHTML = Object.values(sectionResult)[1];
+		const passRateData = document.createElement("td");
+		passRateData.className = "tableColumn";
+		passRateData.innerHTML = Object.values(sectionResult)[2];
+		row.appendChild(courseNameData);
+		row.appendChild(avgData);
+		row.appendChild(passRateData);
+
+		table.appendChild(row);
+	}
+
+	div.appendChild(table);
+}
+
+function updateProfAuditsContainer() {
+	const deptDropdown = document.getElementById("profAuditsDropdown");
+
+	for (const dept in deptMap) {
+		const option = document.createElement("option");
+		option.value = dept;
+		option.innerHTML = dept;
+		deptDropdown.appendChild(option);
+	}
+
+	// View insights button
+	const getInsightButton = document.getElementById("profAuditsButton");
+	getInsightButton.addEventListener('click',
+		function() {
+			getProfAuditsInsight();
+		})
+}
+
+async function getProfAuditsInsight() {
+	const deptDropdown = document.getElementById("profAuditsDropdown");
+	const deptId = deptDropdown.value;
+	// Clone query, as to not modify the original
+	const query = JSON.parse(JSON.stringify(queries.getProfAudits));
+	const datasetId = localStorage.getItem("CurrentDatasetID");
+	const datasetIdDept = datasetId + "_dept";
+	const is1 = {};
+	is1[datasetIdDept] = deptId;
+	query["WHERE"] = {
+		"IS": is1
+	}
+
+	const response = await fetch("http://localhost:4321/query", {
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(query),
+	});
+
+	const profCourseCount = await response.json();
+	const result = profCourseCount.result;
+
+	const newData = [];
+	let maxAudits = 0;
+	for (const sectionResult of result) {
+		if (Object.values(sectionResult)[3] == 0 || Object.values(sectionResult)[0] == "") { // Ignore profs with no audits, or instructors value ""
+			continue;
+		}
+		const newResult = {};
+		newResult["Instructor"] = Object.values(sectionResult)[0];
+		const numStudents = Object.values(sectionResult)[1] + Object.values(sectionResult)[2] + Object.values(sectionResult)[3];
+		const numAudits = Object.values(sectionResult)[3];
+		let auditRate = 100 * numAudits / numStudents;
+		auditRate = Math.round(auditRate * 100) / 100;
+		newResult["Audit Rate"] = auditRate;
+		newResult["# Audits"] = numAudits;
+		if (maxAudits < numAudits) {
+			maxAudits = numAudits;
+		}
+		newData.push(newResult);
+	}
+
+	newData.sort(function (a, b) {
+		return b["# Audits"] - a["# Audits"];
+	})
+
+	const plotOptions = {
+		y: {grid: true},
+		color: {
+			legend: true,
+			pivot: maxAudits / 2,
+			type: "diverging",
+			scheme: "RdYlGn"
+		},
+		width: Math.min(innerWidth, 800),
+		interval: 1,
+		marks: [
+			Plot.ruleY([0]) // Set Y axis range as 0, 100
+		]
+	}
+
+	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "# Audits", sort: {x: "-y"}, tip: "xy", fill: "# Audits", marginLeft: 60}).plot(plotOptions);
+
+	const div = document.getElementById("profAuditsPlot");
+	div.innerHTML = "";
+
+	div.append(avgPlot);
+
+	const table = document.createElement("table");
+	table.className = "table text";
+	const headerRow = document.createElement("tr");
+	const courseNameHeader = document.createElement("th");
+	courseNameHeader.className = "tableColumn";
+	courseNameHeader.innerHTML = "Instructor";
+	const auditRateHeader = document.createElement("th");
+	auditRateHeader.className = "tableColumn";
+	auditRateHeader.innerHTML = "Audit Rate (%)";
+	const auditNumHeader = document.createElement("th");
+	auditNumHeader.className = "tableColumn";
+	auditNumHeader.innerHTML = "Number of Audits";
+	headerRow.appendChild(courseNameHeader);
+	headerRow.appendChild(auditNumHeader);
+	headerRow.appendChild(auditRateHeader);
+
+	table.appendChild(headerRow);
+
+	for (const sectionResult of newData) {
+		const row = document.createElement("tr");
+		const courseNameData = document.createElement("td");
+		courseNameData.className = "tableColumn";
+		courseNameData.innerHTML = Object.values(sectionResult)[0];
+		const auditRateData = document.createElement("td");
+		auditRateData.className = "tableColumn";
+		auditRateData.innerHTML = Object.values(sectionResult)[1];
+		const auditNumData = document.createElement("td");
+		auditNumData.className = "tableColumn";
+		auditNumData.innerHTML = Object.values(sectionResult)[2];
+		row.appendChild(courseNameData);
+		row.appendChild(auditNumData);
+		row.appendChild(auditRateData);
+
+		table.appendChild(row);
+	}
+
+	div.appendChild(table);
 }
 
 
@@ -489,7 +835,7 @@ function updateCoursesDropdown(dropDownElement, courseIds) {
 	}
 }
 
-let deptMap = {};
+
 
 const queries = {
 	"getCourses": {
@@ -520,6 +866,21 @@ const queries = {
 		"TRANSFORMATIONS": {
 			"GROUP": [
 				localStorage.getItem("CurrentDatasetID") + "_dept"
+			],
+			"APPLY": []
+		}
+	},
+	"getYears": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				localStorage.getItem("CurrentDatasetID") + "_year"
+			],
+			"ORDER": localStorage.getItem("CurrentDatasetID") + "_year"
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				localStorage.getItem("CurrentDatasetID") + "_year"
 			],
 			"APPLY": []
 		}
@@ -613,7 +974,12 @@ const queries = {
 				localStorage.getItem("CurrentDatasetID") + "_instructor",
 				"numCourses"
 			],
-			"ORDER": "numCourses"
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"numCourses"
+				]
+			}
 		},
 		"TRANSFORMATIONS": {
 			"GROUP": [
@@ -623,6 +989,84 @@ const queries = {
 				{
 					"numCourses": {
 						"COUNT": localStorage.getItem("CurrentDatasetID") + "_uuid"
+					}
+				}
+			]
+		}
+	},
+	"getDeptPerformance": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				localStorage.getItem("CurrentDatasetID") + "_dept",
+				"sumPasses",
+				"sumFails",
+				"sumAudits",
+				"deptAvg",
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"deptAvg"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				localStorage.getItem("CurrentDatasetID") + "_dept"
+			],
+			"APPLY": [
+				{
+					"deptAvg": {
+						"AVG":  localStorage.getItem("CurrentDatasetID") + "_avg"
+					}
+				},
+				{
+					"sumPasses": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_pass"
+					}
+				},
+				{
+					"sumFails": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_fail"
+					}
+				},
+				{
+					"sumAudits": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_audit"
+					}
+				}
+			]
+		}
+	},
+	"getProfAudits": {
+		"WHERE": {},
+		"OPTIONS": {
+			"COLUMNS": [
+				localStorage.getItem("CurrentDatasetID") + "_instructor",
+				"sumPasses",
+				"sumFails",
+				"sumAudits",
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				localStorage.getItem("CurrentDatasetID") + "_instructor"
+			],
+			"APPLY": [
+				{
+					"sumPasses": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_pass"
+					}
+				},
+				{
+					"sumFails": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_fail"
+					}
+				},
+				{
+					"sumAudits": {
+						"SUM": localStorage.getItem("CurrentDatasetID") + "_audit"
 					}
 				}
 			]
