@@ -296,7 +296,11 @@ async function getTopProfsInsight() {
 		width: Math.min(innerWidth, 800),
 		marks: [
 			Plot.ruleY([0, 100]) // Set Y axis range as 0, 100
-		]
+		],
+		x:{
+			tickRotate: -45
+		},
+		marginBottom: 150
 	}
 
 	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "Course Average", tip: "xy", fill: "Course Average", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
@@ -426,7 +430,11 @@ async function getEasiestCoursesInsight() {
 		width: Math.min(innerWidth, 800),
 		marks: [
 			Plot.ruleY([0, 100]) // Set Y axis range as 0, 100
-		]
+		],
+		x:{
+			tickRotate: -45
+		},
+		marginBottom: 150
 	}
 
 	const avgPlot = Plot.barY(newData, {x: "Course", y: "Pass Rate", tip: "xy", fill: "Pass Rate", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
@@ -557,7 +565,11 @@ async function getBusiestProfsInsight() {
 		interval: 1,
 		marks: [
 			Plot.ruleY([0]) // Set Y axis range as 0, 100
-		]
+		],
+		x:{
+			tickRotate: -45
+		},
+		marginBottom: 150
 	}
 
 	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "# Courses Taught", tip: "xy", fill: "# Courses Taught", sort: {x: "-y"}, marginLeft: 60}).plot(plotOptions);
@@ -774,7 +786,11 @@ async function getProfAuditsInsight() {
 		interval: 1,
 		marks: [
 			Plot.ruleY([0]) // Set Y axis range as 0, 100
-		]
+		],
+		x:{
+			tickRotate: -45
+		},
+		marginBottom: 150
 	}
 
 	const avgPlot = Plot.barY(newData, {x: "Instructor", y: "# Audits", sort: {x: "-y"}, tip: "xy", fill: "# Audits", marginLeft: 60}).plot(plotOptions);

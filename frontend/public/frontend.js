@@ -102,7 +102,7 @@ async function updateDatasetList() {
 
 		// Dataset ID text
 		const idDiv = document.createElement("div");
-		const idText = document.createTextNode(datasetID);
+		const idText = document.createTextNode("Dataset ID: " + datasetID);
 		idDiv.appendChild(idText);
 		container.append(idDiv);
 
