@@ -545,7 +545,7 @@ async function getBusiestProfsInsight() {
 			continue;
 		}
 		const newResult = {};
-		newResult["Instructor"] = deptId + Object.values(sectionResult)[0];
+		newResult["Instructor"] = Object.values(sectionResult)[0];
 		newResult["# Courses Taught"] = Object.values(sectionResult)[1];
 		if (maxCourses < Object.values(sectionResult)[1]) {
 			maxCourses = Object.values(sectionResult)[1];
